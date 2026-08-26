@@ -1,0 +1,6 @@
+practice.duckdb
+*.duckdb
+*.duckdb.wal
+.sqlpad_history
+__pycache__/
+*.pyc

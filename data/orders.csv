@@ -1,0 +1,16 @@
+order_id,customer_id,product,category,amount,order_date
+1001,1,Mechanical Keyboard,Electronics,320.00,2023-02-01
+1002,1,USB-C Hub,Electronics,90.00,2023-02-01
+1003,2,Office Chair,Furniture,650.00,2023-04-10
+1004,3,Standing Desk,Furniture,1200.00,2023-04-15
+1005,3,Desk Lamp,Furniture,80.00,2023-04-15
+1006,4,Noise-cancel Headphones,Electronics,540.00,2023-06-05
+1007,5,Monitor 27in,Electronics,780.00,2023-08-01
+1008,5,Monitor Arm,Furniture,150.00,2023-08-01
+1009,6,Webcam,Electronics,220.00,2023-10-12
+1010,1,Laptop Stand,Furniture,110.00,2023-11-20
+1011,7,Mechanical Keyboard,Electronics,320.00,2024-02-03
+1012,8,Coffee Machine,Appliances,430.00,2024-03-01
+1013,6,Desk Lamp,Furniture,80.00,2024-03-18
+1014,2,Monitor 27in,Electronics,780.00,2024-04-02
+1015,4,Ergo Mouse,Electronics,60.00,2024-04-22
