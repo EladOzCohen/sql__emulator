@@ -31,9 +31,18 @@ class Result:
         return self.columns is not None
 
 
-def connect(db_path: str = DEFAULT_DB) -> duckdb.DuckDBPyConnection:
-    """Open (creating if needed) a persistent DuckDB database file."""
+def connect(
+    db_path: str = DEFAULT_DB,
+    prelude: list[str] | None = None,
+) -> duckdb.DuckDBPyConnection:
+    """Open (creating if needed) a persistent DuckDB database file.
+
+    `prelude` is an optional list of statements (dialect TEMP macros) run
+    immediately after connecting. They are session-only and never persisted.
+    """
     con = duckdb.connect(db_path)
+    for stmt in prelude or []:
+        con.execute(stmt)
     return con
 
 

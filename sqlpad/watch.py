@@ -11,7 +11,7 @@ import os
 import time
 from datetime import datetime
 
-from . import core, render
+from . import core, dialects, render
 
 BANNER = r"""
   ___  ___  _    ___         _
@@ -46,11 +46,12 @@ def _print_result(res: core.Result, index: int, total: int) -> None:
         print(f"  \033[32m✓ {verb} ok\033[0m  \033[90m{res.elapsed_ms:.1f} ms\033[0m")
 
 
-def run_once(con, sql_path: str) -> None:
+def run_once(con, sql_path: str, dialect_title: str = "") -> None:
     _clear()
     print(BANNER)
     stamp = datetime.now().strftime("%H:%M:%S")
-    print(f"\033[90m{os.path.abspath(sql_path)}  ·  ran at {stamp}\033[0m")
+    tag = f"[{dialect_title}]  " if dialect_title else ""
+    print(f"\033[35m{tag}\033[0m\033[90m{os.path.abspath(sql_path)}  ·  ran at {stamp}\033[0m")
 
     with open(sql_path, "r", encoding="utf-8") as fh:
         sql = fh.read()
@@ -70,16 +71,19 @@ def run_once(con, sql_path: str) -> None:
             break
 
 
-def watch(sql_path: str = "query.sql", db_path: str = core.DEFAULT_DB,
-          poll: float = 0.4) -> None:
+def watch(sql_path: str | None = None, db_path: str = core.DEFAULT_DB,
+          dialect: dialects.Dialect | None = None, poll: float = 0.4) -> None:
     """Watch sql_path and re-run on every save. Ctrl-C to quit."""
+    dial = dialect or dialects.DIALECTS[dialects.DEFAULT_DIALECT]
+    sql_path = sql_path or dial.scratch
+
     # make sure the file exists so the user has something to edit
     if not os.path.exists(sql_path):
         with open(sql_path, "w", encoding="utf-8") as fh:
-            fh.write("-- Write SQL here and save. Results appear in the watcher.\n"
-                     "-- Try:\nSELECT 'hello, SQL' AS greeting;\n")
+            fh.write(f"-- {dial.title} scratch pad. Write SQL, save, see results.\n"
+                     "SELECT 'hello, SQL' AS greeting;\n")
 
-    con = core.connect(db_path)
+    con = core.connect(db_path, prelude=dial.prelude)
     last_mtime = -1.0
 
     try:
@@ -92,10 +96,10 @@ def watch(sql_path: str = "query.sql", db_path: str = core.DEFAULT_DB,
             if mtime != last_mtime:
                 last_mtime = mtime
                 try:
-                    run_once(con, sql_path)
+                    run_once(con, sql_path, dial.title)
                 except Exception as exc:  # noqa: BLE001
                     print(f"\n\033[31mUnexpected error:\033[0m {exc}")
-                print("\n\033[90mWatching for changes… (edit + save query.sql, "
+                print(f"\n\033[90mWatching for changes… (edit + save {sql_path}, "
                       "Ctrl-C to quit)\033[0m")
             time.sleep(poll)
     except KeyboardInterrupt:

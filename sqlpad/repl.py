@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import os
 
-from . import core, render
+from . import core, dialects, render
 
 # prompt_toolkit / pygments are part of Anaconda; degrade gracefully if absent.
 try:
@@ -30,6 +30,8 @@ Meta-commands:
   .schema [table]       show columns for a table (or all tables)
   .import <csv> <table> load a CSV file into a table
   .read <file.sql>      run all statements from a .sql file
+  .dialect [name]       show the dialect cheat-sheet, or switch dialect
+                        (name = standard | mysql | bigquery)
   .width <n>            set max column width (default 40)
   .quit / .exit         leave
 
@@ -57,8 +59,9 @@ def _run_sql(con, sql: str, max_width: int) -> None:
             break
 
 
-def _handle_meta(con, line: str, state: dict) -> bool:
+def _handle_meta(line: str, state: dict) -> bool:
     """Return True if the app should keep running, False to quit."""
+    con = state["con"]
     parts = line.strip().split()
     cmd = parts[0].lower()
     args = parts[1:]
@@ -98,6 +101,23 @@ def _handle_meta(con, line: str, state: dict) -> bool:
         else:
             with open(args[0], "r", encoding="utf-8") as fh:
                 _run_sql(con, fh.read(), state["width"])
+    elif cmd == ".dialect":
+        if not args:
+            print(f"\033[35mcurrent: {state['dialect'].title}\033[0m\n")
+            print(state["dialect"].cheatsheet)
+        else:
+            try:
+                new = dialects.resolve(args[0])
+            except ValueError as exc:
+                print(f"\033[31m✗ {exc}\033[0m")
+                return True
+            # reconnect so the previous dialect's TEMP macros are cleared;
+            # persisted tables live in the db file and survive.
+            con.close()
+            state["con"] = core.connect(state["db_path"], prelude=new.prelude)
+            state["dialect"] = new
+            print(f"\033[32m✓ switched to {new.title}\033[0m "
+                  f"(.dialect to see its cheat-sheet)")
     elif cmd == ".width":
         if args and args[0].isdigit():
             state["width"] = int(args[0])
@@ -132,12 +152,15 @@ def _make_session(history_path: str):
     )
 
 
-def repl(db_path: str = core.DEFAULT_DB) -> None:
-    con = core.connect(db_path)
-    state = {"width": 40}
+def repl(db_path: str = core.DEFAULT_DB,
+         dialect: dialects.Dialect | None = None) -> None:
+    dial = dialect or dialects.DIALECTS[dialects.DEFAULT_DIALECT]
+    con = core.connect(db_path, prelude=dial.prelude)
+    state = {"width": 40, "con": con, "db_path": db_path, "dialect": dial}
     tables = core.list_tables(con)
 
-    print("SQLPad REPL — DuckDB.  Type .help for commands, .quit to leave.")
+    print(f"SQLPad REPL — \033[35m{dial.title}\033[0m on DuckDB.  "
+          ".help for commands, .quit to leave.")
     print(f"db: {os.path.abspath(db_path)}")
     if tables:
         print("tables: " + ", ".join(tables))
@@ -154,11 +177,12 @@ def repl(db_path: str = core.DEFAULT_DB) -> None:
 
     try:
         while True:
+            prompt = state["dialect"].prompt
             try:
                 if session is not None:
-                    line = session.prompt("sql> ")
+                    line = session.prompt(prompt)
                 else:
-                    line = input("sql> ")
+                    line = input(prompt)
             except EOFError:
                 break
 
@@ -167,13 +191,13 @@ def repl(db_path: str = core.DEFAULT_DB) -> None:
                 continue
 
             if stripped.startswith("."):
-                if not _handle_meta(con, stripped, state):
+                if not _handle_meta(stripped, state):
                     break
                 continue
 
-            _run_sql(con, line, state["width"])
+            _run_sql(state["con"], line, state["width"])
     except KeyboardInterrupt:
         pass
     finally:
-        con.close()
+        state["con"].close()
         print("\nbye.")
