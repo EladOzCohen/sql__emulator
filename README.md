@@ -43,9 +43,21 @@ switching never pollutes your saved tables or the other dialect.
 
 ---
 
-## Two ways to work
+## Three ways to work
 
-### 1. Live `.sql` file watcher  ← the fix for your debugging pain
+### 1. Native IDE (PyQt5)  ← the comfortable one
+
+Double-click **`ide.bat`** (or run `sqlpad ide`). A small native window: write
+SQL in the top editor with syntax highlighting, press **Ctrl+Enter** to run.
+
+- **Ctrl+Enter** runs the selection, or the statement under the cursor.
+- **Ctrl+Shift+Enter** runs the whole editor.
+- Left panel lists your tables — double-click one to preview its first 100 rows.
+- Toolbar: dialect switcher, Open/Save `.sql`, Export results to CSV.
+
+Same `practice.duckdb`, so every table you imported is already there.
+
+### 2. Live `.sql` file watcher
 
 Double-click **`watch.bat`** (or run `sqlpad watch`). It watches
 [`query.sql`](query.sql). Open that file in any editor, write SQL, hit **save**,
@@ -57,7 +69,7 @@ No quotes. No backslashes. No wrapping it in a function. Just SQL in a file.
 edit query.sql  ──save──►  watcher re-runs  ──►  formatted tables appear
 ```
 
-### 2. Interactive REPL
+### 3. Interactive REPL
 
 Double-click **`repl.bat`** (or run `sqlpad repl`). A prompt with command
 history, SQL syntax highlighting, and multi-line editing (like the mysql
@@ -125,6 +137,7 @@ helper tables (`DEPT`, `T1`, `T10`, `T100`, `T500`) any time with:
 ## Command reference
 
 ```bash
+sqlpad ide                  # native PyQt5 IDE (editor + results grid)
 sqlpad watch [file.sql]     # live file runner (default; file defaults to query.sql)
 sqlpad repl                 # interactive prompt
 sqlpad import <file> <table> [--sheet N]  # load a CSV or Excel (.xlsx) file

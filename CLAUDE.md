@@ -20,8 +20,9 @@ formatted results, with no servers and no installs.
 - Python is **Anaconda, NOT on PATH**: `C:\Users\eladoc\AppData\Local\anaconda3\python.exe`
   (Python 3.13). `python`/`py` fail in the shell — always use the full path.
 - Preinstalled and relied on: `duckdb` 1.5.5, `prompt_toolkit` 3.0.52, `pygments`,
-  `pandas`, stdlib `sqlite3`. **Do not add dependencies** that aren't already in
-  Anaconda — the whole point is zero installs. No network either.
+  `pandas` (+`openpyxl` for Excel import), `PyQt5` (the IDE), stdlib `sqlite3`.
+  **Do not add dependencies** that aren't already in Anaconda — the whole point
+  is zero installs. No network either.
 - Platform: Windows 11. Shell for the user is PowerShell; `.bat` launchers wrap
   the Anaconda python path defensively.
 
@@ -40,12 +41,14 @@ formatted results, with no servers and no installs.
 
 ```bash
 # via launchers (double-click on Windows):
+ide.bat          # native PyQt5 IDE (uses pythonw; optional arg: a dialect)
 watch.bat        # menu -> live .sql watcher
 repl.bat         # menu -> interactive REPL
 bigquery.bat     # watcher straight in BigQuery mode
 
 # via CLI (use the full python path on this machine):
 python -m sqlpad [-d standard|mysql|bigquery] [--db FILE] <command>
+#   ide                   native PyQt5 IDE (editor + results grid)
 #   watch [file.sql]      live file runner (default; file defaults per dialect)
 #   repl                  interactive prompt
 #   import <file> <table> [--sheet N]   load a CSV or Excel (.xlsx) file
@@ -63,9 +66,13 @@ sqlpad/
   __main__.py   CLI dispatch; --dialect flag + interactive entry menu
   core.py       connect(db, prelude), run_statement -> Result, import_file (CSV+Excel), list_tables
   dialects.py   Dialect dataclass + registry (standard/mysql/bigquery), resolve()
-  render.py     split_statements() (quote/comment-aware), render_table() box output
+  render.py     iter_statements()/split_statements()/statement_at() (quote/comment-aware),
+                render_table() box output
   watch.py      poll scratch file mtime (0.4s), re-run whole file, print results
   repl.py       prompt_toolkit prompt, Enter submits on ';' , meta-commands
+  ide.py        PyQt5 IDE: editor + SqlHighlighter, results grid, table list,
+                dialect combo, open/save .sql, CSV export; Ctrl+Enter = run
+                stmt-at-cursor/selection, Ctrl+Shift+Enter = run all
 query.sql           standard scratch file
 query_mysql.sql     mysql scratch file
 query_bigquery.sql  bigquery scratch file
