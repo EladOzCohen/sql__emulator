@@ -85,6 +85,55 @@ def import_csv(
     return int(count)
 
 
+def import_excel(
+    con: duckdb.DuckDBPyConnection,
+    xlsx_path: str,
+    table: str,
+    sheet: int | str = 0,
+    replace: bool = True,
+) -> int:
+    """Load one sheet of an Excel file into a persisted table.
+
+    Uses pandas (+openpyxl) so it works fully offline — no DuckDB extension
+    download needed. `sheet` is a 0-based index or a sheet name.
+    """
+    if not os.path.exists(xlsx_path):
+        raise FileNotFoundError(xlsx_path)
+    import pandas as pd  # lazy: keeps watcher/REPL startup light
+
+    df = pd.read_excel(xlsx_path, sheet_name=sheet)
+    verb = "CREATE OR REPLACE TABLE" if replace else "CREATE TABLE IF NOT EXISTS"
+    con.register("__sqlpad_import_df", df)
+    try:
+        con.execute(f"{verb} {table} AS SELECT * FROM __sqlpad_import_df")
+    finally:
+        con.unregister("__sqlpad_import_df")
+    (count,) = con.execute(f"SELECT count(*) FROM {table}").fetchone()
+    return int(count)
+
+
+_EXCEL_EXT = {".xlsx", ".xlsm", ".xls", ".xlsb"}
+_CSV_EXT = {".csv", ".tsv", ".txt", ""}
+
+
+def import_file(
+    con: duckdb.DuckDBPyConnection,
+    path: str,
+    table: str,
+    sheet: int | str = 0,
+    replace: bool = True,
+) -> int:
+    """Import a CSV or Excel file into a table, dispatching on file extension."""
+    ext = os.path.splitext(path)[1].lower()
+    if ext in _EXCEL_EXT:
+        return import_excel(con, path, table, sheet=sheet, replace=replace)
+    if ext in _CSV_EXT:
+        return import_csv(con, path, table, replace=replace)
+    raise ValueError(
+        f"unsupported file type '{ext}'. Use a CSV (.csv/.tsv) or Excel (.xlsx) file."
+    )
+
+
 def list_tables(con: duckdb.DuckDBPyConnection) -> list[str]:
     rows = con.execute("SHOW TABLES").fetchall()
     return [r[0] for r in rows]
