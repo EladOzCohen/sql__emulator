@@ -11,48 +11,45 @@ from typing import Any, Sequence
 # --------------------------------------------------------------------------- #
 #  SQL statement splitting
 # --------------------------------------------------------------------------- #
-def split_statements(sql: str) -> list[str]:
-    """Split a SQL script into individual statements on top-level ';'.
+def iter_statements(sql: str):
+    """Yield `(text, start, end)` for each top-level statement.
 
-    Respects single quotes, double quotes, backticks, line comments (--) and
-    block comments (/* */) so semicolons inside those are not treated as
-    separators. This is not a full SQL parser, but it handles everything you
-    hit while practising.
+    `text` is the stripped statement; `start`/`end` are character offsets into
+    `sql` spanning the raw statement (excluding the trailing ';'). Respects
+    single/double quotes, backticks, line comments (--) and block comments
+    (/* */) so semicolons inside those don't split. Not a full parser, but it
+    handles everything you hit while practising.
     """
-    statements: list[str] = []
-    buf: list[str] = []
     i = 0
     n = len(sql)
     quote: str | None = None          # current string/identifier delimiter
     in_line_comment = False
     in_block_comment = False
+    buf_start: int | None = None      # index where the current statement began
+
+    def begin(idx: int) -> None:
+        nonlocal buf_start
+        if buf_start is None:
+            buf_start = idx
 
     while i < n:
         ch = sql[i]
         nxt = sql[i + 1] if i + 1 < n else ""
 
         if in_line_comment:
-            buf.append(ch)
             if ch == "\n":
                 in_line_comment = False
             i += 1
             continue
-
         if in_block_comment:
-            buf.append(ch)
             if ch == "*" and nxt == "/":
-                buf.append(nxt)
                 i += 2
                 in_block_comment = False
                 continue
             i += 1
             continue
-
         if quote:
-            buf.append(ch)
-            # handle doubled quote escape ('' or "")
-            if ch == quote and nxt == quote:
-                buf.append(nxt)
+            if ch == quote and nxt == quote:   # doubled-quote escape
                 i += 2
                 continue
             if ch == quote:
@@ -62,36 +59,58 @@ def split_statements(sql: str) -> list[str]:
 
         # not inside quote/comment
         if ch == "-" and nxt == "-":
+            begin(i)
             in_line_comment = True
-            buf.append(ch)
             i += 1
             continue
         if ch == "/" and nxt == "*":
+            begin(i)
             in_block_comment = True
-            buf.append(ch)
-            buf.append(nxt)
             i += 2
             continue
         if ch in ("'", '"', "`"):
+            begin(i)
             quote = ch
-            buf.append(ch)
             i += 1
             continue
         if ch == ";":
-            stmt = "".join(buf).strip()
-            if stmt:
-                statements.append(stmt)
-            buf = []
+            if buf_start is not None:
+                text = sql[buf_start:i].strip()
+                if text:
+                    yield (text, buf_start, i)
+                buf_start = None
             i += 1
             continue
-
-        buf.append(ch)
+        if not ch.isspace():
+            begin(i)
         i += 1
 
-    tail = "".join(buf).strip()
-    if tail:
-        statements.append(tail)
-    return statements
+    if buf_start is not None:
+        text = sql[buf_start:n].strip()
+        if text:
+            yield (text, buf_start, n)
+
+
+def split_statements(sql: str) -> list[str]:
+    """Split a SQL script into individual statements on top-level ';'."""
+    return [text for text, _start, _end in iter_statements(sql)]
+
+
+def statement_at(sql: str, pos: int) -> str | None:
+    """Return the statement the cursor at `pos` is in.
+
+    Falls back to the last statement starting before `pos`, then the first.
+    """
+    spans = list(iter_statements(sql))
+    if not spans:
+        return None
+    chosen: str | None = None
+    for text, start, end in spans:
+        if start <= pos <= end:
+            return text
+        if start <= pos:
+            chosen = text
+    return chosen if chosen is not None else spans[0][0]
 
 
 def strip_comments_head(stmt: str) -> str:

@@ -61,6 +61,8 @@ def main(argv: list[str] | None = None) -> int:
 
     sub.add_parser("repl", help="interactive SQL prompt")
 
+    sub.add_parser("ide", help="native PyQt5 SQL IDE (editor + results grid)")
+
     p_import = sub.add_parser("import", help="load a CSV or Excel file into a table")
     p_import.add_argument("file")
     p_import.add_argument("table")
@@ -85,6 +87,11 @@ def main(argv: list[str] | None = None) -> int:
             dial = _resolve_dialect(args.dialect, interactive_ok=True)
             repl_mod.repl(db_path=args.db, dialect=dial)
             return 0
+
+        if cmd == "ide":
+            from . import ide as ide_mod  # lazy: only import PyQt5 when needed
+            dial = _resolve_dialect(args.dialect, interactive_ok=False)
+            return ide_mod.run_ide(db_path=args.db, dialect=dial)
 
         # non-interactive commands: dialect only matters for its prelude macros
         dial = _resolve_dialect(args.dialect, interactive_ok=False)
