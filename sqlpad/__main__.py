@@ -61,9 +61,11 @@ def main(argv: list[str] | None = None) -> int:
 
     sub.add_parser("repl", help="interactive SQL prompt")
 
-    p_import = sub.add_parser("import", help="load a CSV into a table")
-    p_import.add_argument("csv")
+    p_import = sub.add_parser("import", help="load a CSV or Excel file into a table")
+    p_import.add_argument("file")
     p_import.add_argument("table")
+    p_import.add_argument("--sheet", default="0",
+                          help="Excel sheet index (0-based) or name; default 0")
 
     p_run = sub.add_parser("run", help="run one query and print results")
     p_run.add_argument("sql")
@@ -90,7 +92,8 @@ def main(argv: list[str] | None = None) -> int:
         if cmd == "import":
             con = core.connect(args.db, prelude=dial.prelude)
             try:
-                n = core.import_csv(con, args.csv, args.table)
+                sheet = int(args.sheet) if args.sheet.isdigit() else args.sheet
+                n = core.import_file(con, args.file, args.table, sheet=sheet)
                 print(f"loaded {n} rows into '{args.table}' (db: {args.db})")
             finally:
                 con.close()

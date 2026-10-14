@@ -28,7 +28,8 @@ Meta-commands:
   .help                 show this help
   .tables               list tables
   .schema [table]       show columns for a table (or all tables)
-  .import <csv> <table> load a CSV file into a table
+  .import <file> <table> [sheet]
+                        load a CSV or Excel (.xlsx) file into a table
   .read <file.sql>      run all statements from a .sql file
   .dialect [name]       show the dialect cheat-sheet, or switch dialect
                         (name = standard | mysql | bigquery)
@@ -85,11 +86,14 @@ def _handle_meta(line: str, state: dict) -> bool:
             res = core.table_schema(con, t)
             _print_result(res, state["width"])
     elif cmd == ".import":
-        if len(args) != 2:
-            print("usage: .import <csv_path> <table_name>")
+        if len(args) not in (2, 3):
+            print("usage: .import <csv_or_xlsx_path> <table_name> [sheet]")
         else:
+            sheet: int | str = 0
+            if len(args) == 3:
+                sheet = int(args[2]) if args[2].isdigit() else args[2]
             try:
-                n = core.import_csv(con, args[0], args[1])
+                n = core.import_file(con, args[0], args[1], sheet=sheet)
                 print(f"\033[32m✓ loaded {n} rows into '{args[1]}'\033[0m")
             except Exception as exc:  # noqa: BLE001
                 print(f"\033[31m✗ {exc}\033[0m")

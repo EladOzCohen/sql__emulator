@@ -74,6 +74,10 @@ sql> SELECT city, COUNT(*)
 
 ## Getting data in
 
+> ⚠️ **Dropping a file into `data/` does NOT create a table.** A table exists
+> only after you *import* it. Until then `SELECT * FROM emp` will say the table
+> isn't found.
+
 **From a CSV** — DuckDB sniffs delimiter, header and column types for you:
 
 ```bash
@@ -85,6 +89,14 @@ sqlpad import data/customers.csv customers
 CREATE OR REPLACE TABLE customers AS
     SELECT * FROM read_csv_auto('data/customers.csv', header = true);
 ```
+
+**From Excel (.xlsx)** — same command; it uses pandas under the hood (offline):
+
+```bash
+sqlpad import data/emp.xlsx emp              # first sheet
+sqlpad import data/emp.xlsx emp --sheet 1    # 2nd sheet, or --sheet "Sheet2"
+```
+…or inside the REPL: `.import data/emp.xlsx emp [sheet]`
 
 **Made-up data by hand** — just write normal DDL/DML; it persists:
 
@@ -98,6 +110,16 @@ Two ready-made sample tables ship in [`data/`](data/) (`customers`, `orders`)
 so you can practice JOINs and window functions on day one — see
 [`query.sql`](query.sql).
 
+**SQL Cookbook tables** — to follow Anthony Molinaro's *SQL Cookbook*, load its
+helper tables (`DEPT`, `T1`, `T10`, `T100`, `T500`) any time with:
+
+```
+.read data/seed_sqlcookbook.sql
+```
+
+(`EMP` is the book's employee table — import it from `data/emp.xlsx`:
+`.import data/emp.xlsx emp`. `EMP.DEPTNO` joins to `DEPT.DEPTNO`.)
+
 ---
 
 ## Command reference
@@ -105,7 +127,7 @@ so you can practice JOINs and window functions on day one — see
 ```bash
 sqlpad watch [file.sql]     # live file runner (default; file defaults to query.sql)
 sqlpad repl                 # interactive prompt
-sqlpad import <csv> <table> # load a CSV into a table
+sqlpad import <file> <table> [--sheet N]  # load a CSV or Excel (.xlsx) file
 sqlpad run "<sql>"          # run one query, print, exit
 sqlpad tables               # list tables
 ```
@@ -118,7 +140,7 @@ and `--db <file>` (or set `$SQLPAD_DB`).
 .help                 show help
 .tables               list tables
 .schema [table]       show columns
-.import <csv> <table> load a CSV
+.import <file> <table> [sheet]   load a CSV or Excel (.xlsx) file
 .read <file.sql>      run a .sql file
 .dialect [name]       show cheat-sheet, or switch dialect on the fly
 .width <n>            max column width (default 40)
