@@ -84,6 +84,7 @@ def watch(sql_path: str | None = None, db_path: str = core.DEFAULT_DB,
                      "SELECT 'hello, SQL' AS greeting;\n")
 
     con = core.connect(db_path, prelude=dial.prelude)
+    core.load_sample_data(con)
     last_mtime = -1.0
 
     try:

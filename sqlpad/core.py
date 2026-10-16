@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+import re
 import time
 from dataclasses import dataclass
 from typing import Any
@@ -132,6 +133,43 @@ def import_file(
     raise ValueError(
         f"unsupported file type '{ext}'. Use a CSV (.csv/.tsv) or Excel (.xlsx) file."
     )
+
+
+DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
+
+
+def load_sample_data(con: duckdb.DuckDBPyConnection, data_dir: str = DATA_DIR) -> list[str]:
+    """Load the bundled practice tables from `data/` that are not in the db yet.
+
+    practice.duckdb is gitignored, so a fresh checkout (or another PC) starts
+    empty. Each CSV/Excel file becomes a table named after the file
+    (emp.xlsx -> emp); each seed_*.sql script runs only if none of the tables
+    it creates exist. Existing tables are never touched. Returns what loaded.
+    """
+    from .render import split_statements  # local: keep core importable alone
+
+    if not os.path.isdir(data_dir):
+        return []
+    existing = {t.lower() for t in list_tables(con)}
+    loaded: list[str] = []
+    for name in sorted(os.listdir(data_dir)):
+        path = os.path.join(data_dir, name)
+        stem, ext = os.path.splitext(name)
+        ext = ext.lower()
+        if ext in _EXCEL_EXT | {".csv", ".tsv"}:
+            if stem.lower() not in existing:
+                import_file(con, path, stem)
+                loaded.append(stem)
+        elif ext == ".sql" and stem.startswith("seed_"):
+            with open(path, encoding="utf-8") as fh:
+                script = fh.read()
+            creates = {m.lower() for m in re.findall(
+                r"CREATE\s+(?:OR\s+REPLACE\s+)?TABLE\s+(\w+)", script, re.IGNORECASE)}
+            if creates and not creates & existing:
+                for stmt in split_statements(script):
+                    con.execute(stmt)
+                loaded.extend(sorted(creates))
+    return loaded
 
 
 def list_tables(con: duckdb.DuckDBPyConnection) -> list[str]:

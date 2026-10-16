@@ -160,6 +160,7 @@ def repl(db_path: str = core.DEFAULT_DB,
          dialect: dialects.Dialect | None = None) -> None:
     dial = dialect or dialects.DIALECTS[dialects.DEFAULT_DIALECT]
     con = core.connect(db_path, prelude=dial.prelude)
+    core.load_sample_data(con)
     state = {"width": 40, "con": con, "db_path": db_path, "dialect": dial}
     tables = core.list_tables(con)
 
