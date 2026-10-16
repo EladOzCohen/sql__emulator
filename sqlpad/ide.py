@@ -121,6 +121,7 @@ class IdeWindow(QMainWindow):
         self.db_path = db_path
         self.dialect = dialect
         self.con = core.connect(db_path, prelude=dialect.prelude)
+        loaded = core.load_sample_data(self.con)
         self.current_file: str | None = None
         self.last_result: tuple[list[str], list] | None = None
 
@@ -130,7 +131,7 @@ class IdeWindow(QMainWindow):
         self._build_body()
         self._build_shortcuts()
         self.refresh_tables()
-        self.set_status("Ready")
+        self.set_status(f"Ready — loaded sample tables: {', '.join(loaded)}" if loaded else "Ready")
 
     # ---- UI construction -------------------------------------------------- #
     def _build_toolbar(self) -> None:

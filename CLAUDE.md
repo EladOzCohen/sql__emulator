@@ -119,8 +119,15 @@ shipping (several BigQuery functions take bare keyword args that won't parse).
 
 ## Gotchas learned
 
-- **A file in `data/` is not a table** — it must be `.import`ed first, or
-  `SELECT` won't find it. Common user confusion.
+- **A file in `data/` is not a table** until loaded. `practice.duckdb` is
+  gitignored, so a new PC starts empty. `core.load_sample_data()` (called by
+  ide/watch/repl on startup) imports every CSV/Excel in `data/` as a table
+  named after the file, and runs `seed_*.sql` if none of its tables exist.
+  It never overwrites existing tables. Other files still need `.import`.
+- Running on a second PC (user `elado`, Anaconda at `%USERPROFILE%\anaconda3`):
+  `duckdb` was not preinstalled there and had to be `pip install`ed.
+- DuckDB locks the db file: while the IDE is open, CLI commands on the same
+  `practice.duckdb` fail with "being used by another process".
 - Import dispatches on extension (`core.import_file`): CSV/TSV → DuckDB
   `read_csv_auto`; Excel `.xlsx/.xlsm/.xls/.xlsb` → pandas `read_excel` (lazy
   import, offline, needs openpyxl which is installed) registered into DuckDB.
