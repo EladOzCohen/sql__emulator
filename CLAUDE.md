@@ -182,6 +182,16 @@ shipping (several BigQuery functions take bare keyword args that won't parse).
 - **A loose file in `data/` is not a table** — only files inside a
   `data/<folder>/` are auto-loaded; anything else must be `.import`ed (into the
   active database). Common user confusion.
+- **Fresh clone / second PC:** `practice.duckdb` and `databases/` are gitignored
+  but the CSVs under `data/<folder>/` are committed, so the first start rebuilds
+  every database via `catalog.setup()`. This replaced the short-lived
+  `core.load_sample_data()` (commit `2a6cab3`, which imported loose `data/` files
+  and `seed_*.sql` into the default db); that mechanism and its seed files are gone.
+- Running on a second PC (user `elado`, Anaconda at `%USERPROFILE%\anaconda3`):
+  `duckdb` was not preinstalled there and had to be `pip install`ed.
+- DuckDB locks the db file: while the IDE is open, CLI commands on the same
+  `practice.duckdb` (or any attached `databases/*.duckdb`) fail with "being used
+  by another process".
 - DuckDB infers an all-NULL column from CSV as VARCHAR (e.g. `emp_commission.comm`).
   No per-column type override exists yet (see backlog).
 - `USE x` returns a result with one `Success` column and no rows; `run_statement`
