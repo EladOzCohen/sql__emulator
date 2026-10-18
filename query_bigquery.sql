@@ -5,10 +5,9 @@
 -- │  cheat-sheet of what's native, what's emulated, and what differs.  │
 -- └──────────────────────────────────────────────────────────────────┘
 
-CREATE OR REPLACE TABLE customers AS
-    SELECT * FROM read_csv_auto('data/customers.csv', header = true);
-CREATE OR REPLACE TABLE orders AS
-    SELECT * FROM read_csv_auto('data/orders.csv', header = true);
+-- The sample tables live in the "shop" database (the folder data/shop/).
+-- In BigQuery terms a database here plays the role of a dataset.
+USE shop;
 
 -- Revenue by month: FORMAT_DATE + SAFE_DIVIDE (both from the BigQuery prelude),
 -- grouping by the SELECT alias (GoogleSQL style).

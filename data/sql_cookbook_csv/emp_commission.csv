@@ -1,0 +1,4 @@
+deptno,empno,ename,comm
+10,7782,CLARK,
+10,7839,KING,
+10,7934,MILLER,

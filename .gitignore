@@ -4,3 +4,6 @@ practice.duckdb
 .sqlpad_history
 __pycache__/
 *.pyc
+
+# generated databases (one DuckDB file per data/<folder>) and sync state
+databases/

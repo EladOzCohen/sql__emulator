@@ -2,9 +2,10 @@
 
 Top pane: write SQL. Ctrl+Enter runs the selection, or the statement under the
 cursor; Ctrl+Shift+Enter runs the whole editor. Results show in a grid below.
-Left: a live table browser. Toolbar: dialect switcher, open/save .sql, export
-results to CSV. Same DuckDB file (practice.duckdb) as the CLI, so every table
-you imported is here too.
+Left: a database browser (database -> tables -> columns). Every subfolder of
+data/ is a database; double-click one to make it the active database (same as
+`USE name;`). Toolbar: dialect switcher, open/save .sql, export results to CSV,
+Sync (load new/changed CSVs). Same DuckDB files as the CLI.
 """
 
 from __future__ import annotations
@@ -13,18 +14,19 @@ import csv
 import os
 import re
 
-from . import core, dialects, render
+from . import catalog, core, dialects, render
 
 try:
-    from PyQt5.QtCore import Qt
+    from PyQt5.QtCore import Qt, QUrl
     from PyQt5.QtGui import (
-        QColor, QFont, QKeySequence, QSyntaxHighlighter, QTextCharFormat,
+        QColor, QDesktopServices, QFont, QKeySequence, QSyntaxHighlighter,
+        QTextCharFormat,
     )
     from PyQt5.QtWidgets import (
         QAbstractItemView, QAction, QApplication, QComboBox, QFileDialog,
-        QHeaderView, QLabel, QListWidget, QMainWindow, QPlainTextEdit,
+        QHeaderView, QLabel, QMainWindow, QMenu, QMessageBox, QPlainTextEdit,
         QShortcut, QSplitter, QTableWidget, QTableWidgetItem, QToolBar,
-        QVBoxLayout, QWidget,
+        QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget,
     )
     _HAVE_QT = True
 except Exception:  # noqa: BLE001
@@ -92,7 +94,17 @@ class SqlHighlighter(QSyntaxHighlighter):
 # --------------------------------------------------------------------------- #
 #  Main window
 # --------------------------------------------------------------------------- #
-_STARTER = "-- Ctrl+Enter runs the statement under the cursor (or selection).\n-- Ctrl+Shift+Enter runs everything.\nSELECT * FROM dept;\n"
+_STARTER = (
+    "-- Ctrl+Enter runs the statement under the cursor (or selection).\n"
+    "-- Ctrl+Shift+Enter runs everything.\n"
+    "-- Double-click a database on the left to switch to it (or: USE <database>;)\n"
+    "SHOW TABLES;\n"
+)
+
+# tree item roles
+_ROLE = Qt.UserRole if _HAVE_QT else 0
+_ACTIVE_COLOR = "#4fc1ff"
+_MUTED_COLOR = "#8a8a8a"
 
 _QSS = """
 QMainWindow, QWidget { background:#1e1e1e; color:#d4d4d4; }
@@ -102,8 +114,14 @@ QToolBar { background:#252526; border:0; spacing:6px; padding:4px; }
 QToolBar QToolButton { color:#d4d4d4; padding:4px 8px; border-radius:4px; }
 QToolBar QToolButton:hover { background:#37373d; }
 QComboBox { background:#3c3c3c; color:#d4d4d4; padding:3px 6px; border-radius:4px; }
-QListWidget { background:#252526; color:#d4d4d4; border:0; }
-QListWidget::item:selected { background:#37373d; }
+QTreeWidget { background:#252526; color:#d4d4d4; border:0; outline:0; }
+QTreeWidget::item { padding:2px 0; }
+QTreeWidget::item:hover { background:#2a2d2e; }
+QTreeWidget::item:selected { background:#37373d; color:#ffffff; }
+QMenu { background:#252526; color:#d4d4d4; border:1px solid #3c3c3c; }
+QMenu::item { padding:5px 22px; }
+QMenu::item:selected { background:#37373d; }
+QMenu::separator { height:1px; background:#3c3c3c; margin:4px 0; }
 QTableWidget { background:#1e1e1e; color:#d4d4d4; gridline-color:#333;
                alternate-background-color:#262626;
                selection-background-color:#264f78; selection-color:#ffffff; }
@@ -112,6 +130,13 @@ QHeaderView::section { background:#2d2d30; color:#cccccc; padding:4px; border:0;
 QTableCornerButton::section { background:#2d2d30; border:0; }
 QLabel#status { color:#9cdcfe; padding:4px 8px; }
 QSplitter::handle { background:#333; }
+QScrollBar:vertical { background:#1e1e1e; width:12px; margin:0; }
+QScrollBar:horizontal { background:#1e1e1e; height:12px; margin:0; }
+QScrollBar::handle:vertical { background:#424242; min-height:28px; border-radius:4px; margin:2px; }
+QScrollBar::handle:horizontal { background:#424242; min-width:28px; border-radius:4px; margin:2px; }
+QScrollBar::handle:vertical:hover, QScrollBar::handle:horizontal:hover { background:#5a5a5a; }
+QScrollBar::add-line, QScrollBar::sub-line { width:0; height:0; }
+QScrollBar::add-page, QScrollBar::sub-page { background:none; }
 """
 
 
@@ -120,7 +145,8 @@ class IdeWindow(QMainWindow):
         super().__init__()
         self.db_path = db_path
         self.dialect = dialect
-        self.con = core.connect(db_path, prelude=dialect.prelude)
+        self.con, report = core.connect_ex(db_path, prelude=dialect.prelude)
+        self.active_db = catalog.current_database(self.con)
         self.current_file: str | None = None
         self.last_result: tuple[list[str], list] | None = None
 
@@ -129,8 +155,12 @@ class IdeWindow(QMainWindow):
         self._build_toolbar()
         self._build_body()
         self._build_shortcuts()
-        self.refresh_tables()
-        self.set_status("Ready")
+        self.refresh_tree()
+        self._update_db_label()
+        if report is not None and (report.loaded or report.created or report.errors):
+            self._show_sync_report(report)
+        else:
+            self.set_status("Ready")
 
     # ---- UI construction -------------------------------------------------- #
     def _build_toolbar(self) -> None:
@@ -143,9 +173,15 @@ class IdeWindow(QMainWindow):
         open_a = QAction("Open", self); open_a.triggered.connect(self.open_file)
         save_a = QAction("Save", self); save_a.triggered.connect(self.save_file)
         export = QAction("Export CSV", self); export.triggered.connect(self.export_csv)
-        refresh = QAction("↻ Tables", self); refresh.triggered.connect(self.refresh_tables)
-        for a in (run, run_all, open_a, save_a, export, refresh):
+        sync = QAction("⟳ Sync", self)
+        sync.setToolTip("Load new or changed CSV files from the data/ folders")
+        sync.triggered.connect(self.sync_databases)
+        for a in (run, run_all, open_a, save_a, export, sync):
             tb.addAction(a)
+        tb.addSeparator()
+
+        self.db_label = QLabel()
+        tb.addWidget(self.db_label)
         tb.addSeparator()
 
         tb.addWidget(QLabel(" Dialect: "))
@@ -158,8 +194,12 @@ class IdeWindow(QMainWindow):
         tb.addWidget(self.dialect_combo)
 
     def _build_body(self) -> None:
-        self.tables = QListWidget()
-        self.tables.itemDoubleClicked.connect(self.on_table_double)
+        self.tree = QTreeWidget()
+        self.tree.setHeaderHidden(True)
+        self.tree.setExpandsOnDoubleClick(False)
+        self.tree.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.tree.itemDoubleClicked.connect(self.on_tree_double)
+        self.tree.customContextMenuRequested.connect(self.on_tree_menu)
 
         self.editor = QPlainTextEdit()
         self.editor.setFont(QFont("Consolas", 12))
@@ -188,9 +228,9 @@ class IdeWindow(QMainWindow):
         vsplit.setSizes([380, 340])
 
         hsplit = QSplitter(Qt.Horizontal)
-        hsplit.addWidget(self.tables)
+        hsplit.addWidget(self.tree)
         hsplit.addWidget(vsplit)
-        hsplit.setSizes([200, 900])
+        hsplit.setSizes([240, 860])
         self.setCentralWidget(hsplit)
 
     def _build_shortcuts(self) -> None:
@@ -229,6 +269,7 @@ class IdeWindow(QMainWindow):
                 self._clear_table()
                 self.last_result = None
                 self.set_status(f"✗ {res.error}", error=True)
+                self._after_execute()   # earlier statements may have changed things
                 return
             if res.has_rows:
                 last = res
@@ -240,7 +281,7 @@ class IdeWindow(QMainWindow):
             self._clear_table()
             self.last_result = None
             self.set_status(f"OK · {total_ms:.1f} ms")
-        self.refresh_tables()  # DDL/DML may have changed the table list
+        self._after_execute()
 
     def _show_result(self, columns, rows, cap: int = 10000) -> None:
         shown = rows[:cap]
@@ -265,18 +306,164 @@ class IdeWindow(QMainWindow):
         self.table.setRowCount(0)
         self.table.setColumnCount(0)
 
-    def refresh_tables(self) -> None:
-        try:
-            names = core.list_tables(self.con)
-        except Exception:  # noqa: BLE001
-            names = []
-        self.tables.clear()
-        for name in names:
-            self.tables.addItem(name)
+    # ---- Databases tree --------------------------------------------------- #
+    def _after_execute(self) -> None:
+        """A statement may have run USE / DDL: pick up the active db, redraw tree."""
+        self._pick_up_active_db()
+        self.refresh_tree()
 
-    def on_table_double(self, item) -> None:
-        name = item.text()
-        self._execute(f"SELECT * FROM {name} LIMIT 100")
+    def _pick_up_active_db(self) -> None:
+        try:
+            cur = catalog.current_database(self.con)
+        except Exception:  # noqa: BLE001
+            return
+        if cur != self.active_db:
+            self.active_db = cur
+            catalog.remember_active(cur)
+            self._update_db_label()
+
+    def _update_db_label(self) -> None:
+        self.db_label.setText(
+            f" Database: <b style='color:{_ACTIVE_COLOR}'>{self.active_db}</b> ")
+
+    def refresh_tree(self) -> None:
+        """Rebuild database -> table -> column tree, keeping what was expanded."""
+        expanded: set[tuple] = set()
+        first_build = self.tree.topLevelItemCount() == 0
+        for i in range(self.tree.topLevelItemCount()):
+            db_item = self.tree.topLevelItem(i)
+            if db_item.isExpanded():
+                expanded.add((db_item.data(0, _ROLE)[1],))
+            for j in range(db_item.childCount()):
+                t_item = db_item.child(j)
+                if t_item.isExpanded():
+                    expanded.add(t_item.data(0, _ROLE)[1:4])
+
+        try:
+            infos = catalog.list_databases(self.con)
+            described = catalog.describe_all(self.con)
+        except Exception as exc:  # noqa: BLE001
+            self.set_status(f"cannot read databases: {exc}", error=True)
+            return
+
+        self.tree.clear()
+        bold = QFont(self.tree.font())
+        bold.setBold(True)
+        for info in infos:
+            tables = described.get(info.name, [])
+            is_active = info.name == self.active_db
+            db_item = QTreeWidgetItem([f"{info.name}  ({len(tables)})"])
+            db_item.setData(0, _ROLE, ("db", info.name))
+            if is_active:
+                db_item.setFont(0, bold)
+                db_item.setForeground(0, QColor(_ACTIVE_COLOR))
+            source = f"data/{info.folder.name}/" if info.folder else "default database (tables you create)"
+            db_item.setToolTip(0, f"{source}\nDouble-click to use · right-click for more")
+            self.tree.addTopLevelItem(db_item)
+
+            for schema, table, columns in tables:
+                label = table if schema == "main" else f"{schema}.{table}"
+                t_item = QTreeWidgetItem([label])
+                t_item.setData(0, _ROLE, ("table", info.name, schema, table))
+                db_item.addChild(t_item)
+                for col, dtype in columns:
+                    c_item = QTreeWidgetItem([f"{col}   {dtype}"])
+                    c_item.setData(0, _ROLE, ("column", info.name, schema, table, col))
+                    c_item.setForeground(0, QColor(_MUTED_COLOR))
+                    t_item.addChild(c_item)
+
+            if (info.name,) in expanded or (first_build and is_active):
+                db_item.setExpanded(True)
+            for j in range(db_item.childCount()):
+                t_item = db_item.child(j)
+                if t_item.data(0, _ROLE)[1:4] in expanded:
+                    t_item.setExpanded(True)
+
+    @staticmethod
+    def _qualified(db: str, schema: str, table: str) -> str:
+        return f"{catalog.qi(db)}.{catalog.qi(schema)}.{catalog.qi(table)}"
+
+    def on_tree_double(self, item, _column: int = 0) -> None:
+        data = item.data(0, _ROLE)
+        if not data:
+            return
+        if data[0] == "db":
+            self.switch_database(data[1])
+        elif data[0] == "table":
+            _kind, db, schema, table = data
+            self._execute(f"SELECT * FROM {self._qualified(db, schema, table)} LIMIT 100")
+        elif data[0] == "column":
+            self.editor.insertPlainText(data[4])
+            self.editor.setFocus()
+
+    def on_tree_menu(self, pos) -> None:
+        item = self.tree.itemAt(pos)
+        data = item.data(0, _ROLE) if item else None
+        if not data:
+            return
+        menu = QMenu(self)
+        if data[0] == "db":
+            name = data[1]
+            menu.addAction("Use this database", lambda: self.switch_database(name))
+            info = next((i for i in catalog.list_databases(self.con) if i.name == name), None)
+            if info is not None and info.folder is not None:
+                menu.addSeparator()
+                menu.addAction("Open data folder",
+                               lambda: QDesktopServices.openUrl(QUrl.fromLocalFile(str(info.folder))))
+                menu.addAction("Reset from CSV files…", lambda: self.reset_database(name))
+        elif data[0] == "table":
+            _kind, db, schema, table = data
+            q = self._qualified(db, schema, table)
+            menu.addAction("Preview (100 rows)", lambda: self._execute(f"SELECT * FROM {q} LIMIT 100"))
+            menu.addAction("Count rows", lambda: self._execute(f"SELECT COUNT(*) AS n FROM {q}"))
+            menu.addAction("Insert name into editor",
+                           lambda: (self.editor.insertPlainText(table), self.editor.setFocus()))
+        else:
+            return
+        menu.exec_(self.tree.viewport().mapToGlobal(pos))
+
+    def switch_database(self, name: str) -> None:
+        try:
+            catalog.use(self.con, name)
+        except Exception as exc:  # noqa: BLE001
+            self.set_status(f"✗ {str(exc).splitlines()[0]}", error=True)
+            return
+        self.active_db = name
+        self._update_db_label()
+        self.refresh_tree()
+        self.set_status(f"active database: {name}")
+
+    def _show_sync_report(self, report) -> None:
+        text = report.summary()
+        if report.errors:
+            text += " — " + report.errors[0]
+        self.set_status(text, error=bool(report.errors))
+
+    def sync_databases(self) -> None:
+        try:
+            report = catalog.sync(self.con)
+        except Exception as exc:  # noqa: BLE001
+            self.set_status(f"✗ sync failed: {exc}", error=True)
+            return
+        self._after_execute()
+        self._show_sync_report(report)
+
+    def reset_database(self, name: str) -> None:
+        answer = QMessageBox.warning(
+            self, "Reset database",
+            f"Reset '{name}' from its CSV files?\n\n"
+            "This discards ALL changes you made in this database (updates, deletes, "
+            "dropped or created tables) and reloads it exactly as the CSVs are.",
+            QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if answer != QMessageBox.Yes:
+            return
+        try:
+            report = catalog.reset(self.con, name)
+        except Exception as exc:  # noqa: BLE001
+            self.set_status(f"✗ {str(exc).splitlines()[0]}", error=True)
+            return
+        self._after_execute()
+        self._show_sync_report(report)
 
     def on_dialect_changed(self, index: int) -> None:
         key = self.dialect_combo.itemData(index)
@@ -287,7 +474,9 @@ class IdeWindow(QMainWindow):
             pass
         self.con = core.connect(self.db_path, prelude=new.prelude)
         self.dialect = new
-        self.refresh_tables()
+        self.active_db = catalog.current_database(self.con)
+        self._update_db_label()
+        self.refresh_tree()
         self.set_status(f"dialect: {new.title}")
 
     def open_file(self) -> None:

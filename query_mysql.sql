@@ -4,10 +4,9 @@
 -- │  cheat-sheet of differences (backticks, LIMIT offset, etc.).       │
 -- └──────────────────────────────────────────────────────────────────┘
 
-CREATE OR REPLACE TABLE customers AS
-    SELECT * FROM read_csv_auto('data/customers.csv', header = true);
-CREATE OR REPLACE TABLE orders AS
-    SELECT * FROM read_csv_auto('data/orders.csv', header = true);
+-- The sample tables live in the "shop" database (the folder data/shop/),
+-- like a MySQL `USE shop;`.
+USE shop;
 
 -- DATE_FORMAT + IFNULL (from the MySQL prelude), revenue per month:
 SELECT

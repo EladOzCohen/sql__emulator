@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import os
 
-from . import core, dialects, render
+from . import catalog, core, dialects, render
 
 # prompt_toolkit / pygments are part of Anaconda; degrade gracefully if absent.
 try:
@@ -26,7 +26,11 @@ except Exception:  # noqa: BLE001
 HELP = """
 Meta-commands:
   .help                 show this help
-  .tables               list tables
+  .databases            list databases (a database = a folder under data/)
+  .use <db>             switch the active database (same as: USE <db>;)
+  .sync                 load new/changed CSVs from data/ right now
+  .reset <db>           rebuild a database from its CSVs (discards changes)
+  .tables               list tables in the active database
   .schema [table]       show columns for a table (or all tables)
   .import <file> <table> [sheet]
                         load a CSV or Excel (.xlsx) file into a table
@@ -60,6 +64,34 @@ def _run_sql(con, sql: str, max_width: int) -> None:
             break
 
 
+def _track_db(state: dict) -> None:
+    """Pick up a database switch (e.g. a typed `USE x;`) and remember it."""
+    try:
+        cur = catalog.current_database(state["con"])
+    except Exception:  # noqa: BLE001
+        return
+    if cur != state["db"]:
+        state["db"] = cur
+        catalog.remember_active(cur)
+
+
+def print_sync(report: "catalog.SyncReport") -> None:
+    print(f"\033[32m✓ {report.summary()}\033[0m")
+    for err in report.errors:
+        print(f"\033[31m  ✗ {err}\033[0m")
+
+
+def show_databases(con) -> None:
+    tree = catalog.describe_all(con)
+    current = catalog.current_database(con)
+    rows = []
+    for info in catalog.list_databases(con):
+        n_tables = len(tree.get(info.name, []))
+        source = f"data/{info.folder.name}/" if info.folder else "(default — tables you create)"
+        rows.append(("*" if info.name == current else "", info.name, n_tables, source))
+    print(render.render_table(["", "database", "tables", "source"], rows))
+
+
 def _handle_meta(line: str, state: dict) -> bool:
     """Return True if the app should keep running, False to quit."""
     con = state["con"]
@@ -71,12 +103,41 @@ def _handle_meta(line: str, state: dict) -> bool:
         return False
     if cmd == ".help":
         print(HELP)
+    elif cmd in (".databases", ".dbs"):
+        show_databases(con)
+    elif cmd == ".use":
+        if len(args) != 1:
+            print("usage: .use <database>   (see .databases)")
+        else:
+            try:
+                catalog.use(con, args[0])
+                state["db"] = args[0]
+                print(f"\033[32m✓ using database '{args[0]}'\033[0m")
+            except Exception as exc:  # noqa: BLE001
+                print(f"\033[31m✗ {str(exc).splitlines()[0]}\033[0m")
+    elif cmd == ".sync":
+        print_sync(catalog.sync(con))
+    elif cmd == ".reset":
+        if len(args) != 1:
+            print("usage: .reset <database>   (rebuilds it from its CSVs)")
+        else:
+            name = args[0]
+            answer = input(f"This DISCARDS all changes in '{name}' and reloads its CSVs. "
+                           f"Type the database name to confirm: ").strip()
+            if answer != name:
+                print("cancelled.")
+            else:
+                try:
+                    print_sync(catalog.reset(con, name))
+                except Exception as exc:  # noqa: BLE001
+                    print(f"\033[31m✗ {str(exc).splitlines()[0]}\033[0m")
     elif cmd == ".tables":
         tables = core.list_tables(con)
         if tables:
+            print(f"tables in '{state['db']}':")
             print(render.render_table(["table"], [(t,) for t in tables]))
         else:
-            print("(no tables yet — .import a CSV or CREATE one)")
+            print(f"(no tables in '{state['db']}' — try .databases, or .import / CREATE one)")
     elif cmd == ".schema":
         targets = args if args else core.list_tables(con)
         if not targets:
@@ -119,6 +180,7 @@ def _handle_meta(line: str, state: dict) -> bool:
             # persisted tables live in the db file and survive.
             con.close()
             state["con"] = core.connect(state["db_path"], prelude=new.prelude)
+            state["db"] = catalog.current_database(state["con"])
             state["dialect"] = new
             print(f"\033[32m✓ switched to {new.title}\033[0m "
                   f"(.dialect to see its cheat-sheet)")
@@ -159,13 +221,17 @@ def _make_session(history_path: str):
 def repl(db_path: str = core.DEFAULT_DB,
          dialect: dialects.Dialect | None = None) -> None:
     dial = dialect or dialects.DIALECTS[dialects.DEFAULT_DIALECT]
-    con = core.connect(db_path, prelude=dial.prelude)
-    state = {"width": 40, "con": con, "db_path": db_path, "dialect": dial}
+    con, report = core.connect_ex(db_path, prelude=dial.prelude)
+    state = {"width": 40, "con": con, "db_path": db_path, "dialect": dial,
+             "db": catalog.current_database(con)}
     tables = core.list_tables(con)
 
     print(f"SQLPad REPL — \033[35m{dial.title}\033[0m on DuckDB.  "
           ".help for commands, .quit to leave.")
-    print(f"db: {os.path.abspath(db_path)}")
+    if report is not None and (report.loaded or report.created or report.errors):
+        print_sync(report)
+    print(f"active database: \033[36m{state['db']}\033[0m  "
+          "(.databases to list, .use <db> to switch)")
     if tables:
         print("tables: " + ", ".join(tables))
     print()
@@ -181,7 +247,7 @@ def repl(db_path: str = core.DEFAULT_DB,
 
     try:
         while True:
-            prompt = state["dialect"].prompt
+            prompt = f"[{state['db']}] {state['dialect'].prompt}"
             try:
                 if session is not None:
                     line = session.prompt(prompt)
@@ -197,9 +263,11 @@ def repl(db_path: str = core.DEFAULT_DB,
             if stripped.startswith("."):
                 if not _handle_meta(stripped, state):
                     break
+                _track_db(state)
                 continue
 
             _run_sql(state["con"], line, state["width"])
+            _track_db(state)
     except KeyboardInterrupt:
         pass
     finally:

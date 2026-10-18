@@ -10,8 +10,13 @@ on the work PC and dislikes querying through the DuckDB Python API (writing SQL
 inside Python strings). SQLPad lets the user write plain `.sql` and see
 formatted results, with no servers and no installs.
 
-- **Engine:** DuckDB, persisted to `practice.duckdb` (gitignored).
-- **Two interfaces:** a live `.sql` file watcher, and a prompt_toolkit REPL.
+- **Engine:** DuckDB. The default database persists to `practice.duckdb`
+  (gitignored); folder-backed databases live in `databases/` (gitignored).
+- **Three interfaces:** a native PyQt5 IDE, a live `.sql` file watcher, and a
+  prompt_toolkit REPL.
+- **Databases:** every subfolder of `data/` is a database, every CSV in it a
+  table (MSSQL-style; see "Databases (catalog)" below). Current use: the user is
+  practising the O'Reilly *SQL Cookbook* (database `sql_cookbook_csv`).
 - **Dialects:** practice `standard` (DuckDB), `mysql`, or `bigquery` (GoogleSQL).
 - It is honest **local syntax practice**, NOT a real MySQL/BigQuery server.
 
@@ -33,7 +38,10 @@ formatted results, with no servers and no installs.
 - ⚠️ This folder also sits inside a messy home-dir git repo rooted at
   `%USERPROFILE%`. **Always commit to the sqlpad repo, never the home one.**
 - The user controls pushes — commit when asked, do not `git push` unless told.
-- Last commits:
+- Last commits on `main` (the databases feature below is NOT committed yet unless
+  `git log` shows a newer commit):
+  - `8584db7` Add native PyQt5 SQL IDE
+  - `0a611cd` Add Excel import, SQL Cookbook tables, and project docs
   - `0c84d01` Add MySQL and BigQuery dialect practice modes
   - `d8e3956` first version, only duckDB sql syntax support
 
@@ -53,38 +61,90 @@ python -m sqlpad [-d standard|mysql|bigquery] [--db FILE] <command>
 #   repl                  interactive prompt
 #   import <file> <table> [--sheet N]   load a CSV or Excel (.xlsx) file
 #   run "<sql>"           run one query, print, exit
-#   tables                list tables
+#   tables                list tables in the active database
+#   databases             list databases + table counts
+#   sync                  load new/changed CSVs from data/
+#   reset <db> [-y]       rebuild a database from its CSVs (discards changes)
 ```
 
-`--db` or `$SQLPAD_DB` overrides the database file. `-d` aliases: `bq`, `duckdb`,
-`my`, `google`.
+`--db` or `$SQLPAD_DB` overrides the default database file. `$SQLPAD_DATA`
+overrides the `data/` folder (the generated `databases/` folder is its sibling) —
+used by tests to work in a temp workspace. `-d` aliases: `bq`, `duckdb`, `my`,
+`google`.
 
 ## Architecture / file map
 
 ```
 sqlpad/
   __main__.py   CLI dispatch; --dialect flag + interactive entry menu
-  core.py       connect(db, prelude), run_statement -> Result, import_file (CSV+Excel), list_tables
+  core.py       connect()/connect_ex() (open default db + catalog.setup + dialect prelude),
+                run_statement -> Result (hides USE's bare "Success" column),
+                import_file (CSV+Excel into the ACTIVE db), list_tables
+  catalog.py    databases: folder->database mapping, ATTACH, CSV sync, reset,
+                active-db memory, describe_all() for the IDE tree
   dialects.py   Dialect dataclass + registry (standard/mysql/bigquery), resolve()
   render.py     iter_statements()/split_statements()/statement_at() (quote/comment-aware),
                 render_table() box output
   watch.py      poll scratch file mtime (0.4s), re-run whole file, print results
   repl.py       prompt_toolkit prompt, Enter submits on ';' , meta-commands
-  ide.py        PyQt5 IDE: editor + SqlHighlighter, results grid, table list,
-                dialect combo, open/save .sql, CSV export; Ctrl+Enter = run
-                stmt-at-cursor/selection, Ctrl+Shift+Enter = run all
-query.sql           standard scratch file
+  ide.py        PyQt5 IDE: editor + SqlHighlighter, results grid, database tree
+                (db -> tables -> columns; context menu), dialect combo, Sync,
+                open/save .sql, CSV export; Ctrl+Enter = run stmt-at-cursor/
+                selection, Ctrl+Shift+Enter = run all. Dark QSS incl. scrollbars.
+query.sql           standard scratch file   (all three start with `USE shop;`)
 query_mysql.sql     mysql scratch file
 query_bigquery.sql  bigquery scratch file
-data/customers.csv, data/orders.csv   sample tables for JOIN/window practice
-data/emp.xlsx                         SQL Cookbook EMP table (user-added; .import it)
-data/seed_sqlcookbook.sql             SQL Cookbook helper tables DEPT/T1/T10/T100/T500
+data/<folder>/*.csv     each folder = a database (source of truth, committed)
+  data/shop/              customers.csv, orders.csv (JOIN/window practice)
+  data/sql_cookbook_csv/  the 21 tables of the SQL Cookbook (emp, dept, t1..t500, ...)
+databases/              GENERATED: one <db>.duckdb per folder + _state.json (gitignored)
 *.bat               Windows launchers
 ```
 
-REPL meta-commands: `.help .tables .schema .import .read .dialect .width .quit`.
+REPL meta-commands: `.help .databases .use .sync .reset .tables .schema .import
+.read .dialect .width .quit`. The prompt shows the active database: `[shop] sql> `.
 `.dialect [name]` shows the cheat-sheet or switches dialect on the fly
-(reconnects to clear the previous dialect's TEMP macros).
+(reconnects to clear the previous dialect's TEMP macros; the active database is
+restored from `_state.json`).
+
+## Databases (catalog) — design and rules
+
+User request: group tables into "databases" like MSSQL, selectable on the left
+of the IDE; adding a database = making a subfolder of `data/` and dragging CSVs in.
+
+- **Folder = database, CSV = table.** Names via `catalog.ident()`: non-`[A-Za-z0-9_]`
+  chars become `_`, leading digit gets `_`. Reserved/colliding names get `_2`.
+  Folders starting with `.` or `_` are ignored. Only `.csv`/`.tsv` are loaded
+  (Excel inside folders is not supported yet).
+- **One DuckDB file per database** (`databases/<name>.duckdb`), ATTACHed on every
+  connect. Chosen over schemas-in-one-file for real isolation, per-database reset
+  and no name collisions (the cookbook's `emp/dept/t1..` collide with old tables).
+  The default database is named after `practice.duckdb`'s stem: `practice`.
+- **Strict like MSSQL:** unqualified names resolve only in the active database
+  (`USE name;` or tree double-click). `db.table` works across databases. No
+  fallback search across databases (user confirmed this model).
+- **Active database is remembered** in `databases/_state.json` (`active`), updated
+  by the IDE/REPL after every statement (so a typed `USE x;` counts). The watcher
+  does not persist it (scratch files start with an explicit `USE`).
+- **Sync rule:** a CSV is (re)loaded only if new or its (mtime_ns, size) differs
+  from `_state.json -> sources[db][file]`. Table existence is NOT checked, so a
+  table the user dropped is not resurrected and DML changes survive restarts.
+  If a database file is newly created, its old state entries are discarded.
+  Per-file load errors go into `SyncReport.errors`; they never block startup.
+- **Reset** (`catalog.reset`): switch to the default db (DuckDB cannot DETACH the
+  active database), DETACH, delete the `.duckdb`/`.wal`, clear its state, re-sync,
+  restore the active db. Destroys user changes -> IDE asks for confirmation,
+  CLI/REPL ask the user to type the database name (`-y` skips in the CLI).
+- User decisions: changes persist + Reset button (not "always pristine");
+  existing customers/orders moved to `data/shop/`.
+
+## Testing without touching the user's real data
+
+The IDE/CLI hold DuckDB file locks, so never test against the real
+`practice.duckdb` while the user may have the IDE open. Use a temp workspace:
+set `$SQLPAD_DATA` to a temp `data/` dir (copy CSVs in) and a temp `--db`/db path.
+GUI check without showing a window: `win.setAttribute(Qt.WA_DontShowOnScreen)`,
+`win.show()`, then `win.grab().save("x.png")` and Read the PNG.
 
 ## Dialect system (the key design)
 
@@ -119,8 +179,13 @@ shipping (several BigQuery functions take bare keyword args that won't parse).
 
 ## Gotchas learned
 
-- **A file in `data/` is not a table** — it must be `.import`ed first, or
-  `SELECT` won't find it. Common user confusion.
+- **A loose file in `data/` is not a table** — only files inside a
+  `data/<folder>/` are auto-loaded; anything else must be `.import`ed (into the
+  active database). Common user confusion.
+- DuckDB infers an all-NULL column from CSV as VARCHAR (e.g. `emp_commission.comm`).
+  No per-column type override exists yet (see backlog).
+- `USE x` returns a result with one `Success` column and no rows; `run_statement`
+  treats that as "no result set".
 - Import dispatches on extension (`core.import_file`): CSV/TSV → DuckDB
   `read_csv_auto`; Excel `.xlsx/.xlsm/.xls/.xlsb` → pandas `read_excel` (lazy
   import, offline, needs openpyxl which is installed) registered into DuckDB.
@@ -132,12 +197,22 @@ shipping (several BigQuery functions take bare keyword args that won't parse).
 
 ## Status
 
-Done & tested (all three scratch files run green; both dialects work via `run`;
-dialect switch and unknown-dialect error handled). Nothing pending or broken.
+Done & tested: dialects, Excel import, IDE (committed), and the databases feature
+(catalog sync/attach/use/reset, IDE tree, REPL/CLI commands; verified on a temp
+workspace and on the real data: 21 cookbook tables + 2 shop tables load).
+Cleanup done with the user's approval: removed the redundant `data/emp.xlsx` and
+`data/seed_sqlcookbook.sql` (the cookbook CSVs replace them) and dropped the 8
+old duplicate tables from `practice.duckdb`, which is now an empty sandbox.
+`sql_cookbook_tables.zip` (untracked, repo root) is the user's original download
+of the cookbook CSVs; deliberately left alone and not committed.
 
 ## Possible next steps (backlog, none committed to)
 
-- `EXPORT`/`.export <table|query> <csv>` to dump a result to CSV.
+- Per-folder type overrides (e.g. `data/<folder>/_types.json`) for all-NULL
+  columns that DuckDB guesses as VARCHAR.
+- Load `.xlsx` files placed inside a `data/<folder>/` (sheet per table?).
+- CLI `--use <db>` global option; watcher header showing the active database.
+- An `.export <query> <csv>` command in the REPL (the IDE already has Export CSV).
 - More BigQuery function macros where feasible (e.g. SAFE_DIVIDE variants done;
   consider FORMAT, GENERATE_DATE_ARRAY).
 - Optional opt-in text rewriter for the parser-level BigQuery differences

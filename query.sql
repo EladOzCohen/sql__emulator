@@ -4,12 +4,9 @@
 -- │  backslashes, no wrapping it in a function.                        │
 -- └──────────────────────────────────────────────────────────────────┘
 
--- Load the two sample CSVs into tables (safe to re-run — CREATE OR REPLACE).
-CREATE OR REPLACE TABLE customers AS
-    SELECT * FROM read_csv_auto('data/customers.csv', header = true);
-
-CREATE OR REPLACE TABLE orders AS
-    SELECT * FROM read_csv_auto('data/orders.csv', header = true);
+-- The sample tables live in the "shop" database (the folder data/shop/).
+-- USE picks which database the queries below run against.
+USE shop;
 
 -- Practice below. Every SELECT prints its own result table.
 

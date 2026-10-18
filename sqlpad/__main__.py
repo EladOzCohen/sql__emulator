@@ -18,7 +18,7 @@ from __future__ import annotations
 import argparse
 import sys
 
-from . import core, dialects, render, repl as repl_mod, watch as watch_mod
+from . import catalog, core, dialects, render, repl as repl_mod, watch as watch_mod
 
 
 def _choose_dialect() -> dialects.Dialect:
@@ -72,7 +72,13 @@ def main(argv: list[str] | None = None) -> int:
     p_run = sub.add_parser("run", help="run one query and print results")
     p_run.add_argument("sql")
 
-    sub.add_parser("tables", help="list tables")
+    sub.add_parser("tables", help="list tables in the active database")
+
+    sub.add_parser("databases", help="list databases (folders under data/)")
+    sub.add_parser("sync", help="load new/changed CSVs from data/ into their databases")
+    p_reset = sub.add_parser("reset", help="rebuild a database from its CSVs (discards changes)")
+    p_reset.add_argument("database")
+    p_reset.add_argument("-y", "--yes", action="store_true", help="skip the confirmation prompt")
 
     args = parser.parse_args(argv)
     cmd = args.cmd or "watch"   # default action is the watcher
@@ -130,7 +136,37 @@ def main(argv: list[str] | None = None) -> int:
             finally:
                 con.close()
             return 0
-    except ValueError as exc:   # unknown dialect
+
+        if cmd == "databases":
+            con = core.connect(args.db)
+            try:
+                repl_mod.show_databases(con)
+            finally:
+                con.close()
+            return 0
+
+        if cmd == "sync":
+            con = core.connect(args.db, databases=False)
+            try:
+                repl_mod.print_sync(catalog.sync(con))
+            finally:
+                con.close()
+            return 0
+
+        if cmd == "reset":
+            if not args.yes:
+                answer = input(f"This DISCARDS all changes in '{args.database}' and "
+                               "reloads its CSVs. Type the database name to confirm: ")
+                if answer.strip() != args.database:
+                    print("cancelled.")
+                    return 1
+            con = core.connect(args.db)
+            try:
+                repl_mod.print_sync(catalog.reset(con, args.database))
+            finally:
+                con.close()
+            return 0
+    except ValueError as exc:   # unknown dialect / not a resettable database
         print(f"Error: {exc}", file=sys.stderr)
         return 2
 

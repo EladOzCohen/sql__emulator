@@ -9,6 +9,8 @@ from typing import Any
 
 import duckdb
 
+from . import catalog
+
 
 DEFAULT_DB = os.environ.get("SQLPAD_DB", "practice.duckdb")
 
@@ -31,19 +33,31 @@ class Result:
         return self.columns is not None
 
 
+def connect_ex(
+    db_path: str = DEFAULT_DB,
+    prelude: list[str] | None = None,
+    databases: bool = True,
+) -> tuple[duckdb.DuckDBPyConnection, "catalog.SyncReport | None"]:
+    """Open the default database, attach/sync the data/ folder databases and
+    restore the last active one. Returns (connection, sync report).
+
+    `prelude` is an optional list of statements (dialect TEMP macros) run
+    after connecting. They are session-only and never persisted.
+    """
+    con = duckdb.connect(db_path)
+    report = catalog.setup(con) if databases else None
+    for stmt in prelude or []:
+        con.execute(stmt)
+    return con, report
+
+
 def connect(
     db_path: str = DEFAULT_DB,
     prelude: list[str] | None = None,
+    databases: bool = True,
 ) -> duckdb.DuckDBPyConnection:
-    """Open (creating if needed) a persistent DuckDB database file.
-
-    `prelude` is an optional list of statements (dialect TEMP macros) run
-    immediately after connecting. They are session-only and never persisted.
-    """
-    con = duckdb.connect(db_path)
-    for stmt in prelude or []:
-        con.execute(stmt)
-    return con
+    """Like connect_ex, for callers that don't need the sync report."""
+    return connect_ex(db_path, prelude, databases)[0]
 
 
 def run_statement(con: duckdb.DuckDBPyConnection, statement: str) -> Result:
@@ -55,6 +69,9 @@ def run_statement(con: duckdb.DuckDBPyConnection, statement: str) -> Result:
         if cur.description:
             columns = [d[0] for d in cur.description]
             rows = cur.fetchall()
+            if columns == ["Success"] and not rows:
+                # USE / ATTACH etc. report a bare "Success" column: not a result set
+                return Result(statement, None, [], elapsed)
             return Result(statement, columns, rows, elapsed)
         return Result(statement, None, [], elapsed)
     except Exception as exc:  # noqa: BLE001 - surface any engine error to the user
