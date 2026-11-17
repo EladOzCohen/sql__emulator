@@ -36,7 +36,7 @@ formatted results, with no servers and no installs.
 - This folder has its **own repo**: branch `main`, remote `origin` =
   https://github.com/EladOzCohen/sql__emulator.git.
 - ⚠️ This folder also sits inside a messy home-dir git repo rooted at
-  `%USERPROFILE%`. **Always commit to the sqlpad repo, never the home one.**
+  the user home directory. **Always commit to the sqlpad repo, never the home one.**
 - The user controls pushes — commit when asked, do not `git push` unless told.
 - Last commits on `main` (the databases feature below is NOT committed yet unless
   `git log` shows a newer commit):
