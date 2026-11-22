@@ -1,0 +1,848 @@
+[
+  {
+    "id": "mysql-ctrl-001",
+    "function": "CASE",
+    "sql": "SELECT CASE 1 WHEN 1 THEN 'one' WHEN 2 THEN 'two' ELSE 'more' END;",
+    "expected_rows": [
+      [
+        "one"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/flow-control-functions.html#CASE",
+    "notes": "manual splits statement across two lines"
+  },
+  {
+    "id": "mysql-ctrl-002",
+    "function": "CASE",
+    "sql": "SELECT CASE WHEN 1>0 THEN 'true' ELSE 'false' END;",
+    "expected_rows": [
+      [
+        "true"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/flow-control-functions.html#CASE",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-003",
+    "function": "CASE",
+    "sql": "SELECT CASE BINARY 'B' WHEN 'a' THEN 1 WHEN 'b' THEN 2 END;",
+    "expected_rows": [
+      [
+        "NULL"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/flow-control-functions.html#CASE",
+    "notes": "manual splits statement across two lines"
+  },
+  {
+    "id": "mysql-ctrl-004",
+    "function": "IF",
+    "sql": "SELECT IF(1>2,2,3);",
+    "expected_rows": [
+      [
+        "3"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/flow-control-functions.html#IF",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-005",
+    "function": "IF",
+    "sql": "SELECT IF(1<2,'yes','no');",
+    "expected_rows": [
+      [
+        "yes"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/flow-control-functions.html#IF",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-006",
+    "function": "IF",
+    "sql": "SELECT IF(STRCMP('test','test1'),'no','yes');",
+    "expected_rows": [
+      [
+        "no"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/flow-control-functions.html#IF",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-007",
+    "function": "IFNULL",
+    "sql": "SELECT IFNULL(1,0);",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/flow-control-functions.html#IFNULL",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-008",
+    "function": "IFNULL",
+    "sql": "SELECT IFNULL(NULL,10);",
+    "expected_rows": [
+      [
+        "10"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/flow-control-functions.html#IFNULL",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-009",
+    "function": "IFNULL",
+    "sql": "SELECT IFNULL(1/0,10);",
+    "expected_rows": [
+      [
+        "10"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/flow-control-functions.html#IFNULL",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-010",
+    "function": "IFNULL",
+    "sql": "SELECT IFNULL(1/0,'yes');",
+    "expected_rows": [
+      [
+        "yes"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/flow-control-functions.html#IFNULL",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-011",
+    "function": "NULLIF",
+    "sql": "SELECT NULLIF(1,1);",
+    "expected_rows": [
+      [
+        "NULL"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/flow-control-functions.html#NULLIF",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-012",
+    "function": "NULLIF",
+    "sql": "SELECT NULLIF(1,2);",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/flow-control-functions.html#NULLIF",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-013",
+    "function": "=",
+    "sql": "SELECT 1 = 0;",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#=",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-014",
+    "function": "=",
+    "sql": "SELECT '0' = 0;",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#=",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-015",
+    "function": "=",
+    "sql": "SELECT '0.0' = 0;",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#=",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-016",
+    "function": "=",
+    "sql": "SELECT '0.01' = 0;",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#=",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-017",
+    "function": "=",
+    "sql": "SELECT '.01' = 0.01;",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#=",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-018",
+    "function": "<=>",
+    "sql": "SELECT 1 <=> 1, NULL <=> NULL, 1 <=> NULL;",
+    "expected_rows": [
+      [
+        "1",
+        "1",
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#<=>",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-019",
+    "function": "=",
+    "sql": "SELECT 1 = 1, NULL = NULL, 1 = NULL;",
+    "expected_rows": [
+      [
+        "1",
+        "NULL",
+        "NULL"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#<=>",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-020",
+    "function": "<>",
+    "sql": "SELECT '.01' <> '0.01';",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#<> and !=",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-021",
+    "function": "<>",
+    "sql": "SELECT .01 <> '0.01';",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#<> and !=",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-022",
+    "function": "<>",
+    "sql": "SELECT 'zapp' <> 'zappp';",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#<> and !=",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-023",
+    "function": "<=",
+    "sql": "SELECT 0.1 <= 2;",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#<=",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-024",
+    "function": "<",
+    "sql": "SELECT 2 < 2;",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#<",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-025",
+    "function": ">=",
+    "sql": "SELECT 2 >= 2;",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#>=",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-026",
+    "function": ">",
+    "sql": "SELECT 2 > 2;",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#>",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-027",
+    "function": "BETWEEN ... AND",
+    "sql": "SELECT 2 BETWEEN 1 AND 3, 2 BETWEEN 3 and 1;",
+    "expected_rows": [
+      [
+        "1",
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#BETWEEN",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-028",
+    "function": "BETWEEN ... AND",
+    "sql": "SELECT 1 BETWEEN 2 AND 3;",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#BETWEEN",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-029",
+    "function": "BETWEEN ... AND",
+    "sql": "SELECT 'b' BETWEEN 'a' AND 'c';",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#BETWEEN",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-030",
+    "function": "BETWEEN ... AND",
+    "sql": "SELECT 2 BETWEEN 2 AND '3';",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#BETWEEN",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-031",
+    "function": "BETWEEN ... AND",
+    "sql": "SELECT 2 BETWEEN 2 AND 'x-3';",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#BETWEEN",
+    "notes": "'x-3' converts to 0 in numeric comparison (warning in MySQL)"
+  },
+  {
+    "id": "mysql-ctrl-032",
+    "function": "COALESCE",
+    "sql": "SELECT COALESCE(NULL,1);",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#COALESCE",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-033",
+    "function": "COALESCE",
+    "sql": "SELECT COALESCE(NULL,NULL,NULL);",
+    "expected_rows": [
+      [
+        "NULL"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#COALESCE",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-034",
+    "function": "GREATEST",
+    "sql": "SELECT GREATEST(2,0);",
+    "expected_rows": [
+      [
+        "2"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#GREATEST",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-035",
+    "function": "GREATEST",
+    "sql": "SELECT GREATEST(34.0,3.0,5.0,767.0);",
+    "expected_rows": [
+      [
+        "767.0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#GREATEST",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-036",
+    "function": "GREATEST",
+    "sql": "SELECT GREATEST('B','A','C');",
+    "expected_rows": [
+      [
+        "C"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#GREATEST",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-037",
+    "function": "IN",
+    "sql": "SELECT 2 IN (0,3,5,7);",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#IN",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-038",
+    "function": "IN",
+    "sql": "SELECT 'wefwf' IN ('wee','wefwf','weg');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#IN",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-039",
+    "function": "IN",
+    "sql": "SELECT (3,4) IN ((1,2), (3,4));",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#IN",
+    "notes": "row constructors"
+  },
+  {
+    "id": "mysql-ctrl-040",
+    "function": "IN",
+    "sql": "SELECT (3,4) IN ((1,2), (3,5));",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#IN",
+    "notes": "row constructors"
+  },
+  {
+    "id": "mysql-ctrl-041",
+    "function": "IN",
+    "sql": "SELECT 'a' IN (0), 0 IN ('b');",
+    "expected_rows": [
+      [
+        "1",
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#IN",
+    "notes": "mixed-type comparison"
+  },
+  {
+    "id": "mysql-ctrl-042",
+    "function": "INTERVAL",
+    "sql": "SELECT INTERVAL(23, 1, 15, 17, 30, 44, 200);",
+    "expected_rows": [
+      [
+        "3"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#INTERVAL",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-043",
+    "function": "INTERVAL",
+    "sql": "SELECT INTERVAL(10, 1, 10, 100, 1000);",
+    "expected_rows": [
+      [
+        "2"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#INTERVAL",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-044",
+    "function": "INTERVAL",
+    "sql": "SELECT INTERVAL(22, 23, 30, 44, 200);",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#INTERVAL",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-045",
+    "function": "IS",
+    "sql": "SELECT 1 IS TRUE, 0 IS FALSE, NULL IS UNKNOWN;",
+    "expected_rows": [
+      [
+        "1",
+        "1",
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#IS",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-046",
+    "function": "IS NOT",
+    "sql": "SELECT 1 IS NOT UNKNOWN, 0 IS NOT UNKNOWN, NULL IS NOT UNKNOWN;",
+    "expected_rows": [
+      [
+        "1",
+        "1",
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#IS NOT",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-047",
+    "function": "IS NOT NULL",
+    "sql": "SELECT 1 IS NOT NULL, 0 IS NOT NULL, NULL IS NOT NULL;",
+    "expected_rows": [
+      [
+        "1",
+        "1",
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#IS NOT NULL",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-048",
+    "function": "IS NULL",
+    "sql": "SELECT 1 IS NULL, 0 IS NULL, NULL IS NULL;",
+    "expected_rows": [
+      [
+        "0",
+        "0",
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#IS NULL",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-049",
+    "function": "ISNULL",
+    "sql": "SELECT ISNULL(1+1);",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#ISNULL",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-050",
+    "function": "ISNULL",
+    "sql": "SELECT ISNULL(1/0);",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#ISNULL",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-051",
+    "function": "LEAST",
+    "sql": "SELECT LEAST(2,0);",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#LEAST",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-052",
+    "function": "LEAST",
+    "sql": "SELECT LEAST(34.0,3.0,5.0,767.0);",
+    "expected_rows": [
+      [
+        "3.0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#LEAST",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-053",
+    "function": "LEAST",
+    "sql": "SELECT LEAST('B','A','C');",
+    "expected_rows": [
+      [
+        "A"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#LEAST",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-054",
+    "function": "BINARY",
+    "sql": "SELECT 'a' = 'A';",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/cast-functions.html#BINARY",
+    "notes": "manual preceded by SET NAMES utf8mb4 COLLATE utf8mb4_general_ci (default utf8mb4_0900_ai_ci gives same result)"
+  },
+  {
+    "id": "mysql-ctrl-055",
+    "function": "BINARY",
+    "sql": "SELECT BINARY 'a' = 'A';",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/cast-functions.html#BINARY",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-056",
+    "function": "BINARY",
+    "sql": "SELECT 'a' = 'a ';",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/cast-functions.html#BINARY",
+    "notes": "PAD SPACE-like trailing-space insensitivity under this collation (utf8mb4_general_ci; NOTE utf8mb4_0900_ai_ci is NO PAD and would give 0)"
+  },
+  {
+    "id": "mysql-ctrl-057",
+    "function": "BINARY",
+    "sql": "SELECT BINARY 'a' = 'a ';",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/cast-functions.html#BINARY",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-058",
+    "function": "BINARY",
+    "sql": "SELECT _binary 'a' = 'A';",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/cast-functions.html#BINARY",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-059",
+    "function": "CAST",
+    "sql": "SELECT CAST(1944.35 AS YEAR), CAST(1944.50 AS YEAR);",
+    "expected_rows": [
+      [
+        "1944",
+        "1945"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/cast-functions.html#CAST",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-060",
+    "function": "CAST",
+    "sql": "SELECT CAST(66.35 AS YEAR), CAST(66.50 AS YEAR);",
+    "expected_rows": [
+      [
+        "2066",
+        "2067"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/cast-functions.html#CAST",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-061",
+    "function": "CAST",
+    "sql": "SELECT CAST(\"1979aaa\" AS YEAR);",
+    "expected_rows": [
+      [
+        "1979"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/cast-functions.html#CAST",
+    "notes": "manual shows 1 warning: 1292 Truncated incorrect YEAR value: '1979aaa'"
+  },
+  {
+    "id": "mysql-ctrl-062",
+    "function": "CAST",
+    "sql": "SELECT 1+'1';",
+    "expected_rows": [
+      [
+        "2"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/cast-functions.html#CAST",
+    "notes": "implicit string-to-number conversion"
+  },
+  {
+    "id": "mysql-ctrl-063",
+    "function": "CAST",
+    "sql": "SELECT X'41', X'41'+0;",
+    "expected_rows": [
+      [
+        "A",
+        "65"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/cast-functions.html#CAST",
+    "notes": "hex literal in string vs numeric context"
+  },
+  {
+    "id": "mysql-ctrl-064",
+    "function": "CAST",
+    "sql": "SELECT b'1100001', b'1100001'+0;",
+    "expected_rows": [
+      [
+        "a",
+        "97"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/cast-functions.html#CAST",
+    "notes": "bit literal in string vs numeric context"
+  },
+  {
+    "id": "mysql-ctrl-065",
+    "function": "CAST",
+    "sql": "SELECT CONCAT('hello you ',2);",
+    "expected_rows": [
+      [
+        "hello you 2"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/cast-functions.html#CAST",
+    "notes": "implicit number-to-string conversion"
+  },
+  {
+    "id": "mysql-ctrl-066",
+    "function": "CAST",
+    "sql": "SELECT 1 - 2;",
+    "expected_rows": [
+      [
+        "-1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/cast-functions.html#CAST",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-067",
+    "function": "CAST",
+    "sql": "SELECT CAST(1 - 2 AS UNSIGNED);",
+    "expected_rows": [
+      [
+        "18446744073709551615"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/cast-functions.html#CAST",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-068",
+    "function": "CAST",
+    "sql": "SELECT CAST(CAST(1 - 2 AS UNSIGNED) AS SIGNED);",
+    "expected_rows": [
+      [
+        "-1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/cast-functions.html#CAST",
+    "notes": ""
+  },
+  {
+    "id": "mysql-ctrl-069",
+    "function": "CAST",
+    "sql": "SELECT CAST(1 AS UNSIGNED) - 2.0;",
+    "expected_rows": [
+      [
+        "-1.0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/cast-functions.html#CAST",
+    "notes": ""
+  }
+]

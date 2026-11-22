@@ -1,0 +1,937 @@
+[
+  {
+    "name": "ASCII",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "BIN",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "BIT_LENGTH",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "CHAR",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "CHAR_LENGTH",
+    "category": "string",
+    "has_example": false
+  },
+  {
+    "name": "CHARACTER_LENGTH",
+    "category": "string",
+    "has_example": false
+  },
+  {
+    "name": "CONCAT",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "CONCAT_WS",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "ELT",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "EXPORT_SET",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "FIELD",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "FIND_IN_SET",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "FORMAT",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "FROM_BASE64",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "HEX",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "INSERT",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "INSTR",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "LCASE",
+    "category": "string",
+    "has_example": false
+  },
+  {
+    "name": "LEFT",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "LENGTH",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "LIKE",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "LOAD_FILE",
+    "category": "string",
+    "has_example": false
+  },
+  {
+    "name": "LOCATE",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "LOWER",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "LPAD",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "LTRIM",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "MAKE_SET",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "MATCH",
+    "category": "string",
+    "has_example": false
+  },
+  {
+    "name": "MID",
+    "category": "string",
+    "has_example": false
+  },
+  {
+    "name": "NOT LIKE",
+    "category": "string",
+    "has_example": false
+  },
+  {
+    "name": "NOT REGEXP",
+    "category": "string",
+    "has_example": false
+  },
+  {
+    "name": "OCT",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "OCTET_LENGTH",
+    "category": "string",
+    "has_example": false
+  },
+  {
+    "name": "ORD",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "POSITION",
+    "category": "string",
+    "has_example": false
+  },
+  {
+    "name": "QUOTE",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "REGEXP",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "REGEXP_INSTR",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "REGEXP_LIKE",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "REGEXP_REPLACE",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "REGEXP_SUBSTR",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "REPEAT",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "REPLACE",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "REVERSE",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "RIGHT",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "RLIKE",
+    "category": "string",
+    "has_example": false
+  },
+  {
+    "name": "RPAD",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "RTRIM",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "SOUNDEX",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "SOUNDS LIKE",
+    "category": "string",
+    "has_example": false
+  },
+  {
+    "name": "SPACE",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "STRCMP",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "SUBSTR",
+    "category": "string",
+    "has_example": false
+  },
+  {
+    "name": "SUBSTRING",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "SUBSTRING_INDEX",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "TO_BASE64",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "TRIM",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "UCASE",
+    "category": "string",
+    "has_example": false
+  },
+  {
+    "name": "UNHEX",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "UPPER",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "WEIGHT_STRING",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "ESCAPE",
+    "category": "string",
+    "has_example": true
+  },
+  {
+    "name": "NOT RLIKE",
+    "category": "string",
+    "has_example": false
+  },
+  {
+    "name": "ABS",
+    "category": "numeric",
+    "has_example": true
+  },
+  {
+    "name": "ACOS",
+    "category": "numeric",
+    "has_example": true
+  },
+  {
+    "name": "ASIN",
+    "category": "numeric",
+    "has_example": true
+  },
+  {
+    "name": "ATAN",
+    "category": "numeric",
+    "has_example": true
+  },
+  {
+    "name": "ATAN2",
+    "category": "numeric",
+    "has_example": true
+  },
+  {
+    "name": "CEIL",
+    "category": "numeric",
+    "has_example": false
+  },
+  {
+    "name": "CEILING",
+    "category": "numeric",
+    "has_example": true
+  },
+  {
+    "name": "CONV",
+    "category": "numeric",
+    "has_example": true
+  },
+  {
+    "name": "COS",
+    "category": "numeric",
+    "has_example": true
+  },
+  {
+    "name": "COT",
+    "category": "numeric",
+    "has_example": true
+  },
+  {
+    "name": "CRC32",
+    "category": "numeric",
+    "has_example": true
+  },
+  {
+    "name": "DEGREES",
+    "category": "numeric",
+    "has_example": true
+  },
+  {
+    "name": "EXP",
+    "category": "numeric",
+    "has_example": true
+  },
+  {
+    "name": "FLOOR",
+    "category": "numeric",
+    "has_example": true
+  },
+  {
+    "name": "LN",
+    "category": "numeric",
+    "has_example": true
+  },
+  {
+    "name": "LOG",
+    "category": "numeric",
+    "has_example": true
+  },
+  {
+    "name": "LOG10",
+    "category": "numeric",
+    "has_example": true
+  },
+  {
+    "name": "LOG2",
+    "category": "numeric",
+    "has_example": true
+  },
+  {
+    "name": "MOD",
+    "category": "numeric",
+    "has_example": true
+  },
+  {
+    "name": "PI",
+    "category": "numeric",
+    "has_example": true
+  },
+  {
+    "name": "POW",
+    "category": "numeric",
+    "has_example": true
+  },
+  {
+    "name": "POWER",
+    "category": "numeric",
+    "has_example": false
+  },
+  {
+    "name": "RADIANS",
+    "category": "numeric",
+    "has_example": true
+  },
+  {
+    "name": "RAND",
+    "category": "numeric",
+    "has_example": false
+  },
+  {
+    "name": "ROUND",
+    "category": "numeric",
+    "has_example": true
+  },
+  {
+    "name": "SIGN",
+    "category": "numeric",
+    "has_example": true
+  },
+  {
+    "name": "SIN",
+    "category": "numeric",
+    "has_example": true
+  },
+  {
+    "name": "SQRT",
+    "category": "numeric",
+    "has_example": true
+  },
+  {
+    "name": "TAN",
+    "category": "numeric",
+    "has_example": true
+  },
+  {
+    "name": "TRUNCATE",
+    "category": "numeric",
+    "has_example": true
+  },
+  {
+    "name": "+",
+    "category": "numeric",
+    "has_example": true
+  },
+  {
+    "name": "-",
+    "category": "numeric",
+    "has_example": true
+  },
+  {
+    "name": "- (unary)",
+    "category": "numeric",
+    "has_example": true
+  },
+  {
+    "name": "*",
+    "category": "numeric",
+    "has_example": true
+  },
+  {
+    "name": "/",
+    "category": "numeric",
+    "has_example": true
+  },
+  {
+    "name": "DIV",
+    "category": "numeric",
+    "has_example": true
+  },
+  {
+    "name": "%",
+    "category": "numeric",
+    "has_example": true
+  },
+  {
+    "name": "CASE",
+    "category": "control",
+    "has_example": true
+  },
+  {
+    "name": "IF",
+    "category": "control",
+    "has_example": true
+  },
+  {
+    "name": "IFNULL",
+    "category": "control",
+    "has_example": true
+  },
+  {
+    "name": "NULLIF",
+    "category": "control",
+    "has_example": true
+  },
+  {
+    "name": ">",
+    "category": "compare",
+    "has_example": true
+  },
+  {
+    "name": ">=",
+    "category": "compare",
+    "has_example": true
+  },
+  {
+    "name": "<",
+    "category": "compare",
+    "has_example": true
+  },
+  {
+    "name": "<>",
+    "category": "compare",
+    "has_example": true
+  },
+  {
+    "name": "!=",
+    "category": "compare",
+    "has_example": false
+  },
+  {
+    "name": "<=",
+    "category": "compare",
+    "has_example": true
+  },
+  {
+    "name": "<=>",
+    "category": "compare",
+    "has_example": true
+  },
+  {
+    "name": "=",
+    "category": "compare",
+    "has_example": true
+  },
+  {
+    "name": "BETWEEN ... AND",
+    "category": "compare",
+    "has_example": true
+  },
+  {
+    "name": "COALESCE",
+    "category": "compare",
+    "has_example": true
+  },
+  {
+    "name": "EXISTS",
+    "category": "compare",
+    "has_example": false
+  },
+  {
+    "name": "GREATEST",
+    "category": "compare",
+    "has_example": true
+  },
+  {
+    "name": "IN",
+    "category": "compare",
+    "has_example": true
+  },
+  {
+    "name": "INTERVAL",
+    "category": "compare",
+    "has_example": true
+  },
+  {
+    "name": "IS",
+    "category": "compare",
+    "has_example": true
+  },
+  {
+    "name": "IS NOT",
+    "category": "compare",
+    "has_example": true
+  },
+  {
+    "name": "IS NOT NULL",
+    "category": "compare",
+    "has_example": true
+  },
+  {
+    "name": "IS NULL",
+    "category": "compare",
+    "has_example": true
+  },
+  {
+    "name": "ISNULL",
+    "category": "compare",
+    "has_example": true
+  },
+  {
+    "name": "LEAST",
+    "category": "compare",
+    "has_example": true
+  },
+  {
+    "name": "NOT BETWEEN ... AND",
+    "category": "compare",
+    "has_example": false
+  },
+  {
+    "name": "NOT EXISTS",
+    "category": "compare",
+    "has_example": false
+  },
+  {
+    "name": "NOT IN",
+    "category": "compare",
+    "has_example": false
+  },
+  {
+    "name": "BINARY",
+    "category": "cast",
+    "has_example": true
+  },
+  {
+    "name": "CAST",
+    "category": "cast",
+    "has_example": true
+  },
+  {
+    "name": "CONVERT",
+    "category": "cast",
+    "has_example": false
+  },
+  {
+    "name": "AT TIME ZONE",
+    "category": "cast",
+    "has_example": false
+  },
+  {
+    "name": "AVG",
+    "category": "aggregate",
+    "has_example": false
+  },
+  {
+    "name": "BIT_AND",
+    "category": "aggregate",
+    "has_example": false
+  },
+  {
+    "name": "BIT_OR",
+    "category": "aggregate",
+    "has_example": false
+  },
+  {
+    "name": "BIT_XOR",
+    "category": "aggregate",
+    "has_example": false
+  },
+  {
+    "name": "COUNT",
+    "category": "aggregate",
+    "has_example": false
+  },
+  {
+    "name": "COUNT(DISTINCT)",
+    "category": "aggregate",
+    "has_example": false
+  },
+  {
+    "name": "GROUP_CONCAT",
+    "category": "aggregate",
+    "has_example": false
+  },
+  {
+    "name": "JSON_ARRAYAGG",
+    "category": "aggregate",
+    "has_example": true
+  },
+  {
+    "name": "JSON_OBJECTAGG",
+    "category": "aggregate",
+    "has_example": true
+  },
+  {
+    "name": "MAX",
+    "category": "aggregate",
+    "has_example": false
+  },
+  {
+    "name": "MIN",
+    "category": "aggregate",
+    "has_example": false
+  },
+  {
+    "name": "STD",
+    "category": "aggregate",
+    "has_example": false
+  },
+  {
+    "name": "STDDEV",
+    "category": "aggregate",
+    "has_example": false
+  },
+  {
+    "name": "STDDEV_POP",
+    "category": "aggregate",
+    "has_example": false
+  },
+  {
+    "name": "STDDEV_SAMP",
+    "category": "aggregate",
+    "has_example": false
+  },
+  {
+    "name": "SUM",
+    "category": "aggregate",
+    "has_example": false
+  },
+  {
+    "name": "VAR_POP",
+    "category": "aggregate",
+    "has_example": false
+  },
+  {
+    "name": "VAR_SAMP",
+    "category": "aggregate",
+    "has_example": false
+  },
+  {
+    "name": "VARIANCE",
+    "category": "aggregate",
+    "has_example": false
+  },
+  {
+    "name": "CUME_DIST",
+    "category": "window",
+    "has_example": true
+  },
+  {
+    "name": "DENSE_RANK",
+    "category": "window",
+    "has_example": true
+  },
+  {
+    "name": "FIRST_VALUE",
+    "category": "window",
+    "has_example": true
+  },
+  {
+    "name": "LAG",
+    "category": "window",
+    "has_example": true
+  },
+  {
+    "name": "LAST_VALUE",
+    "category": "window",
+    "has_example": true
+  },
+  {
+    "name": "LEAD",
+    "category": "window",
+    "has_example": true
+  },
+  {
+    "name": "NTH_VALUE",
+    "category": "window",
+    "has_example": true
+  },
+  {
+    "name": "NTILE",
+    "category": "window",
+    "has_example": true
+  },
+  {
+    "name": "PERCENT_RANK",
+    "category": "window",
+    "has_example": true
+  },
+  {
+    "name": "RANK",
+    "category": "window",
+    "has_example": true
+  },
+  {
+    "name": "ROW_NUMBER",
+    "category": "window",
+    "has_example": true
+  },
+  {
+    "name": "ANY_VALUE",
+    "category": "misc",
+    "has_example": false
+  },
+  {
+    "name": "BIN_TO_UUID",
+    "category": "misc",
+    "has_example": false
+  },
+  {
+    "name": "DEFAULT",
+    "category": "misc",
+    "has_example": false
+  },
+  {
+    "name": "GROUPING",
+    "category": "misc",
+    "has_example": true
+  },
+  {
+    "name": "INET_ATON",
+    "category": "misc",
+    "has_example": true
+  },
+  {
+    "name": "INET_NTOA",
+    "category": "misc",
+    "has_example": true
+  },
+  {
+    "name": "INET6_ATON",
+    "category": "misc",
+    "has_example": true
+  },
+  {
+    "name": "INET6_NTOA",
+    "category": "misc",
+    "has_example": true
+  },
+  {
+    "name": "IS_IPV4",
+    "category": "misc",
+    "has_example": true
+  },
+  {
+    "name": "IS_IPV4_COMPAT",
+    "category": "misc",
+    "has_example": true
+  },
+  {
+    "name": "IS_IPV4_MAPPED",
+    "category": "misc",
+    "has_example": true
+  },
+  {
+    "name": "IS_IPV6",
+    "category": "misc",
+    "has_example": true
+  },
+  {
+    "name": "IS_UUID",
+    "category": "misc",
+    "has_example": true
+  },
+  {
+    "name": "NAME_CONST",
+    "category": "misc",
+    "has_example": true
+  },
+  {
+    "name": "SLEEP",
+    "category": "misc",
+    "has_example": false
+  },
+  {
+    "name": "UUID",
+    "category": "misc",
+    "has_example": false
+  },
+  {
+    "name": "UUID_SHORT",
+    "category": "misc",
+    "has_example": false
+  },
+  {
+    "name": "UUID_TO_BIN",
+    "category": "misc",
+    "has_example": false
+  },
+  {
+    "name": "VALUES",
+    "category": "misc",
+    "has_example": false
+  },
+  {
+    "name": "AND",
+    "category": "misc",
+    "has_example": true
+  },
+  {
+    "name": "&&",
+    "category": "misc",
+    "has_example": false
+  },
+  {
+    "name": "NOT",
+    "category": "misc",
+    "has_example": true
+  },
+  {
+    "name": "!",
+    "category": "misc",
+    "has_example": true
+  },
+  {
+    "name": "OR",
+    "category": "misc",
+    "has_example": true
+  },
+  {
+    "name": "||",
+    "category": "misc",
+    "has_example": false
+  },
+  {
+    "name": "XOR",
+    "category": "misc",
+    "has_example": true
+  }
+]

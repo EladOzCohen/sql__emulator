@@ -1,0 +1,1907 @@
+[
+ {
+  "id": "bq-datetime-001",
+  "function": "DATE",
+  "sql": "SELECT\n  DATE(2016, 12, 25) AS date_ymd,\n  DATE(DATETIME '2016-12-25 23:59:59') AS date_dt,\n  DATE(TIMESTAMP '2016-12-25 05:30:00+07', 'America/Los_Angeles') AS date_tstz;",
+  "expected_rows": [
+   [
+    "2016-12-25",
+    "2016-12-25",
+    "2016-12-24"
+   ]
+  ],
+  "expected_columns": [
+   "date_ymd",
+   "date_dt",
+   "date_tstz"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/date_functions#date",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-002",
+  "function": "DATE_ADD",
+  "sql": "SELECT DATE_ADD(DATE '2008-12-25', INTERVAL 5 DAY) AS five_days_later;",
+  "expected_rows": [
+   [
+    "2008-12-30"
+   ]
+  ],
+  "expected_columns": [
+   "five_days_later"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/date_functions#date_add",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-003",
+  "function": "DATE_DIFF",
+  "sql": "SELECT DATE_DIFF(DATE '2010-07-07', DATE '2008-12-25', DAY) AS days_diff;",
+  "expected_rows": [
+   [
+    "559"
+   ]
+  ],
+  "expected_columns": [
+   "days_diff"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/date_functions#date_diff",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-004",
+  "function": "DATE_DIFF",
+  "sql": "SELECT\n  DATE_DIFF(DATE '2023-11-30', DATE '2020-01-01', YEAR) AS diff_3_9,\n  DATE_DIFF(DATE '2023-02-01', DATE '2020-01-01', YEAR) AS diff_3_1,\n  DATE_DIFF(DATE '2020-01-01', DATE '2023-11-30', YEAR) AS diff_negative_3_9,\n  DATE_DIFF(DATE '2020-01-01', DATE '2023-02-01', YEAR) AS diff_negative_3_1;",
+  "expected_rows": [
+   [
+    "3",
+    "3",
+    "-3",
+    "-3"
+   ]
+  ],
+  "expected_columns": [
+   "diff_3_9",
+   "diff_3_1",
+   "diff_negative_3_9",
+   "diff_negative_3_1"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/date_functions#date_diff",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-005",
+  "function": "DATE_DIFF",
+  "sql": "SELECT\n  DATE_DIFF(DATE '2017-10-15', DATE '2017-10-14', DAY) AS days_diff,\n  DATE_DIFF(DATE '2017-10-15', DATE '2017-10-14', WEEK) AS weeks_diff;",
+  "expected_rows": [
+   [
+    "1",
+    "1"
+   ]
+  ],
+  "expected_columns": [
+   "days_diff",
+   "weeks_diff"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/date_functions#date_diff",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-006",
+  "function": "DATE_DIFF",
+  "sql": "SELECT\n  DATE_DIFF('2017-12-30', '2014-12-30', YEAR) AS year_diff,\n  DATE_DIFF('2017-12-30', '2014-12-30', ISOYEAR) AS isoyear_diff;",
+  "expected_rows": [
+   [
+    "3",
+    "2"
+   ]
+  ],
+  "expected_columns": [
+   "year_diff",
+   "isoyear_diff"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/date_functions#date_diff",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-007",
+  "function": "DATE_DIFF",
+  "sql": "SELECT\n  DATE_DIFF('2017-12-18', '2017-12-17', WEEK) AS week_diff,\n  DATE_DIFF('2017-12-18', '2017-12-17', WEEK(MONDAY)) AS week_weekday_diff,\n  DATE_DIFF('2017-12-18', '2017-12-17', ISOWEEK) AS isoweek_diff;",
+  "expected_rows": [
+   [
+    "0",
+    "1",
+    "1"
+   ]
+  ],
+  "expected_columns": [
+   "week_diff",
+   "week_weekday_diff",
+   "isoweek_diff"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/date_functions#date_diff",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-008",
+  "function": "DATE_FROM_UNIX_DATE",
+  "sql": "SELECT DATE_FROM_UNIX_DATE(14238) AS date_from_epoch;",
+  "expected_rows": [
+   [
+    "2008-12-25"
+   ]
+  ],
+  "expected_columns": [
+   "date_from_epoch"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/date_functions#date_from_unix_date",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-009",
+  "function": "DATE_SUB",
+  "sql": "SELECT DATE_SUB(DATE '2008-12-25', INTERVAL 5 DAY) AS five_days_ago;",
+  "expected_rows": [
+   [
+    "2008-12-20"
+   ]
+  ],
+  "expected_columns": [
+   "five_days_ago"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/date_functions#date_sub",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-010",
+  "function": "DATE_TRUNC",
+  "sql": "SELECT DATE_TRUNC(DATE '2008-12-25', MONTH) AS month;",
+  "expected_rows": [
+   [
+    "2008-12-01"
+   ]
+  ],
+  "expected_columns": [
+   "month"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/date_functions#date_trunc",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-011",
+  "function": "DATE_TRUNC",
+  "sql": "SELECT date AS original, DATE_TRUNC(date, WEEK(MONDAY)) AS truncated\nFROM (SELECT DATE('2017-11-05') AS date);",
+  "expected_rows": [
+   [
+    "2017-11-05",
+    "2017-10-30"
+   ]
+  ],
+  "expected_columns": [
+   "original",
+   "truncated"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/date_functions#date_trunc",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-012",
+  "function": "DATE_TRUNC",
+  "sql": "SELECT\n  DATE_TRUNC('2015-06-15', ISOYEAR) AS isoyear_boundary,\n  EXTRACT(ISOYEAR FROM DATE '2015-06-15') AS isoyear_number;",
+  "expected_rows": [
+   [
+    "2014-12-29",
+    "2015"
+   ]
+  ],
+  "expected_columns": [
+   "isoyear_boundary",
+   "isoyear_number"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/date_functions#date_trunc",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-013",
+  "function": "EXTRACT",
+  "sql": "SELECT EXTRACT(DAY FROM DATE '2013-12-25') AS the_day;",
+  "expected_rows": [
+   [
+    "25"
+   ]
+  ],
+  "expected_columns": [
+   "the_day"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/date_functions#extract",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-014",
+  "function": "EXTRACT",
+  "sql": "SELECT\n  date,\n  EXTRACT(ISOYEAR FROM date) AS isoyear,\n  EXTRACT(ISOWEEK FROM date) AS isoweek,\n  EXTRACT(YEAR FROM date) AS year,\n  EXTRACT(WEEK FROM date) AS week\nFROM UNNEST(GENERATE_DATE_ARRAY('2015-12-23', '2016-01-09')) AS date\nORDER BY date;",
+  "expected_rows": [
+   [
+    "2015-12-23",
+    "2015",
+    "52",
+    "2015",
+    "51"
+   ],
+   [
+    "2015-12-24",
+    "2015",
+    "52",
+    "2015",
+    "51"
+   ],
+   [
+    "2015-12-25",
+    "2015",
+    "52",
+    "2015",
+    "51"
+   ],
+   [
+    "2015-12-26",
+    "2015",
+    "52",
+    "2015",
+    "51"
+   ],
+   [
+    "2015-12-27",
+    "2015",
+    "52",
+    "2015",
+    "52"
+   ],
+   [
+    "2015-12-28",
+    "2015",
+    "53",
+    "2015",
+    "52"
+   ],
+   [
+    "2015-12-29",
+    "2015",
+    "53",
+    "2015",
+    "52"
+   ],
+   [
+    "2015-12-30",
+    "2015",
+    "53",
+    "2015",
+    "52"
+   ],
+   [
+    "2015-12-31",
+    "2015",
+    "53",
+    "2015",
+    "52"
+   ],
+   [
+    "2016-01-01",
+    "2015",
+    "53",
+    "2016",
+    "0"
+   ],
+   [
+    "2016-01-02",
+    "2015",
+    "53",
+    "2016",
+    "0"
+   ],
+   [
+    "2016-01-03",
+    "2015",
+    "53",
+    "2016",
+    "1"
+   ],
+   [
+    "2016-01-04",
+    "2016",
+    "1",
+    "2016",
+    "1"
+   ],
+   [
+    "2016-01-05",
+    "2016",
+    "1",
+    "2016",
+    "1"
+   ],
+   [
+    "2016-01-06",
+    "2016",
+    "1",
+    "2016",
+    "1"
+   ],
+   [
+    "2016-01-07",
+    "2016",
+    "1",
+    "2016",
+    "1"
+   ],
+   [
+    "2016-01-08",
+    "2016",
+    "1",
+    "2016",
+    "1"
+   ],
+   [
+    "2016-01-09",
+    "2016",
+    "1",
+    "2016",
+    "1"
+   ]
+  ],
+  "expected_columns": [
+   "date",
+   "isoyear",
+   "isoweek",
+   "year",
+   "week"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/date_functions#extract",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-015",
+  "function": "EXTRACT",
+  "sql": "WITH table AS (SELECT DATE('2017-11-05') AS date)\nSELECT\n  date,\n  EXTRACT(WEEK(SUNDAY) FROM date) AS week_sunday,\n  EXTRACT(WEEK(MONDAY) FROM date) AS week_monday FROM table;",
+  "expected_rows": [
+   [
+    "2017-11-05",
+    "45",
+    "44"
+   ]
+  ],
+  "expected_columns": [
+   "date",
+   "week_sunday",
+   "week_monday"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/date_functions#extract",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-016",
+  "function": "FORMAT_DATE",
+  "sql": "SELECT FORMAT_DATE('%x', DATE '2008-12-25') AS US_format;",
+  "expected_rows": [
+   [
+    "12/25/08"
+   ]
+  ],
+  "expected_columns": [
+   "US_format"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/date_functions#format_date",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-017",
+  "function": "FORMAT_DATE",
+  "sql": "SELECT FORMAT_DATE('%b-%d-%Y', DATE '2008-12-25') AS formatted;",
+  "expected_rows": [
+   [
+    "Dec-25-2008"
+   ]
+  ],
+  "expected_columns": [
+   "formatted"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/date_functions#format_date",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-018",
+  "function": "FORMAT_DATE",
+  "sql": "SELECT FORMAT_DATE('%b %Y', DATE '2008-12-25') AS formatted;",
+  "expected_rows": [
+   [
+    "Dec 2008"
+   ]
+  ],
+  "expected_columns": [
+   "formatted"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/date_functions#format_date",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-019",
+  "function": "LAST_DAY",
+  "sql": "SELECT LAST_DAY(DATE '2008-11-25', MONTH) AS last_day;",
+  "expected_rows": [
+   [
+    "2008-11-30"
+   ]
+  ],
+  "expected_columns": [
+   "last_day"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/date_functions#last_day",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-020",
+  "function": "LAST_DAY",
+  "sql": "SELECT LAST_DAY(DATE '2008-11-25') AS last_day;",
+  "expected_rows": [
+   [
+    "2008-11-30"
+   ]
+  ],
+  "expected_columns": [
+   "last_day"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/date_functions#last_day",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-021",
+  "function": "LAST_DAY",
+  "sql": "SELECT LAST_DAY(DATE '2008-11-25', YEAR) AS last_day;",
+  "expected_rows": [
+   [
+    "2008-12-31"
+   ]
+  ],
+  "expected_columns": [
+   "last_day"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/date_functions#last_day",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-022",
+  "function": "LAST_DAY",
+  "sql": "SELECT LAST_DAY(DATE '2008-11-10', WEEK(SUNDAY)) AS last_day;",
+  "expected_rows": [
+   [
+    "2008-11-15"
+   ]
+  ],
+  "expected_columns": [
+   "last_day"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/date_functions#last_day",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-023",
+  "function": "LAST_DAY",
+  "sql": "SELECT LAST_DAY(DATE '2008-11-10', WEEK(MONDAY)) AS last_day;",
+  "expected_rows": [
+   [
+    "2008-11-16"
+   ]
+  ],
+  "expected_columns": [
+   "last_day"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/date_functions#last_day",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-024",
+  "function": "PARSE_DATE",
+  "sql": "SELECT PARSE_DATE('%x', '12/25/08') AS parsed;",
+  "expected_rows": [
+   [
+    "2008-12-25"
+   ]
+  ],
+  "expected_columns": [
+   "parsed"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/date_functions#parse_date",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-025",
+  "function": "PARSE_DATE",
+  "sql": "SELECT PARSE_DATE('%Y%m%d', '20081225') AS parsed;",
+  "expected_rows": [
+   [
+    "2008-12-25"
+   ]
+  ],
+  "expected_columns": [
+   "parsed"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/date_functions#parse_date",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-026",
+  "function": "UNIX_DATE",
+  "sql": "SELECT UNIX_DATE(DATE '2008-12-25') AS days_from_epoch;",
+  "expected_rows": [
+   [
+    "14238"
+   ]
+  ],
+  "expected_columns": [
+   "days_from_epoch"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/date_functions#unix_date",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-027",
+  "function": "PARSE_DATE",
+  "sql": "SELECT PARSE_DATE('%Y %A %b %e', 'Thursday Dec 25 2008');",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/date_functions#parse_date",
+  "notes": "error: Docs: error because the year element is in different locations.",
+  "error": true
+ },
+ {
+  "id": "bq-datetime-028",
+  "function": "PARSE_DATE",
+  "sql": "SELECT PARSE_DATE('%A %b %e', 'Thursday Dec 25 2008');",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/date_functions#parse_date",
+  "notes": "error: Docs: error because one of the year elements is missing.",
+  "error": true
+ },
+ {
+  "id": "bq-datetime-029",
+  "function": "DATETIME",
+  "sql": "SELECT\n  DATETIME(2008, 12, 25, 05, 30, 00) as datetime_ymdhms,\n  DATETIME(TIMESTAMP \"2008-12-25 05:30:00+00\", \"America/Los_Angeles\") as datetime_tstz;",
+  "expected_rows": [
+   [
+    "2008-12-25T05:30:00",
+    "2008-12-24T21:30:00"
+   ]
+  ],
+  "expected_columns": [
+   "datetime_ymdhms",
+   "datetime_tstz"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/datetime_functions#datetime",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-030",
+  "function": "DATETIME_ADD",
+  "sql": "SELECT\n  DATETIME \"2008-12-25 15:30:00\" as original_date,\n  DATETIME_ADD(DATETIME \"2008-12-25 15:30:00\", INTERVAL 10 MINUTE) as later;",
+  "expected_rows": [
+   [
+    "2008-12-25T15:30:00",
+    "2008-12-25T15:40:00"
+   ]
+  ],
+  "expected_columns": [
+   "original_date",
+   "later"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/datetime_functions#datetime_add",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-031",
+  "function": "DATETIME_DIFF",
+  "sql": "SELECT\n  DATETIME \"2010-07-07 10:20:00\" as first_datetime,\n  DATETIME \"2008-12-25 15:30:00\" as second_datetime,\n  DATETIME_DIFF(DATETIME \"2010-07-07 10:20:00\",\n    DATETIME \"2008-12-25 15:30:00\", DAY) as difference;",
+  "expected_rows": [
+   [
+    "2010-07-07T10:20:00",
+    "2008-12-25T15:30:00",
+    "559"
+   ]
+  ],
+  "expected_columns": [
+   "first_datetime",
+   "second_datetime",
+   "difference"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/datetime_functions#datetime_diff",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-032",
+  "function": "DATETIME_DIFF",
+  "sql": "SELECT\n  DATETIME_DIFF(DATETIME '2021-05-01 04:54:00',\n    DATETIME '2021-05-01 01:00:00', HOUR) AS diff_3_9,\n  DATETIME_DIFF(DATETIME '2021-05-01 04:06:00',\n    DATETIME '2021-05-01 01:00:00', HOUR) AS diff_3_1,\n  DATETIME_DIFF(DATETIME '2021-05-01 01:00:00',\n    DATETIME '2021-05-01 04:54:00', HOUR) AS diff_negative_3_9,\n  DATETIME_DIFF(DATETIME '2021-05-01 01:00:00',\n    DATETIME '2021-05-01 04:06:00', HOUR) AS diff_negative_3_1;",
+  "expected_rows": [
+   [
+    "3",
+    "3",
+    "-3",
+    "-3"
+   ]
+  ],
+  "expected_columns": [
+   "diff_3_9",
+   "diff_3_1",
+   "diff_negative_3_9",
+   "diff_negative_3_1"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/datetime_functions#datetime_diff",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-033",
+  "function": "DATETIME_DIFF",
+  "sql": "SELECT\n  DATETIME_DIFF(DATETIME '2017-10-15 00:00:00',\n    DATETIME '2017-10-14 00:00:00', DAY) as days_diff,\n  DATETIME_DIFF(DATETIME '2017-10-15 00:00:00',\n    DATETIME '2017-10-14 00:00:00', WEEK) as weeks_diff;",
+  "expected_rows": [
+   [
+    "1",
+    "1"
+   ]
+  ],
+  "expected_columns": [
+   "days_diff",
+   "weeks_diff"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/datetime_functions#datetime_diff",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-034",
+  "function": "DATETIME_DIFF",
+  "sql": "SELECT\n  DATETIME_DIFF('2017-12-30 00:00:00',\n    '2014-12-30 00:00:00', YEAR) AS year_diff,\n  DATETIME_DIFF('2017-12-30 00:00:00',\n    '2014-12-30 00:00:00', ISOYEAR) AS isoyear_diff;",
+  "expected_rows": [
+   [
+    "3",
+    "2"
+   ]
+  ],
+  "expected_columns": [
+   "year_diff",
+   "isoyear_diff"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/datetime_functions#datetime_diff",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-035",
+  "function": "DATETIME_DIFF",
+  "sql": "SELECT\n  DATETIME_DIFF('2017-12-18', '2017-12-17', WEEK) AS week_diff,\n  DATETIME_DIFF('2017-12-18', '2017-12-17', WEEK(MONDAY)) AS week_weekday_diff,\n  DATETIME_DIFF('2017-12-18', '2017-12-17', ISOWEEK) AS isoweek_diff;",
+  "expected_rows": [
+   [
+    "0",
+    "1",
+    "1"
+   ]
+  ],
+  "expected_columns": [
+   "week_diff",
+   "week_weekday_diff",
+   "isoweek_diff"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/datetime_functions#datetime_diff",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-036",
+  "function": "DATETIME_SUB",
+  "sql": "SELECT\n  DATETIME \"2008-12-25 15:30:00\" as original_date,\n  DATETIME_SUB(DATETIME \"2008-12-25 15:30:00\", INTERVAL 10 MINUTE) as earlier;",
+  "expected_rows": [
+   [
+    "2008-12-25T15:30:00",
+    "2008-12-25T15:20:00"
+   ]
+  ],
+  "expected_columns": [
+   "original_date",
+   "earlier"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/datetime_functions#datetime_sub",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-037",
+  "function": "DATETIME_TRUNC",
+  "sql": "SELECT\n  DATETIME \"2008-12-25 15:30:00\" as original,\n  DATETIME_TRUNC(DATETIME \"2008-12-25 15:30:00\", DAY) as truncated;",
+  "expected_rows": [
+   [
+    "2008-12-25T15:30:00",
+    "2008-12-25T00:00:00"
+   ]
+  ],
+  "expected_columns": [
+   "original",
+   "truncated"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/datetime_functions#datetime_trunc",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-038",
+  "function": "DATETIME_TRUNC",
+  "sql": "SELECT\n datetime AS original,\n DATETIME_TRUNC(datetime, WEEK(MONDAY)) AS truncated\nFROM (SELECT DATETIME(TIMESTAMP \"2017-11-05 00:00:00+00\", \"UTC\") AS datetime);",
+  "expected_rows": [
+   [
+    "2017-11-05T00:00:00",
+    "2017-10-30T00:00:00"
+   ]
+  ],
+  "expected_columns": [
+   "original",
+   "truncated"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/datetime_functions#datetime_trunc",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-039",
+  "function": "DATETIME_TRUNC",
+  "sql": "SELECT\n  DATETIME_TRUNC('2015-06-15 00:00:00', ISOYEAR) AS isoyear_boundary,\n  EXTRACT(ISOYEAR FROM DATETIME '2015-06-15 00:00:00') AS isoyear_number;",
+  "expected_rows": [
+   [
+    "2014-12-29T00:00:00",
+    "2015"
+   ]
+  ],
+  "expected_columns": [
+   "isoyear_boundary",
+   "isoyear_number"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/datetime_functions#datetime_trunc",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-040",
+  "function": "EXTRACT",
+  "sql": "SELECT EXTRACT(HOUR FROM DATETIME(2008, 12, 25, 15, 30, 00)) as hour;",
+  "expected_rows": [
+   [
+    "15"
+   ]
+  ],
+  "expected_columns": [
+   "hour"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/datetime_functions#extract",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-041",
+  "function": "EXTRACT",
+  "sql": "WITH Datetimes AS (\n  SELECT DATETIME '2005-01-03 12:34:56' AS datetime UNION ALL\n  SELECT DATETIME '2007-12-31' UNION ALL\n  SELECT DATETIME '2009-01-01' UNION ALL\n  SELECT DATETIME '2009-12-31' UNION ALL\n  SELECT DATETIME '2017-01-02' UNION ALL\n  SELECT DATETIME '2017-05-26'\n)\nSELECT\n  datetime,\n  EXTRACT(ISOYEAR FROM datetime) AS isoyear,\n  EXTRACT(ISOWEEK FROM datetime) AS isoweek,\n  EXTRACT(YEAR FROM datetime) AS year,\n  EXTRACT(WEEK FROM datetime) AS week\nFROM Datetimes\nORDER BY datetime;",
+  "expected_rows": [
+   [
+    "2005-01-03T12:34:56",
+    "2005",
+    "1",
+    "2005",
+    "1"
+   ],
+   [
+    "2007-12-31T00:00:00",
+    "2008",
+    "1",
+    "2007",
+    "52"
+   ],
+   [
+    "2009-01-01T00:00:00",
+    "2009",
+    "1",
+    "2009",
+    "0"
+   ],
+   [
+    "2009-12-31T00:00:00",
+    "2009",
+    "53",
+    "2009",
+    "52"
+   ],
+   [
+    "2017-01-02T00:00:00",
+    "2017",
+    "1",
+    "2017",
+    "1"
+   ],
+   [
+    "2017-05-26T00:00:00",
+    "2017",
+    "21",
+    "2017",
+    "21"
+   ]
+  ],
+  "expected_columns": [
+   "datetime",
+   "isoyear",
+   "isoweek",
+   "year",
+   "week"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/datetime_functions#extract",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-042",
+  "function": "EXTRACT",
+  "sql": "WITH table AS (SELECT DATETIME(TIMESTAMP \"2017-11-05 00:00:00+00\", \"UTC\") AS datetime)\nSELECT\n  datetime,\n  EXTRACT(WEEK(SUNDAY) FROM datetime) AS week_sunday,\n  EXTRACT(WEEK(MONDAY) FROM datetime) AS week_monday\nFROM table;",
+  "expected_rows": [
+   [
+    "2017-11-05T00:00:00",
+    "45",
+    "44"
+   ]
+  ],
+  "expected_columns": [
+   "datetime",
+   "week_sunday",
+   "week_monday"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/datetime_functions#extract",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-043",
+  "function": "FORMAT_DATETIME",
+  "sql": "SELECT\n  FORMAT_DATETIME(\"%c\", DATETIME \"2008-12-25 15:30:00\")\n  AS formatted;",
+  "expected_rows": [
+   [
+    "Thu Dec 25 15:30:00 2008"
+   ]
+  ],
+  "expected_columns": [
+   "formatted"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/datetime_functions#format_datetime",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-044",
+  "function": "FORMAT_DATETIME",
+  "sql": "SELECT\n  FORMAT_DATETIME(\"%b-%d-%Y\", DATETIME \"2008-12-25 15:30:00\")\n  AS formatted;",
+  "expected_rows": [
+   [
+    "Dec-25-2008"
+   ]
+  ],
+  "expected_columns": [
+   "formatted"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/datetime_functions#format_datetime",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-045",
+  "function": "FORMAT_DATETIME",
+  "sql": "SELECT\n  FORMAT_DATETIME(\"%b %Y\", DATETIME \"2008-12-25 15:30:00\")\n  AS formatted;",
+  "expected_rows": [
+   [
+    "Dec 2008"
+   ]
+  ],
+  "expected_columns": [
+   "formatted"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/datetime_functions#format_datetime",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-046",
+  "function": "LAST_DAY",
+  "sql": "SELECT LAST_DAY(DATETIME '2008-11-25 15:30:00', MONTH) AS last_day;",
+  "expected_rows": [
+   [
+    "2008-11-30"
+   ]
+  ],
+  "expected_columns": [
+   "last_day"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/datetime_functions#last_day",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-047",
+  "function": "LAST_DAY",
+  "sql": "SELECT LAST_DAY(DATETIME '2008-11-25 15:30:00') AS last_day;",
+  "expected_rows": [
+   [
+    "2008-11-30"
+   ]
+  ],
+  "expected_columns": [
+   "last_day"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/datetime_functions#last_day",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-048",
+  "function": "LAST_DAY",
+  "sql": "SELECT LAST_DAY(DATETIME '2008-11-25 15:30:00', YEAR) AS last_day;",
+  "expected_rows": [
+   [
+    "2008-12-31"
+   ]
+  ],
+  "expected_columns": [
+   "last_day"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/datetime_functions#last_day",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-049",
+  "function": "LAST_DAY",
+  "sql": "SELECT LAST_DAY(DATETIME '2008-11-10 15:30:00', WEEK(SUNDAY)) AS last_day;",
+  "expected_rows": [
+   [
+    "2008-11-15"
+   ]
+  ],
+  "expected_columns": [
+   "last_day"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/datetime_functions#last_day",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-050",
+  "function": "LAST_DAY",
+  "sql": "SELECT LAST_DAY(DATETIME '2008-11-10 15:30:00', WEEK(MONDAY)) AS last_day;",
+  "expected_rows": [
+   [
+    "2008-11-16"
+   ]
+  ],
+  "expected_columns": [
+   "last_day"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/datetime_functions#last_day",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-051",
+  "function": "PARSE_DATETIME",
+  "sql": "SELECT PARSE_DATETIME('%Y-%m-%d %H:%M:%S', '1998-10-18 13:45:55') AS datetime;",
+  "expected_rows": [
+   [
+    "1998-10-18T13:45:55"
+   ]
+  ],
+  "expected_columns": [
+   "datetime"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/datetime_functions#parse_datetime",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-052",
+  "function": "PARSE_DATETIME",
+  "sql": "SELECT PARSE_DATETIME('%m/%d/%Y %I:%M:%S %p', '8/30/2018 2:23:38 pm') AS datetime;",
+  "expected_rows": [
+   [
+    "2018-08-30T14:23:38"
+   ]
+  ],
+  "expected_columns": [
+   "datetime"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/datetime_functions#parse_datetime",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-053",
+  "function": "PARSE_DATETIME",
+  "sql": "SELECT PARSE_DATETIME('%A, %B %e, %Y','Wednesday, December 19, 2018')\n  AS datetime;",
+  "expected_rows": [
+   [
+    "2018-12-19T00:00:00"
+   ]
+  ],
+  "expected_columns": [
+   "datetime"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/datetime_functions#parse_datetime",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-054",
+  "function": "PARSE_DATETIME",
+  "sql": "SELECT PARSE_DATETIME(\"%a %b %e %Y %I:%M:%S\", \"Thu Dec 25 07:30:00 2008\");",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/datetime_functions#parse_datetime",
+  "notes": "error: Docs: error because the year element is in different locations.",
+  "error": true
+ },
+ {
+  "id": "bq-datetime-055",
+  "function": "PARSE_DATETIME",
+  "sql": "SELECT PARSE_DATETIME(\"%a %b %e %I:%M:%S\", \"Thu Dec 25 07:30:00 2008\");",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/datetime_functions#parse_datetime",
+  "notes": "error: Docs: error because one of the year elements is missing.",
+  "error": true
+ },
+ {
+  "id": "bq-datetime-056",
+  "function": "EXTRACT",
+  "sql": "SELECT\n  EXTRACT(\n    DAY\n    FROM TIMESTAMP('2008-12-25 05:30:00+00') AT TIME ZONE 'UTC')\n    AS the_day_utc,\n  EXTRACT(\n    DAY\n    FROM TIMESTAMP('2008-12-25 05:30:00+00') AT TIME ZONE 'America/Los_Angeles')\n    AS the_day_california;",
+  "expected_rows": [
+   [
+    "25",
+    "24"
+   ]
+  ],
+  "expected_columns": [
+   "the_day_utc",
+   "the_day_california"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#extract",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-057",
+  "function": "EXTRACT",
+  "sql": "SELECT\n  EXTRACT(ISOYEAR FROM TIMESTAMP(\"2005-01-03 12:34:56+00\")) AS isoyear,\n  EXTRACT(ISOWEEK FROM TIMESTAMP(\"2005-01-03 12:34:56+00\")) AS isoweek,\n  EXTRACT(YEAR FROM TIMESTAMP(\"2005-01-03 12:34:56+00\")) AS year,\n  EXTRACT(WEEK FROM TIMESTAMP(\"2005-01-03 12:34:56+00\")) AS week;",
+  "expected_rows": [
+   [
+    "2005",
+    "1",
+    "2005",
+    "1"
+   ]
+  ],
+  "expected_columns": [
+   "isoyear",
+   "isoweek",
+   "year",
+   "week"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#extract",
+  "notes": "Docs: display of results may depend on the environment time zone."
+ },
+ {
+  "id": "bq-datetime-058",
+  "function": "EXTRACT",
+  "sql": "SELECT\n  EXTRACT(ISOYEAR FROM TIMESTAMP(\"2007-12-31 12:00:00+00\")) AS isoyear,\n  EXTRACT(ISOWEEK FROM TIMESTAMP(\"2007-12-31 12:00:00+00\")) AS isoweek,\n  EXTRACT(YEAR FROM TIMESTAMP(\"2007-12-31 12:00:00+00\")) AS year,\n  EXTRACT(WEEK FROM TIMESTAMP(\"2007-12-31 12:00:00+00\")) AS week;",
+  "expected_rows": [
+   [
+    "2008",
+    "1",
+    "2007",
+    "52"
+   ]
+  ],
+  "expected_columns": [
+   "isoyear",
+   "isoweek",
+   "year",
+   "week"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#extract",
+  "notes": "Docs result table omits the timestamp_value column that the original SQL selected; that column was removed from the SQL to match the shown result. Docs: display of results may depend on the environment time zone."
+ },
+ {
+  "id": "bq-datetime-059",
+  "function": "EXTRACT",
+  "sql": "SELECT\n  EXTRACT(ISOYEAR FROM TIMESTAMP(\"2009-01-01 12:00:00+00\")) AS isoyear,\n  EXTRACT(ISOWEEK FROM TIMESTAMP(\"2009-01-01 12:00:00+00\")) AS isoweek,\n  EXTRACT(YEAR FROM TIMESTAMP(\"2009-01-01 12:00:00+00\")) AS year,\n  EXTRACT(WEEK FROM TIMESTAMP(\"2009-01-01 12:00:00+00\")) AS week;",
+  "expected_rows": [
+   [
+    "2009",
+    "1",
+    "2009",
+    "0"
+   ]
+  ],
+  "expected_columns": [
+   "isoyear",
+   "isoweek",
+   "year",
+   "week"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#extract",
+  "notes": "Docs result table omits the timestamp_value column that the original SQL selected; that column was removed from the SQL to match the shown result. Docs: display of results may depend on the environment time zone."
+ },
+ {
+  "id": "bq-datetime-060",
+  "function": "EXTRACT",
+  "sql": "SELECT\n  EXTRACT(ISOYEAR FROM TIMESTAMP(\"2009-12-31 12:00:00+00\")) AS isoyear,\n  EXTRACT(ISOWEEK FROM TIMESTAMP(\"2009-12-31 12:00:00+00\")) AS isoweek,\n  EXTRACT(YEAR FROM TIMESTAMP(\"2009-12-31 12:00:00+00\")) AS year,\n  EXTRACT(WEEK FROM TIMESTAMP(\"2009-12-31 12:00:00+00\")) AS week;",
+  "expected_rows": [
+   [
+    "2009",
+    "53",
+    "2009",
+    "52"
+   ]
+  ],
+  "expected_columns": [
+   "isoyear",
+   "isoweek",
+   "year",
+   "week"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#extract",
+  "notes": "Docs result table omits the timestamp_value column that the original SQL selected; that column was removed from the SQL to match the shown result. Docs: display of results may depend on the environment time zone."
+ },
+ {
+  "id": "bq-datetime-061",
+  "function": "EXTRACT",
+  "sql": "SELECT\n  EXTRACT(ISOYEAR FROM TIMESTAMP(\"2017-01-02 12:00:00+00\")) AS isoyear,\n  EXTRACT(ISOWEEK FROM TIMESTAMP(\"2017-01-02 12:00:00+00\")) AS isoweek,\n  EXTRACT(YEAR FROM TIMESTAMP(\"2017-01-02 12:00:00+00\")) AS year,\n  EXTRACT(WEEK FROM TIMESTAMP(\"2017-01-02 12:00:00+00\")) AS week;",
+  "expected_rows": [
+   [
+    "2017",
+    "1",
+    "2017",
+    "1"
+   ]
+  ],
+  "expected_columns": [
+   "isoyear",
+   "isoweek",
+   "year",
+   "week"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#extract",
+  "notes": "Docs result table omits the timestamp_value column that the original SQL selected; that column was removed from the SQL to match the shown result. Docs: display of results may depend on the environment time zone."
+ },
+ {
+  "id": "bq-datetime-062",
+  "function": "EXTRACT",
+  "sql": "SELECT\n  EXTRACT(ISOYEAR FROM TIMESTAMP(\"2017-05-26 12:00:00+00\")) AS isoyear,\n  EXTRACT(ISOWEEK FROM TIMESTAMP(\"2017-05-26 12:00:00+00\")) AS isoweek,\n  EXTRACT(YEAR FROM TIMESTAMP(\"2017-05-26 12:00:00+00\")) AS year,\n  EXTRACT(WEEK FROM TIMESTAMP(\"2017-05-26 12:00:00+00\")) AS week;",
+  "expected_rows": [
+   [
+    "2017",
+    "21",
+    "2017",
+    "21"
+   ]
+  ],
+  "expected_columns": [
+   "isoyear",
+   "isoweek",
+   "year",
+   "week"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#extract",
+  "notes": "Docs result table omits the timestamp_value column that the original SQL selected; that column was removed from the SQL to match the shown result. Docs: display of results may depend on the environment time zone."
+ },
+ {
+  "id": "bq-datetime-063",
+  "function": "EXTRACT",
+  "sql": "SELECT\n  EXTRACT(WEEK(SUNDAY) FROM TIMESTAMP(\"2017-11-06 00:00:00+00\")) AS week_sunday,\n  EXTRACT(WEEK(MONDAY) FROM TIMESTAMP(\"2017-11-06 00:00:00+00\")) AS week_monday;",
+  "expected_rows": [
+   [
+    "45",
+    "44"
+   ]
+  ],
+  "expected_columns": [
+   "week_sunday",
+   "week_monday"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#extract",
+  "notes": "Docs: display of results may depend on the environment time zone."
+ },
+ {
+  "id": "bq-datetime-064",
+  "function": "FORMAT_TIMESTAMP",
+  "sql": "SELECT FORMAT_TIMESTAMP(\"%c\", TIMESTAMP \"2050-12-25 15:30:55+00\", \"UTC\")\n  AS formatted;",
+  "expected_rows": [
+   [
+    "Sun Dec 25 15:30:55 2050"
+   ]
+  ],
+  "expected_columns": [
+   "formatted"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#format_timestamp",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-065",
+  "function": "FORMAT_TIMESTAMP",
+  "sql": "SELECT FORMAT_TIMESTAMP(\"%b-%d-%Y\", TIMESTAMP \"2050-12-25 15:30:55+00\")\n  AS formatted;",
+  "expected_rows": [
+   [
+    "Dec-25-2050"
+   ]
+  ],
+  "expected_columns": [
+   "formatted"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#format_timestamp",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-066",
+  "function": "FORMAT_TIMESTAMP",
+  "sql": "SELECT FORMAT_TIMESTAMP(\"%b %Y\", TIMESTAMP \"2050-12-25 15:30:55+00\")\n  AS formatted;",
+  "expected_rows": [
+   [
+    "Dec 2050"
+   ]
+  ],
+  "expected_columns": [
+   "formatted"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#format_timestamp",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-067",
+  "function": "PARSE_TIMESTAMP",
+  "sql": "SELECT PARSE_TIMESTAMP(\"%c\", \"Thu Dec 25 07:30:00 2008\") AS parsed;",
+  "expected_rows": [
+   [
+    "2008-12-25 07:30:00 UTC"
+   ]
+  ],
+  "expected_columns": [
+   "parsed"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#parse_timestamp",
+  "notes": "Docs: display of results may depend on the environment time zone."
+ },
+ {
+  "id": "bq-datetime-068",
+  "function": "STRING",
+  "sql": "SELECT STRING(TIMESTAMP \"2008-12-25 15:30:00+00\", \"UTC\") AS string;",
+  "expected_rows": [
+   [
+    "2008-12-25 15:30:00+00"
+   ]
+  ],
+  "expected_columns": [
+   "string"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#string",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-069",
+  "function": "TIMESTAMP",
+  "sql": "SELECT TIMESTAMP(\"2008-12-25 15:30:00+00\") AS timestamp_str;",
+  "expected_rows": [
+   [
+    "2008-12-25 15:30:00 UTC"
+   ]
+  ],
+  "expected_columns": [
+   "timestamp_str"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#timestamp",
+  "notes": "Docs: display of results may depend on the environment time zone."
+ },
+ {
+  "id": "bq-datetime-070",
+  "function": "TIMESTAMP",
+  "sql": "SELECT TIMESTAMP(\"2008-12-25 15:30:00\", \"America/Los_Angeles\") AS timestamp_str;",
+  "expected_rows": [
+   [
+    "2008-12-25 23:30:00 UTC"
+   ]
+  ],
+  "expected_columns": [
+   "timestamp_str"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#timestamp",
+  "notes": "Docs: display of results may depend on the environment time zone."
+ },
+ {
+  "id": "bq-datetime-071",
+  "function": "TIMESTAMP",
+  "sql": "SELECT TIMESTAMP(\"2008-12-25 15:30:00 UTC\") AS timestamp_str;",
+  "expected_rows": [
+   [
+    "2008-12-25 15:30:00 UTC"
+   ]
+  ],
+  "expected_columns": [
+   "timestamp_str"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#timestamp",
+  "notes": "Docs: display of results may depend on the environment time zone."
+ },
+ {
+  "id": "bq-datetime-072",
+  "function": "TIMESTAMP",
+  "sql": "SELECT TIMESTAMP(DATETIME \"2008-12-25 15:30:00\") AS timestamp_datetime;",
+  "expected_rows": [
+   [
+    "2008-12-25 15:30:00 UTC"
+   ]
+  ],
+  "expected_columns": [
+   "timestamp_datetime"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#timestamp",
+  "notes": "Docs: display of results may depend on the environment time zone."
+ },
+ {
+  "id": "bq-datetime-073",
+  "function": "TIMESTAMP",
+  "sql": "SELECT TIMESTAMP(DATE \"2008-12-25\") AS timestamp_date;",
+  "expected_rows": [
+   [
+    "2008-12-25 00:00:00 UTC"
+   ]
+  ],
+  "expected_columns": [
+   "timestamp_date"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#timestamp",
+  "notes": "Docs: display of results may depend on the environment time zone."
+ },
+ {
+  "id": "bq-datetime-074",
+  "function": "TIMESTAMP_ADD",
+  "sql": "SELECT\n  TIMESTAMP(\"2008-12-25 15:30:00+00\") AS original,\n  TIMESTAMP_ADD(TIMESTAMP \"2008-12-25 15:30:00+00\", INTERVAL 10 MINUTE) AS later;",
+  "expected_rows": [
+   [
+    "2008-12-25 15:30:00 UTC",
+    "2008-12-25 15:40:00 UTC"
+   ]
+  ],
+  "expected_columns": [
+   "original",
+   "later"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#timestamp_add",
+  "notes": "Docs: display of results may depend on the environment time zone."
+ },
+ {
+  "id": "bq-datetime-075",
+  "function": "TIMESTAMP_DIFF",
+  "sql": "SELECT\n  TIMESTAMP(\"2010-07-07 10:20:00+00\") AS later_timestamp,\n  TIMESTAMP(\"2008-12-25 15:30:00+00\") AS earlier_timestamp,\n  TIMESTAMP_DIFF(TIMESTAMP \"2010-07-07 10:20:00+00\", TIMESTAMP \"2008-12-25 15:30:00+00\", HOUR) AS hours;",
+  "expected_rows": [
+   [
+    "2010-07-07 10:20:00 UTC",
+    "2008-12-25 15:30:00 UTC",
+    "13410"
+   ]
+  ],
+  "expected_columns": [
+   "later_timestamp",
+   "earlier_timestamp",
+   "hours"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#timestamp_diff",
+  "notes": "Docs: display of results may depend on the environment time zone."
+ },
+ {
+  "id": "bq-datetime-076",
+  "function": "TIMESTAMP_DIFF",
+  "sql": "SELECT TIMESTAMP_DIFF(TIMESTAMP \"2018-08-14\", TIMESTAMP \"2018-10-14\", DAY) AS negative_diff;",
+  "expected_rows": [
+   [
+    "-61"
+   ]
+  ],
+  "expected_columns": [
+   "negative_diff"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#timestamp_diff",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-077",
+  "function": "TIMESTAMP_DIFF",
+  "sql": "SELECT TIMESTAMP_DIFF(\"2001-02-01 01:00:00\", \"2001-02-01 00:00:01\", HOUR) AS diff;",
+  "expected_rows": [
+   [
+    "0"
+   ]
+  ],
+  "expected_columns": [
+   "diff"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#timestamp_diff",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-078",
+  "function": "TIMESTAMP_DIFF",
+  "sql": "SELECT\n  TIMESTAMP_DIFF(TIMESTAMP '2021-05-01 04:54:00+00',\n    TIMESTAMP '2021-05-01 01:00:00+00', HOUR) AS diff_3_9,\n  TIMESTAMP_DIFF(TIMESTAMP '2021-05-01 04:06:00+00',\n    TIMESTAMP '2021-05-01 01:00:00+00', HOUR) AS diff_3_1,\n  TIMESTAMP_DIFF(TIMESTAMP '2021-05-01 01:00:00+00',\n    TIMESTAMP '2021-05-01 04:54:00+00', HOUR) AS diff_negative_3_9,\n  TIMESTAMP_DIFF(TIMESTAMP '2021-05-01 01:00:00+00',\n    TIMESTAMP '2021-05-01 04:06:00+00', HOUR) AS diff_negative_3_1;",
+  "expected_rows": [
+   [
+    "3",
+    "3",
+    "-3",
+    "-3"
+   ]
+  ],
+  "expected_columns": [
+   "diff_3_9",
+   "diff_3_1",
+   "diff_negative_3_9",
+   "diff_negative_3_1"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#timestamp_diff",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-079",
+  "function": "TIMESTAMP_MICROS",
+  "sql": "SELECT TIMESTAMP_MICROS(1230219000000000) AS timestamp_value;",
+  "expected_rows": [
+   [
+    "2008-12-25 15:30:00 UTC"
+   ]
+  ],
+  "expected_columns": [
+   "timestamp_value"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#timestamp_micros",
+  "notes": "Docs: display of results may depend on the environment time zone."
+ },
+ {
+  "id": "bq-datetime-080",
+  "function": "TIMESTAMP_MILLIS",
+  "sql": "SELECT TIMESTAMP_MILLIS(1230219000000) AS timestamp_value;",
+  "expected_rows": [
+   [
+    "2008-12-25 15:30:00 UTC"
+   ]
+  ],
+  "expected_columns": [
+   "timestamp_value"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#timestamp_millis",
+  "notes": "Docs: display of results may depend on the environment time zone."
+ },
+ {
+  "id": "bq-datetime-081",
+  "function": "TIMESTAMP_SECONDS",
+  "sql": "SELECT TIMESTAMP_SECONDS(1230219000) AS timestamp_value;",
+  "expected_rows": [
+   [
+    "2008-12-25 15:30:00 UTC"
+   ]
+  ],
+  "expected_columns": [
+   "timestamp_value"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#timestamp_seconds",
+  "notes": "Docs: display of results may depend on the environment time zone."
+ },
+ {
+  "id": "bq-datetime-082",
+  "function": "TIMESTAMP_SUB",
+  "sql": "SELECT\n  TIMESTAMP(\"2008-12-25 15:30:00+00\") AS original,\n  TIMESTAMP_SUB(TIMESTAMP \"2008-12-25 15:30:00+00\", INTERVAL 10 MINUTE) AS earlier;",
+  "expected_rows": [
+   [
+    "2008-12-25 15:30:00 UTC",
+    "2008-12-25 15:20:00 UTC"
+   ]
+  ],
+  "expected_columns": [
+   "original",
+   "earlier"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#timestamp_sub",
+  "notes": "Docs: display of results may depend on the environment time zone."
+ },
+ {
+  "id": "bq-datetime-083",
+  "function": "TIMESTAMP_TRUNC",
+  "sql": "SELECT\n  TIMESTAMP_TRUNC(TIMESTAMP \"2008-12-25 15:30:00+00\", DAY, \"UTC\") AS utc,\n  TIMESTAMP_TRUNC(TIMESTAMP \"2008-12-25 15:30:00+00\", DAY, \"America/Los_Angeles\") AS la;",
+  "expected_rows": [
+   [
+    "2008-12-25 00:00:00 UTC",
+    "2008-12-25 08:00:00 UTC"
+   ]
+  ],
+  "expected_columns": [
+   "utc",
+   "la"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#timestamp_trunc",
+  "notes": "Docs: display of results may depend on the environment time zone."
+ },
+ {
+  "id": "bq-datetime-084",
+  "function": "TIMESTAMP_TRUNC",
+  "sql": "SELECT\n  timestamp_value AS timestamp_value,\n  TIMESTAMP_TRUNC(timestamp_value, WEEK(MONDAY), \"UTC\") AS utc_truncated,\n  TIMESTAMP_TRUNC(timestamp_value, WEEK(MONDAY), \"Pacific/Auckland\") AS nzdt_truncated\nFROM (SELECT TIMESTAMP(\"2017-11-06 00:00:00+12\") AS timestamp_value);",
+  "expected_rows": [
+   [
+    "2017-11-05 12:00:00 UTC",
+    "2017-10-30 00:00:00 UTC",
+    "2017-11-05 11:00:00 UTC"
+   ]
+  ],
+  "expected_columns": [
+   "timestamp_value",
+   "utc_truncated",
+   "nzdt_truncated"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#timestamp_trunc",
+  "notes": "Docs: display of results may depend on the environment time zone."
+ },
+ {
+  "id": "bq-datetime-085",
+  "function": "TIMESTAMP_TRUNC",
+  "sql": "SELECT\n  TIMESTAMP_TRUNC(\"2015-06-15 00:00:00+00\", ISOYEAR) AS isoyear_boundary,\n  EXTRACT(ISOYEAR FROM TIMESTAMP \"2015-06-15 00:00:00+00\") AS isoyear_number;",
+  "expected_rows": [
+   [
+    "2014-12-29 00:00:00 UTC",
+    "2015"
+   ]
+  ],
+  "expected_columns": [
+   "isoyear_boundary",
+   "isoyear_number"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#timestamp_trunc",
+  "notes": "Docs: display of results may depend on the environment time zone."
+ },
+ {
+  "id": "bq-datetime-086",
+  "function": "UNIX_MICROS",
+  "sql": "SELECT UNIX_MICROS(TIMESTAMP \"2008-12-25 15:30:00+00\") AS micros;",
+  "expected_rows": [
+   [
+    "1230219000000000"
+   ]
+  ],
+  "expected_columns": [
+   "micros"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#unix_micros",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-087",
+  "function": "UNIX_MILLIS",
+  "sql": "SELECT UNIX_MILLIS(TIMESTAMP \"2008-12-25 15:30:00+00\") AS millis;",
+  "expected_rows": [
+   [
+    "1230219000000"
+   ]
+  ],
+  "expected_columns": [
+   "millis"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#unix_millis",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-088",
+  "function": "UNIX_MILLIS",
+  "sql": "SELECT UNIX_MILLIS(TIMESTAMP \"1970-01-01 00:00:00.0018+00\") AS millis;",
+  "expected_rows": [
+   [
+    "1"
+   ]
+  ],
+  "expected_columns": [
+   "millis"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#unix_millis",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-089",
+  "function": "UNIX_SECONDS",
+  "sql": "SELECT UNIX_SECONDS(TIMESTAMP \"2008-12-25 15:30:00+00\") AS seconds;",
+  "expected_rows": [
+   [
+    "1230219000"
+   ]
+  ],
+  "expected_columns": [
+   "seconds"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#unix_seconds",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-090",
+  "function": "UNIX_SECONDS",
+  "sql": "SELECT UNIX_SECONDS(TIMESTAMP \"1970-01-01 00:00:01.8+00\") AS seconds;",
+  "expected_rows": [
+   [
+    "1"
+   ]
+  ],
+  "expected_columns": [
+   "seconds"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#unix_seconds",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-091",
+  "function": "FORMAT_TIMESTAMP",
+  "sql": "SELECT FORMAT_TIMESTAMP(\"%Y-%m-%dT%H:%M:%S%Z\", TIMESTAMP \"2050-12-25 15:30:55\", \"UTC\")\n  AS formatted;",
+  "expected_rows": [
+   [
+    "2050-12-25T15:30:55UTC"
+   ]
+  ],
+  "expected_columns": [
+   "formatted"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#format_timestamp",
+  "notes": "Docs result table has an irregular border (/*+---); values taken as shown."
+ },
+ {
+  "id": "bq-datetime-092",
+  "function": "PARSE_TIMESTAMP",
+  "sql": "SELECT PARSE_TIMESTAMP(\"%a %b %e %Y %I:%M:%S\", \"Thu Dec 25 07:30:00 2008\");",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#parse_timestamp",
+  "notes": "error: Docs: error because the year element is in different locations.",
+  "error": true
+ },
+ {
+  "id": "bq-datetime-093",
+  "function": "PARSE_TIMESTAMP",
+  "sql": "SELECT PARSE_TIMESTAMP(\"%a %b %e %I:%M:%S\", \"Thu Dec 25 07:30:00 2008\");",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions#parse_timestamp",
+  "notes": "error: Docs: error because one of the year elements is missing.",
+  "error": true
+ },
+ {
+  "id": "bq-datetime-094",
+  "function": "EXTRACT",
+  "sql": "SELECT EXTRACT(HOUR FROM TIME \"15:30:00\") as hour;",
+  "expected_rows": [
+   [
+    "15"
+   ]
+  ],
+  "expected_columns": [
+   "hour"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/time_functions#extract",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-095",
+  "function": "FORMAT_TIME",
+  "sql": "SELECT FORMAT_TIME(\"%R\", TIME \"15:30:00\") as formatted_time;",
+  "expected_rows": [
+   [
+    "15:30"
+   ]
+  ],
+  "expected_columns": [
+   "formatted_time"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/time_functions#format_time",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-096",
+  "function": "PARSE_TIME",
+  "sql": "SELECT PARSE_TIME(\"%H\", \"15\") as parsed_time;",
+  "expected_rows": [
+   [
+    "15:00:00"
+   ]
+  ],
+  "expected_columns": [
+   "parsed_time"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/time_functions#parse_time",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-097",
+  "function": "PARSE_TIME",
+  "sql": "SELECT PARSE_TIME('%I:%M:%S %p', '2:23:38 pm') AS parsed_time;",
+  "expected_rows": [
+   [
+    "14:23:38"
+   ]
+  ],
+  "expected_columns": [
+   "parsed_time"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/time_functions#parse_time",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-098",
+  "function": "TIME",
+  "sql": "SELECT\n  TIME(15, 30, 00) as time_hms,\n  TIME(TIMESTAMP \"2008-12-25 15:30:00+08\", \"America/Los_Angeles\") as time_tstz;",
+  "expected_rows": [
+   [
+    "15:30:00",
+    "23:30:00"
+   ]
+  ],
+  "expected_columns": [
+   "time_hms",
+   "time_tstz"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/time_functions#time",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-099",
+  "function": "TIME",
+  "sql": "SELECT TIME(DATETIME \"2008-12-25 15:30:00.000000\") AS time_dt;",
+  "expected_rows": [
+   [
+    "15:30:00"
+   ]
+  ],
+  "expected_columns": [
+   "time_dt"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/time_functions#time",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-100",
+  "function": "TIME_ADD",
+  "sql": "SELECT\n  TIME \"15:30:00\" as original_time,\n  TIME_ADD(TIME \"15:30:00\", INTERVAL 10 MINUTE) as later;",
+  "expected_rows": [
+   [
+    "15:30:00",
+    "15:40:00"
+   ]
+  ],
+  "expected_columns": [
+   "original_time",
+   "later"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/time_functions#time_add",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-101",
+  "function": "TIME_DIFF",
+  "sql": "SELECT\n  TIME \"15:30:00\" as first_time,\n  TIME \"14:35:00\" as second_time,\n  TIME_DIFF(TIME \"15:30:00\", TIME \"14:35:00\", MINUTE) as difference;",
+  "expected_rows": [
+   [
+    "15:30:00",
+    "14:35:00",
+    "55"
+   ]
+  ],
+  "expected_columns": [
+   "first_time",
+   "second_time",
+   "difference"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/time_functions#time_diff",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-102",
+  "function": "TIME_DIFF",
+  "sql": "SELECT\n  TIME_DIFF(TIME '04:54:00', TIME '01:00:00', HOUR) AS diff_3_9,\n  TIME_DIFF(TIME '04:06:00', TIME '01:00:00', HOUR) AS diff_3_1,\n  TIME_DIFF(TIME '01:00:00', TIME '04:54:00', HOUR) AS diff_negative_3_9,\n  TIME_DIFF(TIME '01:00:00', TIME '04:06:00', HOUR) AS diff_negative_3_1;",
+  "expected_rows": [
+   [
+    "3",
+    "3",
+    "-3",
+    "-3"
+   ]
+  ],
+  "expected_columns": [
+   "diff_3_9",
+   "diff_3_1",
+   "diff_negative_3_9",
+   "diff_negative_3_1"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/time_functions#time_diff",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-103",
+  "function": "TIME_SUB",
+  "sql": "SELECT\n  TIME \"15:30:00\" as original_date,\n  TIME_SUB(TIME \"15:30:00\", INTERVAL 10 MINUTE) as earlier;",
+  "expected_rows": [
+   [
+    "15:30:00",
+    "15:20:00"
+   ]
+  ],
+  "expected_columns": [
+   "original_date",
+   "earlier"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/time_functions#time_sub",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-104",
+  "function": "TIME_TRUNC",
+  "sql": "SELECT\n  TIME \"15:30:00\" as original,\n  TIME_TRUNC(TIME \"15:30:00\", HOUR) as truncated;",
+  "expected_rows": [
+   [
+    "15:30:00",
+    "15:00:00"
+   ]
+  ],
+  "expected_columns": [
+   "original",
+   "truncated"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/time_functions#time_trunc",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-105",
+  "function": "PARSE_TIME",
+  "sql": "SELECT PARSE_TIME(\"%S:%I:%M\", \"07:30:00\");",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/time_functions#parse_time",
+  "notes": "error: Docs: error because the seconds element is in different locations.",
+  "error": true
+ },
+ {
+  "id": "bq-datetime-106",
+  "function": "PARSE_TIME",
+  "sql": "SELECT PARSE_TIME(\"%I:%M\", \"07:30:00\");",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/time_functions#parse_time",
+  "notes": "error: Docs: error because one of the seconds elements is missing.",
+  "error": true
+ },
+ {
+  "id": "bq-datetime-107",
+  "function": "FORMAT_DATE",
+  "sql": "SELECT FORMAT_DATE(\"%b-%d-%Y\", DATE \"2008-12-25\") AS formatted;",
+  "expected_rows": [
+   [
+    "Dec-25-2008"
+   ]
+  ],
+  "expected_columns": [
+   "formatted"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#format_elements_for_date_and_time_parts",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-108",
+  "function": "FORMAT_TIMESTAMP",
+  "sql": "SELECT FORMAT_TIMESTAMP(\"%b %Y %Ez\", TIMESTAMP \"2008-12-25 15:30:00+00\")\n  AS formatted;",
+  "expected_rows": [
+   [
+    "Dec 2008 +00:00"
+   ]
+  ],
+  "expected_columns": [
+   "formatted"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#format_elements_for_date_and_time_parts",
+  "notes": ""
+ },
+ {
+  "id": "bq-datetime-109",
+  "function": "PARSE_DATE",
+  "sql": "SELECT PARSE_DATE(\"%Y%m%d\", \"20081225\") AS parsed;",
+  "expected_rows": [
+   [
+    "2008-12-25"
+   ]
+  ],
+  "expected_columns": [
+   "parsed"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#format_elements_for_date_and_time_parts",
+  "notes": ""
+ }
+]

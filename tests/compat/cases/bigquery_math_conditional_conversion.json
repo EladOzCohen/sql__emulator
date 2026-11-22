@@ -1,0 +1,4271 @@
+[
+ {
+  "id": "bq-math-001",
+  "function": "CBRT",
+  "sql": "SELECT CBRT(27) AS cube_root;",
+  "expected_rows": [
+   [
+    "3.0000000000000004"
+   ]
+  ],
+  "expected_columns": [
+   "cube_root"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#cbrt",
+  "notes": ""
+ },
+ {
+  "id": "bq-math-002",
+  "function": "COSINE_DISTANCE",
+  "sql": "SELECT COSINE_DISTANCE([1.0, 2.0], [3.0, 4.0]) AS results;",
+  "expected_rows": [
+   [
+    "0.016130"
+   ]
+  ],
+  "expected_columns": [
+   "results"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#cosine_distance",
+  "notes": ""
+ },
+ {
+  "id": "bq-math-003",
+  "function": "COSINE_DISTANCE",
+  "sql": "SELECT COSINE_DISTANCE(\n [(1, 1.0), (2, 2.0)],\n [(2, 4.0), (1, 3.0)]) AS results;",
+  "expected_rows": [
+   [
+    "0.016130"
+   ]
+  ],
+  "expected_columns": [
+   "results"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#cosine_distance",
+  "notes": ""
+ },
+ {
+  "id": "bq-math-004",
+  "function": "COT",
+  "sql": "SELECT COT(1) AS a, SAFE.COT(0) AS b;",
+  "expected_rows": [
+   [
+    "0.64209261593433065",
+    "NULL"
+   ]
+  ],
+  "expected_columns": [
+   "a",
+   "b"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#cot",
+  "notes": ""
+ },
+ {
+  "id": "bq-math-005",
+  "function": "COTH",
+  "sql": "SELECT COTH(1) AS a, SAFE.COTH(0) AS b;",
+  "expected_rows": [
+   [
+    "1.313035285499",
+    "NULL"
+   ]
+  ],
+  "expected_columns": [
+   "a",
+   "b"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#coth",
+  "notes": ""
+ },
+ {
+  "id": "bq-math-006",
+  "function": "CSC",
+  "sql": "SELECT CSC(100) AS a, CSC(-1) AS b, SAFE.CSC(0) AS c;",
+  "expected_rows": [
+   [
+    "-1.97485753142",
+    "-1.188395105778",
+    "NULL"
+   ]
+  ],
+  "expected_columns": [
+   "a",
+   "b",
+   "c"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#csc",
+  "notes": ""
+ },
+ {
+  "id": "bq-math-007",
+  "function": "CSCH",
+  "sql": "SELECT CSCH(0.5) AS a, CSCH(-2) AS b, SAFE.CSCH(0) AS c;",
+  "expected_rows": [
+   [
+    "1.919034751334",
+    "-0.27572056477",
+    "NULL"
+   ]
+  ],
+  "expected_columns": [
+   "a",
+   "b",
+   "c"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#csch",
+  "notes": ""
+ },
+ {
+  "id": "bq-math-008",
+  "function": "EUCLIDEAN_DISTANCE",
+  "sql": "SELECT EUCLIDEAN_DISTANCE([1.0, 2.0], [3.0, 4.0]) AS results;",
+  "expected_rows": [
+   [
+    "2.828"
+   ]
+  ],
+  "expected_columns": [
+   "results"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#euclidean_distance",
+  "notes": ""
+ },
+ {
+  "id": "bq-math-009",
+  "function": "EUCLIDEAN_DISTANCE",
+  "sql": "SELECT EUCLIDEAN_DISTANCE(\n [(1, 1.0), (2, 2.0)],\n [(2, 4.0), (1, 3.0)]) AS results;",
+  "expected_rows": [
+   [
+    "2.828"
+   ]
+  ],
+  "expected_columns": [
+   "results"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#euclidean_distance",
+  "notes": ""
+ },
+ {
+  "id": "bq-math-010",
+  "function": "RANGE_BUCKET",
+  "sql": "WITH students AS\n(\n  SELECT 9 AS age UNION ALL\n  SELECT 20 AS age UNION ALL\n  SELECT 25 AS age UNION ALL\n  SELECT 31 AS age UNION ALL\n  SELECT 32 AS age UNION ALL\n  SELECT 33 AS age\n)\nSELECT RANGE_BUCKET(age, [10, 20, 30]) AS age_group, COUNT(*) AS count\nFROM students\nGROUP BY 1;",
+  "expected_rows": [
+   [
+    "0",
+    "1"
+   ],
+   [
+    "2",
+    "2"
+   ],
+   [
+    "3",
+    "3"
+   ]
+  ],
+  "expected_columns": [
+   "age_group",
+   "count"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#range_bucket",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-math-011",
+  "function": "SEC",
+  "sql": "SELECT SEC(100) AS a, SEC(-1) AS b;",
+  "expected_rows": [
+   [
+    "1.159663822905",
+    "1.85081571768"
+   ]
+  ],
+  "expected_columns": [
+   "a",
+   "b"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#sec",
+  "notes": ""
+ },
+ {
+  "id": "bq-math-012",
+  "function": "SECH",
+  "sql": "SELECT SECH(0.5) AS a, SECH(-2) AS b, SECH(100) AS c;",
+  "expected_rows": [
+   [
+    "0.88681888397",
+    "0.265802228834",
+    "7.4401519520417E-44"
+   ]
+  ],
+  "expected_columns": [
+   "a",
+   "b",
+   "c"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#sech",
+  "notes": ""
+ },
+ {
+  "id": "bq-cond-001",
+  "function": "CASE",
+  "sql": "WITH Numbers AS (\n  SELECT 90 as A, 2 as B UNION ALL\n  SELECT 50, 8 UNION ALL\n  SELECT 60, 6 UNION ALL\n  SELECT 50, 10\n)\nSELECT\n  A,\n  B,\n  CASE A\n    WHEN 90 THEN 'red'\n    WHEN 50 THEN 'blue'\n    ELSE 'green'\n    END\n    AS result\nFROM Numbers;",
+  "expected_rows": [
+   [
+    "90",
+    "2",
+    "red"
+   ],
+   [
+    "50",
+    "8",
+    "blue"
+   ],
+   [
+    "60",
+    "6",
+    "green"
+   ],
+   [
+    "50",
+    "10",
+    "blue"
+   ]
+  ],
+  "expected_columns": [
+   "A",
+   "B",
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conditional_expressions#case_expr",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-cond-002",
+  "function": "CASE",
+  "sql": "WITH Numbers AS (\n  SELECT 90 as A, 2 as B UNION ALL\n  SELECT 50, 6 UNION ALL\n  SELECT 20, 10\n)\nSELECT\n  A,\n  B,\n  CASE\n    WHEN A > 60 THEN 'red'\n    WHEN B = 6 THEN 'blue'\n    ELSE 'green'\n    END\n    AS result\nFROM Numbers;",
+  "expected_rows": [
+   [
+    "90",
+    "2",
+    "red"
+   ],
+   [
+    "50",
+    "6",
+    "blue"
+   ],
+   [
+    "20",
+    "10",
+    "green"
+   ]
+  ],
+  "expected_columns": [
+   "A",
+   "B",
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conditional_expressions#case",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-cond-003",
+  "function": "COALESCE",
+  "sql": "SELECT COALESCE('A', 'B', 'C') as result;",
+  "expected_rows": [
+   [
+    "A"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conditional_expressions#coalesce",
+  "notes": ""
+ },
+ {
+  "id": "bq-cond-004",
+  "function": "COALESCE",
+  "sql": "SELECT COALESCE(NULL, 'B', 'C') as result;",
+  "expected_rows": [
+   [
+    "B"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conditional_expressions#coalesce",
+  "notes": ""
+ },
+ {
+  "id": "bq-cond-005",
+  "function": "COALESCE",
+  "sql": "-- The first expression is non-NULL, so it's used. The division-by-zero error\n-- from the second expression isn't produced.\nSELECT COALESCE(10, 1 / 0) as result;",
+  "expected_rows": [
+   [
+    "10"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conditional_expressions#coalesce",
+  "notes": ""
+ },
+ {
+  "id": "bq-cond-006",
+  "function": "IF",
+  "sql": "SELECT\n  10 AS A,\n  20 AS B,\n  IF(10 < 20, 'true', 'false') AS result;",
+  "expected_rows": [
+   [
+    "10",
+    "20",
+    "true"
+   ]
+  ],
+  "expected_columns": [
+   "A",
+   "B",
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conditional_expressions#if",
+  "notes": ""
+ },
+ {
+  "id": "bq-cond-007",
+  "function": "IF",
+  "sql": "SELECT\n  30 AS A,\n  20 AS B,\n  IF(30 < 20, 'true', 'false') AS result;",
+  "expected_rows": [
+   [
+    "30",
+    "20",
+    "false"
+   ]
+  ],
+  "expected_columns": [
+   "A",
+   "B",
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conditional_expressions#if",
+  "notes": ""
+ },
+ {
+  "id": "bq-cond-008",
+  "function": "IFNULL",
+  "sql": "SELECT IFNULL(NULL, 0) as result;",
+  "expected_rows": [
+   [
+    "0"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conditional_expressions#ifnull",
+  "notes": ""
+ },
+ {
+  "id": "bq-cond-009",
+  "function": "IFNULL",
+  "sql": "SELECT IFNULL(10, 0) as result;",
+  "expected_rows": [
+   [
+    "10"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conditional_expressions#ifnull",
+  "notes": ""
+ },
+ {
+  "id": "bq-cond-010",
+  "function": "IFNULL",
+  "sql": "-- The first expression is non-NULL, so it's used. The division-by-zero error\n-- from the second expression isn't produced.\nSELECT IFNULL(10, 1 / 0) as result;",
+  "expected_rows": [
+   [
+    "10"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conditional_expressions#ifnull",
+  "notes": ""
+ },
+ {
+  "id": "bq-cond-011",
+  "function": "NULLIF",
+  "sql": "SELECT NULLIF(0, 0) as result;",
+  "expected_rows": [
+   [
+    "NULL"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conditional_expressions#nullif",
+  "notes": ""
+ },
+ {
+  "id": "bq-cond-012",
+  "function": "NULLIF",
+  "sql": "SELECT NULLIF(10, 0) as result;",
+  "expected_rows": [
+   [
+    "10"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conditional_expressions#nullif",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-001",
+  "function": "CAST",
+  "sql": "SELECT '0x123' as hex_value, CAST('0x123' as INT64) as hex_to_int;",
+  "expected_rows": [
+   [
+    "0x123",
+    "291"
+   ]
+  ],
+  "expected_columns": [
+   "hex_value",
+   "hex_to_int"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#cast_as_int64",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-002",
+  "function": "CAST",
+  "sql": "SELECT '-0x123' as hex_value, CAST('-0x123' as INT64) as hex_to_int;",
+  "expected_rows": [
+   [
+    "-0x123",
+    "-291"
+   ]
+  ],
+  "expected_columns": [
+   "hex_value",
+   "hex_to_int"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#cast_as_int64",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-003",
+  "function": "CAST",
+  "sql": "SELECT input, CAST(input AS INTERVAL) AS output\nFROM UNNEST([\n  '1-2 3 10:20:30.456',\n  '1-2',\n  '10:20:30',\n  'P1Y2M3D',\n  'PT10H20M30,456S'\n]) input;",
+  "expected_rows": [
+   [
+    "1-2 3 10:20:30.456",
+    "1-2 3 10:20:30.456"
+   ],
+   [
+    "1-2",
+    "1-2 0 0:0:0"
+   ],
+   [
+    "10:20:30",
+    "0-0 0 10:20:30"
+   ],
+   [
+    "P1Y2M3D",
+    "1-2 3 0:0:0"
+   ],
+   [
+    "PT10H20M30,456S",
+    "0-0 0 10:20:30.456"
+   ]
+  ],
+  "expected_columns": [
+   "input",
+   "output"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#cast_as_interval",
+  "notes": "Docs show INTERVAL values in canonical text form. Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-conv-004",
+  "function": "CAST",
+  "sql": "SELECT CAST(\n  '[2020-01-01, 2020-01-02)'\n  AS RANGE<DATE>) AS string_to_range;",
+  "expected_rows": [
+   [
+    "[DATE '2020-01-01', DATE '2020-01-02')"
+   ]
+  ],
+  "expected_columns": [
+   "string_to_range"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#cast_as_range",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-005",
+  "function": "CAST",
+  "sql": "SELECT CAST(\n  '[2014-09-27 12:30:00.45, 2016-10-17 11:15:00.33)'\n  AS RANGE<DATETIME>) AS string_to_range;",
+  "expected_rows": [
+   [
+    "[DATETIME '2014-09-27 12:30:00.45', DATETIME '2016-10-17 11:15:00.33')"
+   ]
+  ],
+  "expected_columns": [
+   "string_to_range"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#cast_as_range",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-006",
+  "function": "CAST",
+  "sql": "SELECT CAST(\n  '[2014-09-27 12:30:00+08, 2016-10-17 11:15:00+08)'\n  AS RANGE<TIMESTAMP>) AS string_to_range;",
+  "expected_rows": [
+   [
+    "[TIMESTAMP '2014-09-27 12:30:00+08', TIMESTAMP '2016-10-17 11:15:00 UTC')"
+   ]
+  ],
+  "expected_columns": [
+   "string_to_range"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#cast_as_range",
+  "notes": "AMBIGUOUS: docs result mixes +08 and UTC rendering and depends on the environment time zone."
+ },
+ {
+  "id": "bq-conv-007",
+  "function": "CAST",
+  "sql": "SELECT CAST(\n  '[UNBOUNDED, 2020-01-02)'\n  AS RANGE<DATE>) AS string_to_range;",
+  "expected_rows": [
+   [
+    "[UNBOUNDED, DATE '2020-01-02')"
+   ]
+  ],
+  "expected_columns": [
+   "string_to_range"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#cast_as_range",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-008",
+  "function": "CAST",
+  "sql": "SELECT CAST(\n  '[2020-01-01, NULL)'\n  AS RANGE<DATE>) AS string_to_range;",
+  "expected_rows": [
+   [
+    "[DATE '2020-01-01', UNBOUNDED)"
+   ]
+  ],
+  "expected_columns": [
+   "string_to_range"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#cast_as_range",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-009",
+  "function": "CAST",
+  "sql": "SELECT CAST(\n  TIMESTAMP '2008-12-25 00:00:00+00:00'\n  AS STRING FORMAT 'YYYY-MM-DD HH24:MI:SS TZH:TZM') AS date_time_to_string;",
+  "expected_rows": [
+   [
+    "2008-12-24 16:00:00 -08:00"
+   ]
+  ],
+  "expected_columns": [
+   "date_time_to_string"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#cast_as_string",
+  "notes": "AMBIGUOUS: docs say the result depends on the environment time zone. Docs show -08:00 (a US Pacific default time zone), not UTC."
+ },
+ {
+  "id": "bq-conv-010",
+  "function": "CAST",
+  "sql": "SELECT CAST(\n  TIMESTAMP '2008-12-25 00:00:00+00:00'\n  AS STRING FORMAT 'YYYY-MM-DD HH24:MI:SS TZH:TZM'\n  AT TIME ZONE 'Asia/Kolkata') AS date_time_to_string;",
+  "expected_rows": [
+   [
+    "2008-12-25 05:30:00 +05:30"
+   ]
+  ],
+  "expected_columns": [
+   "date_time_to_string"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#cast_as_string",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-011",
+  "function": "CAST",
+  "sql": "SELECT CAST(INTERVAL 3 DAY AS STRING) AS interval_to_string;",
+  "expected_rows": [
+   [
+    "0-0 3 0:0:0"
+   ]
+  ],
+  "expected_columns": [
+   "interval_to_string"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#cast_as_string",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-012",
+  "function": "CAST",
+  "sql": "SELECT CAST(\n  INTERVAL \"1-2 3 4:5:6.789\" YEAR TO SECOND\n  AS STRING) AS interval_to_string;",
+  "expected_rows": [
+   [
+    "1-2 3 4:5:6.789"
+   ]
+  ],
+  "expected_columns": [
+   "interval_to_string"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#cast_as_string",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-013",
+  "function": "CAST",
+  "sql": "SELECT CAST(\"2020-06-02 17:00:53.110+00:00\" AS TIMESTAMP) AS as_timestamp;",
+  "expected_rows": [
+   [
+    "2020-06-03 00:00:53.110 UTC"
+   ]
+  ],
+  "expected_columns": [
+   "as_timestamp"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#cast_as_timestamp",
+  "notes": "AMBIGUOUS: docs result (2020-06-03 00:00:53.110 UTC) is inconsistent with the +00:00 offset in the input; depends on environment time zone."
+ },
+ {
+  "id": "bq-conv-014",
+  "function": "PARSE_BIGNUMERIC",
+  "sql": "-- This example shows how a string with a decimal point is parsed.\nSELECT PARSE_BIGNUMERIC(\"123.45\") AS parsed;",
+  "expected_rows": [
+   [
+    "123.45"
+   ]
+  ],
+  "expected_columns": [
+   "parsed"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_bignumeric",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-015",
+  "function": "PARSE_BIGNUMERIC",
+  "sql": "-- This example shows how a string with an exponent is parsed.\nSELECT PARSE_BIGNUMERIC(\"123.456E37\") AS parsed;",
+  "expected_rows": [
+   [
+    "123400000000000000000000000000000000000"
+   ]
+  ],
+  "expected_columns": [
+   "parsed"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_bignumeric",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-016",
+  "function": "PARSE_BIGNUMERIC",
+  "sql": "-- This example shows the rounding when digits after the decimal point exceeds 38.\nSELECT PARSE_BIGNUMERIC(\"1.123456789012345678901234567890123456789\") as parsed;",
+  "expected_rows": [
+   [
+    "1.12345678901234567890123456789012345679"
+   ]
+  ],
+  "expected_columns": [
+   "parsed"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_bignumeric",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-017",
+  "function": "PARSE_BIGNUMERIC",
+  "sql": "SELECT PARSE_BIGNUMERIC(\"  -  12.34 \") as parsed;",
+  "expected_rows": [
+   [
+    "-12.34"
+   ]
+  ],
+  "expected_columns": [
+   "parsed"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_bignumeric",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-018",
+  "function": "PARSE_BIGNUMERIC",
+  "sql": "SELECT PARSE_BIGNUMERIC(\"12.34e-1-\") as parsed;",
+  "expected_rows": [
+   [
+    "-1.234"
+   ]
+  ],
+  "expected_columns": [
+   "parsed"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_bignumeric",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-019",
+  "function": "PARSE_BIGNUMERIC",
+  "sql": "SELECT PARSE_BIGNUMERIC(\"  1,2,,3,.45 + \") as parsed;",
+  "expected_rows": [
+   [
+    "123.45"
+   ]
+  ],
+  "expected_columns": [
+   "parsed"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_bignumeric",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-020",
+  "function": "PARSE_BIGNUMERIC",
+  "sql": "SELECT PARSE_BIGNUMERIC(\".1234  \") as parsed;",
+  "expected_rows": [
+   [
+    "0.1234"
+   ]
+  ],
+  "expected_columns": [
+   "parsed"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_bignumeric",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-021",
+  "function": "PARSE_NUMERIC",
+  "sql": "-- This example shows how a string with a decimal point is parsed.\nSELECT PARSE_NUMERIC(\"123.45\") AS parsed;",
+  "expected_rows": [
+   [
+    "123.45"
+   ]
+  ],
+  "expected_columns": [
+   "parsed"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_numeric",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-022",
+  "function": "PARSE_NUMERIC",
+  "sql": "-- This example shows how a string with an exponent is parsed.\nSELECT PARSE_NUMERIC(\"12.34E27\") as parsed;",
+  "expected_rows": [
+   [
+    "12340000000000000000000000000"
+   ]
+  ],
+  "expected_columns": [
+   "parsed"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_numeric",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-023",
+  "function": "PARSE_NUMERIC",
+  "sql": "-- This example shows the rounding when digits after the decimal point exceeds 9.\nSELECT PARSE_NUMERIC(\"1.0123456789\") as parsed;",
+  "expected_rows": [
+   [
+    "1.012345679"
+   ]
+  ],
+  "expected_columns": [
+   "parsed"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_numeric",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-024",
+  "function": "PARSE_NUMERIC",
+  "sql": "SELECT PARSE_NUMERIC(\"  -  12.34 \") as parsed;",
+  "expected_rows": [
+   [
+    "-12.34"
+   ]
+  ],
+  "expected_columns": [
+   "parsed"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_numeric",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-025",
+  "function": "PARSE_NUMERIC",
+  "sql": "SELECT PARSE_NUMERIC(\"12.34e-1-\") as parsed;",
+  "expected_rows": [
+   [
+    "-1.234"
+   ]
+  ],
+  "expected_columns": [
+   "parsed"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_numeric",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-026",
+  "function": "PARSE_NUMERIC",
+  "sql": "SELECT PARSE_NUMERIC(\"  1,2,,3,.45 + \") as parsed;",
+  "expected_rows": [
+   [
+    "123.45"
+   ]
+  ],
+  "expected_columns": [
+   "parsed"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_numeric",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-027",
+  "function": "PARSE_NUMERIC",
+  "sql": "SELECT PARSE_NUMERIC(\".1234  \") as parsed;",
+  "expected_rows": [
+   [
+    "0.1234"
+   ]
+  ],
+  "expected_columns": [
+   "parsed"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_numeric",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-028",
+  "function": "SAFE_CAST",
+  "sql": "SELECT SAFE_CAST(\"apple\" AS INT64) AS not_a_number;",
+  "expected_rows": [
+   [
+    "NULL"
+   ]
+  ],
+  "expected_columns": [
+   "not_a_number"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#safe_cast",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-029",
+  "function": "PARSE_NUMERIC",
+  "sql": "SELECT PARSE_NUMERIC(\",,,.1234  \") as parsed;",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_numeric",
+  "notes": "error: Docs: invalid input, produces an error.",
+  "error": true
+ },
+ {
+  "id": "bq-conv-030",
+  "function": "PARSE_BIGNUMERIC",
+  "sql": "SELECT PARSE_BIGNUMERIC(\",,,.1234  \") as parsed;",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_bignumeric",
+  "notes": "error: Docs: invalid input, produces an error.",
+  "error": true
+ },
+ {
+  "id": "bq-conv-031",
+  "function": "PARSE_NUMERIC",
+  "sql": "SELECT PARSE_NUMERIC(\"1  23.4 5  \") as parsed;",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_numeric",
+  "notes": "error: Docs: invalid input, produces an error.",
+  "error": true
+ },
+ {
+  "id": "bq-conv-032",
+  "function": "PARSE_BIGNUMERIC",
+  "sql": "SELECT PARSE_BIGNUMERIC(\"1  23.4 5  \") as parsed;",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_bignumeric",
+  "notes": "error: Docs: invalid input, produces an error.",
+  "error": true
+ },
+ {
+  "id": "bq-conv-033",
+  "function": "PARSE_NUMERIC",
+  "sql": "SELECT PARSE_NUMERIC(\"  e1 \") as parsed;",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_numeric",
+  "notes": "error: Docs: invalid input, produces an error.",
+  "error": true
+ },
+ {
+  "id": "bq-conv-034",
+  "function": "PARSE_BIGNUMERIC",
+  "sql": "SELECT PARSE_BIGNUMERIC(\"  e1 \") as parsed;",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_bignumeric",
+  "notes": "error: Docs: invalid input, produces an error.",
+  "error": true
+ },
+ {
+  "id": "bq-conv-035",
+  "function": "PARSE_NUMERIC",
+  "sql": "SELECT PARSE_NUMERIC(\"  - 12.3 - \") as parsed;",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_numeric",
+  "notes": "error: Docs: invalid input, produces an error.",
+  "error": true
+ },
+ {
+  "id": "bq-conv-036",
+  "function": "PARSE_BIGNUMERIC",
+  "sql": "SELECT PARSE_BIGNUMERIC(\"  - 12.3 - \") as parsed;",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_bignumeric",
+  "notes": "error: Docs: invalid input, produces an error.",
+  "error": true
+ },
+ {
+  "id": "bq-conv-037",
+  "function": "PARSE_NUMERIC",
+  "sql": "SELECT PARSE_NUMERIC(\"12.34E100 \") as parsed;",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_numeric",
+  "notes": "error: Docs: invalid input, produces an error.",
+  "error": true
+ },
+ {
+  "id": "bq-conv-038",
+  "function": "PARSE_BIGNUMERIC",
+  "sql": "SELECT PARSE_BIGNUMERIC(\"12.34E100 \") as parsed;",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_bignumeric",
+  "notes": "error: Docs: invalid input, produces an error.",
+  "error": true
+ },
+ {
+  "id": "bq-conv-039",
+  "function": "PARSE_NUMERIC",
+  "sql": "SELECT PARSE_NUMERIC(\"$12.34\") as parsed;",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_numeric",
+  "notes": "error: Docs: invalid input, produces an error.",
+  "error": true
+ },
+ {
+  "id": "bq-conv-040",
+  "function": "PARSE_BIGNUMERIC",
+  "sql": "SELECT PARSE_BIGNUMERIC(\"$12.34\") as parsed;",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_bignumeric",
+  "notes": "error: Docs: invalid input, produces an error.",
+  "error": true
+ },
+ {
+  "id": "bq-conv-041",
+  "function": "CAST",
+  "sql": "SELECT CAST(\"apple\" AS INT64) AS not_a_number;",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#cast",
+  "notes": "error: Docs: the query generates an error.",
+  "error": true
+ },
+ {
+  "id": "bq-conv-042",
+  "function": "PARSE_NUMERIC",
+  "sql": "SELECT PARSE_NUMERIC(\"- 12,34567,89.0\");",
+  "expected_rows": [
+   [
+    "-123456789"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_numeric",
+  "notes": "From the docs rules table (Example Input / Output)."
+ },
+ {
+  "id": "bq-conv-043",
+  "function": "PARSE_NUMERIC",
+  "sql": "SELECT PARSE_NUMERIC(\" - 12.345 \");",
+  "expected_rows": [
+   [
+    "-12.345"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_numeric",
+  "notes": "From the docs rules table (Example Input / Output)."
+ },
+ {
+  "id": "bq-conv-044",
+  "function": "PARSE_NUMERIC",
+  "sql": "SELECT PARSE_NUMERIC(\" 12,345,678\");",
+  "expected_rows": [
+   [
+    "12345678"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_numeric",
+  "notes": "From the docs rules table (Example Input / Output)."
+ },
+ {
+  "id": "bq-conv-045",
+  "function": "PARSE_NUMERIC",
+  "sql": "SELECT PARSE_NUMERIC(\"1.234 \");",
+  "expected_rows": [
+   [
+    "1.234"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_numeric",
+  "notes": "From the docs rules table (Example Input / Output)."
+ },
+ {
+  "id": "bq-conv-046",
+  "function": "PARSE_NUMERIC",
+  "sql": "SELECT PARSE_NUMERIC(\" 123.45e-1\");",
+  "expected_rows": [
+   [
+    "12.345"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_numeric",
+  "notes": "From the docs rules table (Example Input / Output)."
+ },
+ {
+  "id": "bq-conv-047",
+  "function": "PARSE_NUMERIC",
+  "sql": "SELECT PARSE_NUMERIC(\" 0,.12 -\");",
+  "expected_rows": [
+   [
+    "-0.12"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_numeric",
+  "notes": "From the docs rules table (Example Input / Output)."
+ },
+ {
+  "id": "bq-conv-048",
+  "function": "PARSE_NUMERIC",
+  "sql": "SELECT PARSE_NUMERIC(\" .1\");",
+  "expected_rows": [
+   [
+    "0.1"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_numeric",
+  "notes": "From the docs rules table (Example Input / Output)."
+ },
+ {
+  "id": "bq-conv-049",
+  "function": "PARSE_NUMERIC",
+  "sql": "SELECT PARSE_NUMERIC(\" 0.5 +\");",
+  "expected_rows": [
+   [
+    "0.5"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_numeric",
+  "notes": "From the docs rules table (Example Input / Output)."
+ },
+ {
+  "id": "bq-conv-050",
+  "function": "PARSE_BIGNUMERIC",
+  "sql": "SELECT PARSE_BIGNUMERIC(\"- 12,34567,89.0\");",
+  "expected_rows": [
+   [
+    "-123456789"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_bignumeric",
+  "notes": "From the docs rules table (Example Input / Output)."
+ },
+ {
+  "id": "bq-conv-051",
+  "function": "PARSE_BIGNUMERIC",
+  "sql": "SELECT PARSE_BIGNUMERIC(\" - 12.345 \");",
+  "expected_rows": [
+   [
+    "-12.345"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_bignumeric",
+  "notes": "From the docs rules table (Example Input / Output)."
+ },
+ {
+  "id": "bq-conv-052",
+  "function": "PARSE_BIGNUMERIC",
+  "sql": "SELECT PARSE_BIGNUMERIC(\" 12,345,678\");",
+  "expected_rows": [
+   [
+    "12345678"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_bignumeric",
+  "notes": "From the docs rules table (Example Input / Output)."
+ },
+ {
+  "id": "bq-conv-053",
+  "function": "PARSE_BIGNUMERIC",
+  "sql": "SELECT PARSE_BIGNUMERIC(\"1.234 \");",
+  "expected_rows": [
+   [
+    "1.234"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_bignumeric",
+  "notes": "From the docs rules table (Example Input / Output)."
+ },
+ {
+  "id": "bq-conv-054",
+  "function": "PARSE_BIGNUMERIC",
+  "sql": "SELECT PARSE_BIGNUMERIC(\" 123.45e-1\");",
+  "expected_rows": [
+   [
+    "12.345"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_bignumeric",
+  "notes": "From the docs rules table (Example Input / Output)."
+ },
+ {
+  "id": "bq-conv-055",
+  "function": "PARSE_BIGNUMERIC",
+  "sql": "SELECT PARSE_BIGNUMERIC(\" 0,.12 -\");",
+  "expected_rows": [
+   [
+    "-0.12"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_bignumeric",
+  "notes": "From the docs rules table (Example Input / Output)."
+ },
+ {
+  "id": "bq-conv-056",
+  "function": "PARSE_BIGNUMERIC",
+  "sql": "SELECT PARSE_BIGNUMERIC(\" .1\");",
+  "expected_rows": [
+   [
+    "0.1"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_bignumeric",
+  "notes": "From the docs rules table (Example Input / Output)."
+ },
+ {
+  "id": "bq-conv-057",
+  "function": "PARSE_BIGNUMERIC",
+  "sql": "SELECT PARSE_BIGNUMERIC(\" 0.5 +\");",
+  "expected_rows": [
+   [
+    "0.5"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#parse_bignumeric",
+  "notes": "From the docs rules table (Example Input / Output)."
+ },
+ {
+  "id": "bq-conv-058",
+  "function": "CAST",
+  "sql": "SELECT CAST(b'\\x48\\x65\\x6c\\x6c\\x6f' AS STRING FORMAT 'ASCII') AS bytes_to_string;",
+  "expected_rows": [
+   [
+    "Hello"
+   ]
+  ],
+  "expected_columns": [
+   "bytes_to_string"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#format_bytes_as_string",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-059",
+  "function": "CAST",
+  "sql": "SELECT CAST('Hello' AS BYTES FORMAT 'ASCII') AS string_to_bytes;",
+  "expected_rows": [
+   [
+    "b'\\x48\\x65\\x6c\\x6c\\x6f'"
+   ]
+  ],
+  "expected_columns": [
+   "string_to_bytes"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#format_string_as_bytes",
+  "notes": "Docs show the BYTES result as b'\\x48\\x65\\x6c\\x6c\\x6f'."
+ },
+ {
+  "id": "bq-conv-060",
+  "function": "CAST",
+  "sql": "SELECT CAST(DATE '2018-01-30' AS STRING FORMAT 'YYYY') AS date_time_to_string;",
+  "expected_rows": [
+   [
+    "2018"
+   ]
+  ],
+  "expected_columns": [
+   "date_time_to_string"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#format_date_and_time_as_string",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-061",
+  "function": "CAST",
+  "sql": "SELECT CAST(DATE '2018-01-30' AS STRING FORMAT 'MONTH') AS date_time_to_string;",
+  "expected_rows": [
+   [
+    "JANUARY"
+   ]
+  ],
+  "expected_columns": [
+   "date_time_to_string"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#format_date_and_time_as_string",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-062",
+  "function": "CAST",
+  "sql": "SELECT CAST(DATE '2018-02-15' AS STRING FORMAT 'DD') AS date_time_to_string;",
+  "expected_rows": [
+   [
+    "15"
+   ]
+  ],
+  "expected_columns": [
+   "date_time_to_string"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#format_date_and_time_as_string",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-063",
+  "function": "CAST",
+  "sql": "SELECT CAST(TIME '21:30:00' AS STRING FORMAT 'HH24') AS date_time_to_string;",
+  "expected_rows": [
+   [
+    "21"
+   ]
+  ],
+  "expected_columns": [
+   "date_time_to_string"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#format_date_and_time_as_string",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-064",
+  "function": "CAST",
+  "sql": "SELECT CAST(TIME '21:30:00' AS STRING FORMAT 'HH12') AS date_time_to_string;",
+  "expected_rows": [
+   [
+    "09"
+   ]
+  ],
+  "expected_columns": [
+   "date_time_to_string"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#format_date_and_time_as_string",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-065",
+  "function": "CAST",
+  "sql": "SELECT CAST(TIME '21:30:00' AS STRING FORMAT 'MI') AS date_time_to_string;",
+  "expected_rows": [
+   [
+    "30"
+   ]
+  ],
+  "expected_columns": [
+   "date_time_to_string"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#format_date_and_time_as_string",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-066",
+  "function": "CAST",
+  "sql": "SELECT CAST(TIME '21:30:25.16' AS STRING FORMAT 'SS') AS date_time_to_string;",
+  "expected_rows": [
+   [
+    "25"
+   ]
+  ],
+  "expected_columns": [
+   "date_time_to_string"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#format_date_and_time_as_string",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-067",
+  "function": "CAST",
+  "sql": "SELECT CAST(TIME '21:30:25.16' AS STRING FORMAT 'FF2') AS date_time_to_string;",
+  "expected_rows": [
+   [
+    "16"
+   ]
+  ],
+  "expected_columns": [
+   "date_time_to_string"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#format_date_and_time_as_string",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-068",
+  "function": "CAST",
+  "sql": "SELECT CAST(TIMESTAMP '2008-12-25 00:00:00+00:00' AS STRING FORMAT 'TZH') AS date_time_to_string;",
+  "expected_rows": [
+   [
+    "-08"
+   ]
+  ],
+  "expected_columns": [
+   "date_time_to_string"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#format_date_and_time_as_string",
+  "notes": "AMBIGUOUS: docs say the result depends on the environment time zone (shown as -08, a US Pacific default)."
+ },
+ {
+  "id": "bq-conv-069",
+  "function": "CAST",
+  "sql": "SELECT CAST(TIMESTAMP '2008-12-25 00:00:00+00:00' AS STRING FORMAT 'TZH' AT TIME ZONE 'Asia/Kolkata')\nAS date_time_to_string;",
+  "expected_rows": [
+   [
+    "+05"
+   ]
+  ],
+  "expected_columns": [
+   "date_time_to_string"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#format_date_and_time_as_string",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-070",
+  "function": "CAST",
+  "sql": "SELECT CAST(TIMESTAMP '2008-12-25 00:00:00+00:00' AS STRING FORMAT 'TZM') AS date_time_to_string;",
+  "expected_rows": [
+   [
+    "00"
+   ]
+  ],
+  "expected_columns": [
+   "date_time_to_string"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#format_date_and_time_as_string",
+  "notes": "AMBIGUOUS: docs say the result depends on the environment time zone."
+ },
+ {
+  "id": "bq-conv-071",
+  "function": "CAST",
+  "sql": "SELECT CAST(TIMESTAMP '2008-12-25 00:00:00+00:00' AS STRING FORMAT 'TZM' AT TIME ZONE 'Asia/Kolkata')\nAS date_time_to_string;",
+  "expected_rows": [
+   [
+    "30"
+   ]
+  ],
+  "expected_columns": [
+   "date_time_to_string"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#format_date_and_time_as_string",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-072",
+  "function": "CAST",
+  "sql": "SELECT CAST('18-12-03' AS DATE FORMAT 'YY-MM-DD') AS string_to_date;",
+  "expected_rows": [
+   [
+    "2018-12-03"
+   ]
+  ],
+  "expected_columns": [
+   "string_to_date"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#format_string_as_date_and_time",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-073",
+  "function": "CAST",
+  "sql": "SELECT CAST('DEC 03, 2018' AS DATE FORMAT 'MON DD, YYYY') AS string_to_date;",
+  "expected_rows": [
+   [
+    "2018-12-03"
+   ]
+  ],
+  "expected_columns": [
+   "string_to_date"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#format_string_as_date_and_time",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-074",
+  "function": "CAST",
+  "sql": "SELECT CAST('DECEMBER 03, 2018' AS DATE FORMAT 'MONTH DD, YYYY') AS string_to_date;",
+  "expected_rows": [
+   [
+    "2018-12-03"
+   ]
+  ],
+  "expected_columns": [
+   "string_to_date"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#format_string_as_date_and_time",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-075",
+  "function": "CAST",
+  "sql": "SELECT CAST('15:30' AS TIME FORMAT 'HH24:MI') AS string_to_date_time;",
+  "expected_rows": [
+   [
+    "15:30:00"
+   ]
+  ],
+  "expected_columns": [
+   "string_to_date_time"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#format_string_as_date_and_time",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-076",
+  "function": "CAST",
+  "sql": "SELECT CAST('03:30 P.M.' AS TIME FORMAT 'HH:MI P.M.') AS string_to_date_time;",
+  "expected_rows": [
+   [
+    "15:30:00"
+   ]
+  ],
+  "expected_columns": [
+   "string_to_date_time"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#format_string_as_date_and_time",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-077",
+  "function": "CAST",
+  "sql": "SELECT CAST('01:05:07.16' AS TIME FORMAT 'HH24:MI:SS.FF1') AS string_to_date_time;",
+  "expected_rows": [
+   [
+    "01:05:07.2"
+   ]
+  ],
+  "expected_columns": [
+   "string_to_date_time"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#format_string_as_date_and_time",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-078",
+  "function": "CAST",
+  "sql": "SELECT CAST('03:30 P.M.' AS TIME FORMAT 'HH:MI A.M.') AS string_to_date_time;",
+  "expected_rows": [
+   [
+    "15:30:00"
+   ]
+  ],
+  "expected_columns": [
+   "string_to_date_time"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#format_string_as_date_and_time",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-079",
+  "function": "CAST",
+  "sql": "SELECT CAST('2020.06.03 00:00:53+00' AS TIMESTAMP FORMAT 'YYYY.MM.DD HH:MI:SSTZH') AS string_to_date_time;",
+  "expected_rows": [
+   [
+    "2020-06-03 00:00:53.110 UTC"
+   ]
+  ],
+  "expected_columns": [
+   "as_timestamp"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#format_string_as_date_and_time",
+  "notes": "AMBIGUOUS: docs result column name and fractional seconds (.110) do not correspond to the SQL/input shown."
+ },
+ {
+  "id": "bq-conv-080",
+  "function": "CAST",
+  "sql": "SELECT input, CAST(input AS STRING FORMAT '$999,999.999') AS output\nFROM UNNEST([1.2, 12.3, 123.456, 1234.56, -12345.678, 1234567.89]) AS input;",
+  "expected_rows": [
+   [
+    "1.2",
+    "$1.200"
+   ],
+   [
+    "12.3",
+    "$12.300"
+   ],
+   [
+    "123.456",
+    "$123.456"
+   ],
+   [
+    "1234.56",
+    "$1,234.560"
+   ],
+   [
+    "-12345.678",
+    "-$12,345.678"
+   ],
+   [
+    "1234567.89",
+    "$###,###.###"
+   ]
+  ],
+  "expected_columns": [
+   "input",
+   "output"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#format_numeric_type_as_string",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-conv-081",
+  "function": "CAST",
+  "sql": "SELECT\n  CAST(12 AS STRING FORMAT '999') as a,\n  CAST(-12 AS STRING FORMAT '999') as b;",
+  "expected_rows": [
+   [
+    "12",
+    "-12"
+   ]
+  ],
+  "expected_columns": [
+   "a",
+   "b"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#format_numeric_type_as_string",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-082",
+  "function": "CAST",
+  "sql": "SELECT CAST(12.5 AS STRING FORMAT '99.99') as a;",
+  "expected_rows": [
+   [
+    "12.50"
+   ]
+  ],
+  "expected_columns": [
+   "a"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#format_numeric_type_as_string",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-083",
+  "function": "CAST",
+  "sql": "SELECT\n  CAST(12 AS STRING FORMAT 'S99') as a,\n  CAST(-12 AS STRING FORMAT 'S99') as b;",
+  "expected_rows": [
+   [
+    "+12",
+    "-12"
+   ]
+  ],
+  "expected_columns": [
+   "a",
+   "b"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#format_numeric_type_as_string",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-084",
+  "function": "CAST",
+  "sql": "SELECT\n  CAST(12 AS STRING FORMAT '$99') as a,\n  CAST(-12 AS STRING FORMAT '$99') as b;",
+  "expected_rows": [
+   [
+    "$12",
+    "-$12"
+   ]
+  ],
+  "expected_columns": [
+   "a",
+   "b"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#format_numeric_type_as_string",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-085",
+  "function": "CAST",
+  "sql": "SELECT CAST(1234 AS STRING FORMAT '999,999') as a;",
+  "expected_rows": [
+   [
+    "1,234"
+   ]
+  ],
+  "expected_columns": [
+   "a"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#format_numeric_type_as_string",
+  "notes": ""
+ },
+ {
+  "id": "bq-conv-086",
+  "function": "CAST",
+  "sql": "SELECT CAST(-123456 AS STRING FORMAT '9.999EEEE') as a;",
+  "expected_rows": [
+   [
+    "-1.235E+05"
+   ]
+  ],
+  "expected_columns": [
+   "a"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#format_numeric_type_as_string",
+  "notes": "Docs SQL has a stray double quote after the semicolon; removed."
+ },
+ {
+  "id": "bq-conv-087",
+  "function": "CAST",
+  "sql": "SELECT CAST(TIME '21:30:00' AS STRING FORMAT 'AM') AS date_time_to_string;",
+  "expected_rows": [
+   [
+    "PM"
+   ]
+  ],
+  "expected_columns": [
+   "date_time_to_string"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#cast",
+  "notes": "AMBIGUOUS: docs list two statements (AM and PM format elements) followed by a single shown result; the same result is assumed for both."
+ },
+ {
+  "id": "bq-conv-088",
+  "function": "CAST",
+  "sql": "SELECT CAST(TIME '21:30:00' AS STRING FORMAT 'PM') AS date_time_to_string;",
+  "expected_rows": [
+   [
+    "PM"
+   ]
+  ],
+  "expected_columns": [
+   "date_time_to_string"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#cast",
+  "notes": "AMBIGUOUS: docs list two statements (AM and PM format elements) followed by a single shown result; the same result is assumed for both."
+ },
+ {
+  "id": "bq-conv-089",
+  "function": "CAST",
+  "sql": "SELECT CAST(TIME '01:30:00' AS STRING FORMAT 'AM') AS date_time_to_string;",
+  "expected_rows": [
+   [
+    "AM"
+   ]
+  ],
+  "expected_columns": [
+   "date_time_to_string"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#cast",
+  "notes": "AMBIGUOUS: docs list two statements (AM and PM format elements) followed by a single shown result; the same result is assumed for both."
+ },
+ {
+  "id": "bq-conv-090",
+  "function": "CAST",
+  "sql": "SELECT CAST(TIME '01:30:00' AS STRING FORMAT 'PM') AS date_time_to_string;",
+  "expected_rows": [
+   [
+    "AM"
+   ]
+  ],
+  "expected_columns": [
+   "date_time_to_string"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/format-elements#cast",
+  "notes": "AMBIGUOUS: docs list two statements (AM and PM format elements) followed by a single shown result; the same result is assumed for both."
+ },
+ {
+  "id": "bq-math-013",
+  "function": "RANGE_BUCKET",
+  "sql": "SELECT RANGE_BUCKET(20, [0, 10, 20, 30, 40]);",
+  "expected_rows": [
+   [
+    "3"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#range_bucket",
+  "notes": "Return value stated in a docs comment."
+ },
+ {
+  "id": "bq-math-014",
+  "function": "RANGE_BUCKET",
+  "sql": "SELECT RANGE_BUCKET(20, [0, 10, 20, 20, 40, 40]);",
+  "expected_rows": [
+   [
+    "4"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#range_bucket",
+  "notes": "Return value stated in a docs comment."
+ },
+ {
+  "id": "bq-math-015",
+  "function": "RANGE_BUCKET",
+  "sql": "SELECT RANGE_BUCKET(25, [0, 10, 20, 30, 40]);",
+  "expected_rows": [
+   [
+    "3"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#range_bucket",
+  "notes": "Return value stated in a docs comment."
+ },
+ {
+  "id": "bq-math-016",
+  "function": "RANGE_BUCKET",
+  "sql": "SELECT RANGE_BUCKET(-10, [5, 10, 20, 30, 40]);",
+  "expected_rows": [
+   [
+    "0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#range_bucket",
+  "notes": "Return value stated in a docs comment."
+ },
+ {
+  "id": "bq-math-017",
+  "function": "RANGE_BUCKET",
+  "sql": "SELECT RANGE_BUCKET(80, [0, 10, 20, 30, 40]);",
+  "expected_rows": [
+   [
+    "5"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#range_bucket",
+  "notes": "Return value stated in a docs comment."
+ },
+ {
+  "id": "bq-math-018",
+  "function": "RANGE_BUCKET",
+  "sql": "SELECT RANGE_BUCKET(80, []);",
+  "expected_rows": [
+   [
+    "0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#range_bucket",
+  "notes": "Return value stated in a docs comment."
+ },
+ {
+  "id": "bq-math-019",
+  "function": "RANGE_BUCKET",
+  "sql": "SELECT RANGE_BUCKET(NULL, [0, 10, 20, 30, 40]);",
+  "expected_rows": [
+   [
+    "NULL"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#range_bucket",
+  "notes": "Return value stated in a docs comment."
+ },
+ {
+  "id": "bq-math-020",
+  "function": "RANGE_BUCKET",
+  "sql": "SELECT RANGE_BUCKET('a', ['a', 'b', 'c', 'd']);",
+  "expected_rows": [
+   [
+    "1"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#range_bucket",
+  "notes": "Return value stated in a docs comment."
+ },
+ {
+  "id": "bq-math-021",
+  "function": "RANGE_BUCKET",
+  "sql": "SELECT RANGE_BUCKET(1.2, [1, 1.2, 1.4, 1.6]);",
+  "expected_rows": [
+   [
+    "2"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#range_bucket",
+  "notes": "Return value stated in a docs comment."
+ },
+ {
+  "id": "bq-math-022",
+  "function": "RANGE_BUCKET",
+  "sql": "SELECT RANGE_BUCKET(1.2, [1, 2, 4, 6]);",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#range_bucket",
+  "notes": "error: Docs: execution failure.",
+  "error": true
+ },
+ {
+  "id": "bq-math-023",
+  "function": "RANGE_BUCKET",
+  "sql": "SELECT RANGE_BUCKET(80, [NULL, 10, 20, 30, 40]);",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#range_bucket",
+  "notes": "error: Docs: execution failure.",
+  "error": true
+ },
+ {
+  "id": "bq-math-024",
+  "function": "RANGE_BUCKET",
+  "sql": "SELECT RANGE_BUCKET(30, [10, 30, 20, 40, 50]);",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#range_bucket",
+  "notes": "error: Docs: execution failure.",
+  "error": true
+ },
+ {
+  "id": "bq-math-025",
+  "function": "COSINE_DISTANCE",
+  "sql": "SELECT COSINE_DISTANCE([2.0, 1.0], [4.0, 3.0]) AS results;",
+  "expected_rows": [
+   [
+    "0.016130"
+   ]
+  ],
+  "expected_columns": [
+   "results"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#cosine_distance",
+  "notes": "Docs show one shared result for these three statements."
+ },
+ {
+  "id": "bq-math-026",
+  "function": "COSINE_DISTANCE",
+  "sql": "SELECT COSINE_DISTANCE([(1, 1.0), (2, 2.0)], [(1, 3.0), (2, 4.0)]) AS results;",
+  "expected_rows": [
+   [
+    "0.016130"
+   ]
+  ],
+  "expected_columns": [
+   "results"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#cosine_distance",
+  "notes": "Docs show one shared result for these three statements."
+ },
+ {
+  "id": "bq-math-027",
+  "function": "EUCLIDEAN_DISTANCE",
+  "sql": "SELECT EUCLIDEAN_DISTANCE([2.0, 1.0], [4.0, 3.0]) AS results;",
+  "expected_rows": [
+   [
+    "2.828"
+   ]
+  ],
+  "expected_columns": [
+   "results"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#euclidean_distance",
+  "notes": "Docs show one shared result for these three statements."
+ },
+ {
+  "id": "bq-math-028",
+  "function": "EUCLIDEAN_DISTANCE",
+  "sql": "SELECT EUCLIDEAN_DISTANCE([(1, 1.0), (2, 2.0)], [(1, 3.0), (2, 4.0)]) AS results;",
+  "expected_rows": [
+   [
+    "2.828"
+   ]
+  ],
+  "expected_columns": [
+   "results"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#euclidean_distance",
+  "notes": "Docs show one shared result for these three statements."
+ },
+ {
+  "id": "bq-math-029",
+  "function": "COSINE_DISTANCE",
+  "sql": "SELECT COSINE_DISTANCE([0.0, 0.0], [3.0, 4.0]) AS results;",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#cosine_distance",
+  "notes": "error: Docs: marked -- ERROR.",
+  "error": true
+ },
+ {
+  "id": "bq-math-030",
+  "function": "COSINE_DISTANCE",
+  "sql": "SELECT COSINE_DISTANCE([(1, 0.0), (2, 0.0)], [(1, 3.0), (2, 4.0)]) AS results;",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#cosine_distance",
+  "notes": "error: Docs: marked -- ERROR.",
+  "error": true
+ },
+ {
+  "id": "bq-math-031",
+  "function": "COSINE_DISTANCE",
+  "sql": "SELECT COSINE_DISTANCE([9.0, 7.0], [8.0, 4.0, 5.0]) AS results;",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#cosine_distance",
+  "notes": "error: Docs: marked -- ERROR.",
+  "error": true
+ },
+ {
+  "id": "bq-math-032",
+  "function": "COSINE_DISTANCE",
+  "sql": "SELECT COSINE_DISTANCE(\n  [(1, 9.0), (2, 7.0), (2, 8.0)], [(1, 8.0), (2, 4.0), (3, 5.0)]) AS results;",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#cosine_distance",
+  "notes": "error: Docs: marked -- ERROR.",
+  "error": true
+ },
+ {
+  "id": "bq-math-033",
+  "function": "EUCLIDEAN_DISTANCE",
+  "sql": "SELECT EUCLIDEAN_DISTANCE([9.0, 7.0], [8.0, 4.0, 5.0]) AS results;",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#euclidean_distance",
+  "notes": "error: Docs: marked -- ERROR.",
+  "error": true
+ },
+ {
+  "id": "bq-math-034",
+  "function": "EUCLIDEAN_DISTANCE",
+  "sql": "SELECT EUCLIDEAN_DISTANCE(\n  [(1, 9.0), (2, 7.0), (2, 8.0)], [(1, 8.0), (2, 4.0), (3, 5.0)]) AS results;",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#euclidean_distance",
+  "notes": "error: Docs: marked -- ERROR.",
+  "error": true
+ },
+ {
+  "id": "bq-math-035",
+  "function": "ABS",
+  "sql": "SELECT ABS(25);",
+  "expected_rows": [
+   [
+    "25"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#abs",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-036",
+  "function": "ABS",
+  "sql": "SELECT ABS(-25);",
+  "expected_rows": [
+   [
+    "25"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#abs",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-037",
+  "function": "ABS",
+  "sql": "SELECT ABS(CAST('+inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "+inf"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#abs",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-038",
+  "function": "ABS",
+  "sql": "SELECT ABS(CAST('-inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "+inf"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#abs",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-039",
+  "function": "ACOS",
+  "sql": "SELECT ACOS(CAST('+inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#acos",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-040",
+  "function": "ACOS",
+  "sql": "SELECT ACOS(CAST('-inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#acos",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-041",
+  "function": "ACOS",
+  "sql": "SELECT ACOS(CAST('NaN' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#acos",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-042",
+  "function": "ACOSH",
+  "sql": "SELECT ACOSH(CAST('+inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "+inf"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#acosh",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-043",
+  "function": "ACOSH",
+  "sql": "SELECT ACOSH(CAST('-inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#acosh",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-044",
+  "function": "ACOSH",
+  "sql": "SELECT ACOSH(CAST('NaN' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#acosh",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-045",
+  "function": "ASIN",
+  "sql": "SELECT ASIN(CAST('+inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#asin",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-046",
+  "function": "ASIN",
+  "sql": "SELECT ASIN(CAST('-inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#asin",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-047",
+  "function": "ASIN",
+  "sql": "SELECT ASIN(CAST('NaN' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#asin",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-048",
+  "function": "ASINH",
+  "sql": "SELECT ASINH(CAST('+inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "+inf"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#asinh",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-049",
+  "function": "ASINH",
+  "sql": "SELECT ASINH(CAST('-inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "-inf"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#asinh",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-050",
+  "function": "ASINH",
+  "sql": "SELECT ASINH(CAST('NaN' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#asinh",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-051",
+  "function": "ATAN",
+  "sql": "SELECT ATAN(CAST('NaN' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#atan",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-052",
+  "function": "ATAN2",
+  "sql": "SELECT ATAN2(0.0, 0.0);",
+  "expected_rows": [
+   [
+    "0.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#atan2",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-053",
+  "function": "ATANH",
+  "sql": "SELECT ATANH(CAST('+inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#atanh",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-054",
+  "function": "ATANH",
+  "sql": "SELECT ATANH(CAST('-inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#atanh",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-055",
+  "function": "ATANH",
+  "sql": "SELECT ATANH(CAST('NaN' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#atanh",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-056",
+  "function": "CBRT",
+  "sql": "SELECT CBRT(CAST('+inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "inf"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#cbrt",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-057",
+  "function": "CBRT",
+  "sql": "SELECT CBRT(CAST('-inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "-inf"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#cbrt",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-058",
+  "function": "CBRT",
+  "sql": "SELECT CBRT(CAST('NaN' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#cbrt",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-059",
+  "function": "CBRT",
+  "sql": "SELECT CBRT(0);",
+  "expected_rows": [
+   [
+    "0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#cbrt",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-060",
+  "function": "CBRT",
+  "sql": "SELECT CBRT(NULL);",
+  "expected_rows": [
+   [
+    "NULL"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#cbrt",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-061",
+  "function": "CEIL",
+  "sql": "SELECT CEIL(2.0);",
+  "expected_rows": [
+   [
+    "2.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#ceil",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-062",
+  "function": "CEIL",
+  "sql": "SELECT CEIL(2.3);",
+  "expected_rows": [
+   [
+    "3.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#ceil",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-063",
+  "function": "CEIL",
+  "sql": "SELECT CEIL(2.8);",
+  "expected_rows": [
+   [
+    "3.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#ceil",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-064",
+  "function": "CEIL",
+  "sql": "SELECT CEIL(2.5);",
+  "expected_rows": [
+   [
+    "3.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#ceil",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-065",
+  "function": "CEIL",
+  "sql": "SELECT CEIL(-2.3);",
+  "expected_rows": [
+   [
+    "-2.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#ceil",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-066",
+  "function": "CEIL",
+  "sql": "SELECT CEIL(-2.8);",
+  "expected_rows": [
+   [
+    "-2.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#ceil",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-067",
+  "function": "CEIL",
+  "sql": "SELECT CEIL(-2.5);",
+  "expected_rows": [
+   [
+    "-2.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#ceil",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-068",
+  "function": "CEIL",
+  "sql": "SELECT CEIL(0);",
+  "expected_rows": [
+   [
+    "0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#ceil",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-069",
+  "function": "CEIL",
+  "sql": "SELECT CEIL(CAST('+inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "+inf"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#ceil",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-070",
+  "function": "CEIL",
+  "sql": "SELECT CEIL(CAST('-inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "-inf"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#ceil",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-071",
+  "function": "CEIL",
+  "sql": "SELECT CEIL(CAST('NaN' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#ceil",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-072",
+  "function": "COS",
+  "sql": "SELECT COS(CAST('+inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#cos",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-073",
+  "function": "COS",
+  "sql": "SELECT COS(CAST('-inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#cos",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-074",
+  "function": "COS",
+  "sql": "SELECT COS(CAST('NaN' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#cos",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-075",
+  "function": "COSH",
+  "sql": "SELECT COSH(CAST('+inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "+inf"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#cosh",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-076",
+  "function": "COSH",
+  "sql": "SELECT COSH(CAST('-inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "+inf"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#cosh",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-077",
+  "function": "COSH",
+  "sql": "SELECT COSH(CAST('NaN' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#cosh",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-078",
+  "function": "COT",
+  "sql": "SELECT COT(CAST('+inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#cot",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-079",
+  "function": "COT",
+  "sql": "SELECT COT(CAST('-inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#cot",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-080",
+  "function": "COT",
+  "sql": "SELECT COT(CAST('NaN' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#cot",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-081",
+  "function": "COT",
+  "sql": "SELECT COT(0);",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#cot",
+  "notes": "error: Docs table: result is Error.",
+  "error": true
+ },
+ {
+  "id": "bq-math-082",
+  "function": "COT",
+  "sql": "SELECT COT(NULL);",
+  "expected_rows": [
+   [
+    "NULL"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#cot",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-083",
+  "function": "COTH",
+  "sql": "SELECT COTH(CAST('+inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "1"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#coth",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-084",
+  "function": "COTH",
+  "sql": "SELECT COTH(CAST('-inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "-1"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#coth",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-085",
+  "function": "COTH",
+  "sql": "SELECT COTH(CAST('NaN' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#coth",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-086",
+  "function": "COTH",
+  "sql": "SELECT COTH(0);",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#coth",
+  "notes": "error: Docs table: result is Error.",
+  "error": true
+ },
+ {
+  "id": "bq-math-087",
+  "function": "COTH",
+  "sql": "SELECT COTH(NULL);",
+  "expected_rows": [
+   [
+    "NULL"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#coth",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-088",
+  "function": "CSC",
+  "sql": "SELECT CSC(CAST('+inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#csc",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-089",
+  "function": "CSC",
+  "sql": "SELECT CSC(CAST('-inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#csc",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-090",
+  "function": "CSC",
+  "sql": "SELECT CSC(CAST('NaN' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#csc",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-091",
+  "function": "CSC",
+  "sql": "SELECT CSC(0);",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#csc",
+  "notes": "error: Docs table: result is Error.",
+  "error": true
+ },
+ {
+  "id": "bq-math-092",
+  "function": "CSC",
+  "sql": "SELECT CSC(NULL);",
+  "expected_rows": [
+   [
+    "NULL"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#csc",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-093",
+  "function": "CSCH",
+  "sql": "SELECT CSCH(CAST('+inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#csch",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-094",
+  "function": "CSCH",
+  "sql": "SELECT CSCH(CAST('-inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#csch",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-095",
+  "function": "CSCH",
+  "sql": "SELECT CSCH(CAST('NaN' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#csch",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-096",
+  "function": "CSCH",
+  "sql": "SELECT CSCH(0);",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#csch",
+  "notes": "error: Docs table: result is Error.",
+  "error": true
+ },
+ {
+  "id": "bq-math-097",
+  "function": "CSCH",
+  "sql": "SELECT CSCH(NULL);",
+  "expected_rows": [
+   [
+    "NULL"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#csch",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-098",
+  "function": "DIV",
+  "sql": "SELECT DIV(20, 4);",
+  "expected_rows": [
+   [
+    "5"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#div",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-099",
+  "function": "DIV",
+  "sql": "SELECT DIV(12, -7);",
+  "expected_rows": [
+   [
+    "-1"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#div",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-100",
+  "function": "DIV",
+  "sql": "SELECT DIV(20, 3);",
+  "expected_rows": [
+   [
+    "6"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#div",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-101",
+  "function": "DIV",
+  "sql": "SELECT DIV(0, 20);",
+  "expected_rows": [
+   [
+    "0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#div",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-102",
+  "function": "DIV",
+  "sql": "SELECT DIV(20, 0);",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#div",
+  "notes": "error: Docs table: result is Error.",
+  "error": true
+ },
+ {
+  "id": "bq-math-103",
+  "function": "EXP",
+  "sql": "SELECT EXP(0.0);",
+  "expected_rows": [
+   [
+    "1.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#exp",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-104",
+  "function": "EXP",
+  "sql": "SELECT EXP(CAST('+inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "+inf"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#exp",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-105",
+  "function": "EXP",
+  "sql": "SELECT EXP(CAST('-inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "0.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#exp",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-106",
+  "function": "FLOOR",
+  "sql": "SELECT FLOOR(2.0);",
+  "expected_rows": [
+   [
+    "2.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#floor",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-107",
+  "function": "FLOOR",
+  "sql": "SELECT FLOOR(2.3);",
+  "expected_rows": [
+   [
+    "2.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#floor",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-108",
+  "function": "FLOOR",
+  "sql": "SELECT FLOOR(2.8);",
+  "expected_rows": [
+   [
+    "2.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#floor",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-109",
+  "function": "FLOOR",
+  "sql": "SELECT FLOOR(2.5);",
+  "expected_rows": [
+   [
+    "2.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#floor",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-110",
+  "function": "FLOOR",
+  "sql": "SELECT FLOOR(-2.3);",
+  "expected_rows": [
+   [
+    "-3.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#floor",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-111",
+  "function": "FLOOR",
+  "sql": "SELECT FLOOR(-2.8);",
+  "expected_rows": [
+   [
+    "-3.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#floor",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-112",
+  "function": "FLOOR",
+  "sql": "SELECT FLOOR(-2.5);",
+  "expected_rows": [
+   [
+    "-3.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#floor",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-113",
+  "function": "FLOOR",
+  "sql": "SELECT FLOOR(0);",
+  "expected_rows": [
+   [
+    "0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#floor",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-114",
+  "function": "FLOOR",
+  "sql": "SELECT FLOOR(CAST('+inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "+inf"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#floor",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-115",
+  "function": "FLOOR",
+  "sql": "SELECT FLOOR(CAST('-inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "-inf"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#floor",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-116",
+  "function": "FLOOR",
+  "sql": "SELECT FLOOR(CAST('NaN' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#floor",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-117",
+  "function": "GREATEST",
+  "sql": "SELECT GREATEST(3, 5, 1);",
+  "expected_rows": [
+   [
+    "5"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#greatest",
+  "notes": "From the docs input/output table."
+ },
+ {
+  "id": "bq-math-118",
+  "function": "IEEE_DIVIDE",
+  "sql": "SELECT IEEE_DIVIDE(20.0, 4.0);",
+  "expected_rows": [
+   [
+    "5.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#ieee_divide",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-119",
+  "function": "IEEE_DIVIDE",
+  "sql": "SELECT IEEE_DIVIDE(20.0, 6.0);",
+  "expected_rows": [
+   [
+    "3.3333333333333335"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#ieee_divide",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-120",
+  "function": "IEEE_DIVIDE",
+  "sql": "SELECT IEEE_DIVIDE(0.0, 25.0);",
+  "expected_rows": [
+   [
+    "0.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#ieee_divide",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-121",
+  "function": "IEEE_DIVIDE",
+  "sql": "SELECT IEEE_DIVIDE(25.0, 0.0);",
+  "expected_rows": [
+   [
+    "+inf"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#ieee_divide",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-122",
+  "function": "IEEE_DIVIDE",
+  "sql": "SELECT IEEE_DIVIDE(-25.0, 0.0);",
+  "expected_rows": [
+   [
+    "-inf"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#ieee_divide",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-123",
+  "function": "IEEE_DIVIDE",
+  "sql": "SELECT IEEE_DIVIDE(25.0, -0.0);",
+  "expected_rows": [
+   [
+    "-inf"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#ieee_divide",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-124",
+  "function": "IEEE_DIVIDE",
+  "sql": "SELECT IEEE_DIVIDE(0.0, 0.0);",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#ieee_divide",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-125",
+  "function": "IEEE_DIVIDE",
+  "sql": "SELECT IEEE_DIVIDE(0.0, CAST('NaN' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#ieee_divide",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-126",
+  "function": "IEEE_DIVIDE",
+  "sql": "SELECT IEEE_DIVIDE(CAST('NaN' AS FLOAT64), 0.0);",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#ieee_divide",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-127",
+  "function": "IEEE_DIVIDE",
+  "sql": "SELECT IEEE_DIVIDE(CAST('+inf' AS FLOAT64), CAST('+inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#ieee_divide",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-128",
+  "function": "IEEE_DIVIDE",
+  "sql": "SELECT IEEE_DIVIDE(CAST('-inf' AS FLOAT64), CAST('-inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#ieee_divide",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-129",
+  "function": "IS_INF",
+  "sql": "SELECT IS_INF(CAST('+inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "TRUE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#is_inf",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-130",
+  "function": "IS_INF",
+  "sql": "SELECT IS_INF(CAST('-inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "TRUE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#is_inf",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-131",
+  "function": "IS_INF",
+  "sql": "SELECT IS_INF(25);",
+  "expected_rows": [
+   [
+    "FALSE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#is_inf",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-132",
+  "function": "IS_NAN",
+  "sql": "SELECT IS_NAN(CAST('NaN' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "TRUE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#is_nan",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-133",
+  "function": "IS_NAN",
+  "sql": "SELECT IS_NAN(25);",
+  "expected_rows": [
+   [
+    "FALSE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#is_nan",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-134",
+  "function": "LEAST",
+  "sql": "SELECT LEAST(3, 5, 1);",
+  "expected_rows": [
+   [
+    "1"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#least",
+  "notes": "From the docs input/output table."
+ },
+ {
+  "id": "bq-math-135",
+  "function": "LN",
+  "sql": "SELECT LN(1.0);",
+  "expected_rows": [
+   [
+    "0.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#ln",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-136",
+  "function": "LN",
+  "sql": "SELECT LN(CAST('+inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "+inf"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#ln",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-137",
+  "function": "LOG",
+  "sql": "SELECT LOG(100.0, 10.0);",
+  "expected_rows": [
+   [
+    "2.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#log",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-138",
+  "function": "LOG10",
+  "sql": "SELECT LOG10(100.0);",
+  "expected_rows": [
+   [
+    "2.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#log10",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-139",
+  "function": "LOG10",
+  "sql": "SELECT LOG10(CAST('-inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#log10",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-140",
+  "function": "LOG10",
+  "sql": "SELECT LOG10(CAST('+inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "+inf"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#log10",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-141",
+  "function": "MOD",
+  "sql": "SELECT MOD(25, 12);",
+  "expected_rows": [
+   [
+    "1"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#mod",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-142",
+  "function": "MOD",
+  "sql": "SELECT MOD(25, 0);",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#mod",
+  "notes": "error: Docs table: result is Error.",
+  "error": true
+ },
+ {
+  "id": "bq-math-143",
+  "function": "POW",
+  "sql": "SELECT POW(2.0, 3.0);",
+  "expected_rows": [
+   [
+    "8.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#pow",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-144",
+  "function": "POW",
+  "sql": "SELECT POW(-1.0, CAST('+inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "1.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#pow",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-145",
+  "function": "POW",
+  "sql": "SELECT POW(-1.0, CAST('-inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "1.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#pow",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-146",
+  "function": "ROUND",
+  "sql": "SELECT ROUND(2.0);",
+  "expected_rows": [
+   [
+    "2.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#round",
+  "notes": "From the docs Expression / Return Value table (docs notation for the result)."
+ },
+ {
+  "id": "bq-math-147",
+  "function": "ROUND",
+  "sql": "SELECT ROUND(2.3);",
+  "expected_rows": [
+   [
+    "2.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#round",
+  "notes": "From the docs Expression / Return Value table (docs notation for the result)."
+ },
+ {
+  "id": "bq-math-148",
+  "function": "ROUND",
+  "sql": "SELECT ROUND(2.8);",
+  "expected_rows": [
+   [
+    "3.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#round",
+  "notes": "From the docs Expression / Return Value table (docs notation for the result)."
+ },
+ {
+  "id": "bq-math-149",
+  "function": "ROUND",
+  "sql": "SELECT ROUND(2.5);",
+  "expected_rows": [
+   [
+    "3.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#round",
+  "notes": "From the docs Expression / Return Value table (docs notation for the result)."
+ },
+ {
+  "id": "bq-math-150",
+  "function": "ROUND",
+  "sql": "SELECT ROUND(-2.3);",
+  "expected_rows": [
+   [
+    "-2.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#round",
+  "notes": "From the docs Expression / Return Value table (docs notation for the result)."
+ },
+ {
+  "id": "bq-math-151",
+  "function": "ROUND",
+  "sql": "SELECT ROUND(-2.8);",
+  "expected_rows": [
+   [
+    "-3.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#round",
+  "notes": "From the docs Expression / Return Value table (docs notation for the result)."
+ },
+ {
+  "id": "bq-math-152",
+  "function": "ROUND",
+  "sql": "SELECT ROUND(-2.5);",
+  "expected_rows": [
+   [
+    "-3.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#round",
+  "notes": "From the docs Expression / Return Value table (docs notation for the result)."
+ },
+ {
+  "id": "bq-math-153",
+  "function": "ROUND",
+  "sql": "SELECT ROUND(0);",
+  "expected_rows": [
+   [
+    "0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#round",
+  "notes": "From the docs Expression / Return Value table (docs notation for the result)."
+ },
+ {
+  "id": "bq-math-154",
+  "function": "ROUND",
+  "sql": "SELECT ROUND(CAST('+inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "+inf"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#round",
+  "notes": "From the docs Expression / Return Value table (docs notation for the result)."
+ },
+ {
+  "id": "bq-math-155",
+  "function": "ROUND",
+  "sql": "SELECT ROUND(CAST('-inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "-inf"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#round",
+  "notes": "From the docs Expression / Return Value table (docs notation for the result)."
+ },
+ {
+  "id": "bq-math-156",
+  "function": "ROUND",
+  "sql": "SELECT ROUND(CAST('NaN' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#round",
+  "notes": "From the docs Expression / Return Value table (docs notation for the result)."
+ },
+ {
+  "id": "bq-math-157",
+  "function": "ROUND",
+  "sql": "SELECT ROUND(123.7, -1);",
+  "expected_rows": [
+   [
+    "120.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#round",
+  "notes": "From the docs Expression / Return Value table (docs notation for the result)."
+ },
+ {
+  "id": "bq-math-158",
+  "function": "ROUND",
+  "sql": "SELECT ROUND(1.235, 2);",
+  "expected_rows": [
+   [
+    "1.24"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#round",
+  "notes": "From the docs Expression / Return Value table (docs notation for the result)."
+ },
+ {
+  "id": "bq-math-159",
+  "function": "ROUND",
+  "sql": "SELECT ROUND(NUMERIC \"2.25\", 1, \"ROUND_HALF_EVEN\");",
+  "expected_rows": [
+   [
+    "2.2"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#round",
+  "notes": "From the docs Expression / Return Value table (docs notation for the result)."
+ },
+ {
+  "id": "bq-math-160",
+  "function": "ROUND",
+  "sql": "SELECT ROUND(NUMERIC \"2.35\", 1, \"ROUND_HALF_EVEN\");",
+  "expected_rows": [
+   [
+    "2.4"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#round",
+  "notes": "From the docs Expression / Return Value table (docs notation for the result)."
+ },
+ {
+  "id": "bq-math-161",
+  "function": "ROUND",
+  "sql": "SELECT ROUND(NUMERIC \"2.251\", 1, \"ROUND_HALF_EVEN\");",
+  "expected_rows": [
+   [
+    "2.3"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#round",
+  "notes": "From the docs Expression / Return Value table (docs notation for the result)."
+ },
+ {
+  "id": "bq-math-162",
+  "function": "ROUND",
+  "sql": "SELECT ROUND(NUMERIC \"-2.5\", 0, \"ROUND_HALF_EVEN\");",
+  "expected_rows": [
+   [
+    "-2"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#round",
+  "notes": "From the docs Expression / Return Value table (docs notation for the result)."
+ },
+ {
+  "id": "bq-math-163",
+  "function": "ROUND",
+  "sql": "SELECT ROUND(NUMERIC \"2.5\", 0, \"ROUND_HALF_AWAY_FROM_ZERO\");",
+  "expected_rows": [
+   [
+    "3"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#round",
+  "notes": "From the docs Expression / Return Value table (docs notation for the result)."
+ },
+ {
+  "id": "bq-math-164",
+  "function": "ROUND",
+  "sql": "SELECT ROUND(NUMERIC \"-2.5\", 0, \"ROUND_HALF_AWAY_FROM_ZERO\");",
+  "expected_rows": [
+   [
+    "-3"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#round",
+  "notes": "From the docs Expression / Return Value table (docs notation for the result)."
+ },
+ {
+  "id": "bq-math-165",
+  "function": "SAFE_ADD",
+  "sql": "SELECT SAFE_ADD(5, 4);",
+  "expected_rows": [
+   [
+    "9"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#safe_add",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-166",
+  "function": "SAFE_DIVIDE",
+  "sql": "SELECT SAFE_DIVIDE(20, 4);",
+  "expected_rows": [
+   [
+    "5"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#safe_divide",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-167",
+  "function": "SAFE_DIVIDE",
+  "sql": "SELECT SAFE_DIVIDE(0, 20);",
+  "expected_rows": [
+   [
+    "0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#safe_divide",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-168",
+  "function": "SAFE_DIVIDE",
+  "sql": "SELECT SAFE_DIVIDE(20, 0);",
+  "expected_rows": [
+   [
+    "NULL"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#safe_divide",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-169",
+  "function": "SAFE_MULTIPLY",
+  "sql": "SELECT SAFE_MULTIPLY(20, 4);",
+  "expected_rows": [
+   [
+    "80"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#safe_multiply",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-170",
+  "function": "SAFE_NEGATE",
+  "sql": "SELECT SAFE_NEGATE(+1);",
+  "expected_rows": [
+   [
+    "-1"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#safe_negate",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-171",
+  "function": "SAFE_NEGATE",
+  "sql": "SELECT SAFE_NEGATE(-1);",
+  "expected_rows": [
+   [
+    "+1"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#safe_negate",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-172",
+  "function": "SAFE_NEGATE",
+  "sql": "SELECT SAFE_NEGATE(0);",
+  "expected_rows": [
+   [
+    "0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#safe_negate",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-173",
+  "function": "SAFE_SUBTRACT",
+  "sql": "SELECT SAFE_SUBTRACT(5, 4);",
+  "expected_rows": [
+   [
+    "1"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#safe_subtract",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-174",
+  "function": "SEC",
+  "sql": "SELECT SEC(CAST('+inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#sec",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-175",
+  "function": "SEC",
+  "sql": "SELECT SEC(CAST('-inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#sec",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-176",
+  "function": "SEC",
+  "sql": "SELECT SEC(CAST('NaN' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#sec",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-177",
+  "function": "SEC",
+  "sql": "SELECT SEC(NULL);",
+  "expected_rows": [
+   [
+    "NULL"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#sec",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-178",
+  "function": "SECH",
+  "sql": "SELECT SECH(CAST('+inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#sech",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-179",
+  "function": "SECH",
+  "sql": "SELECT SECH(CAST('-inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#sech",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-180",
+  "function": "SECH",
+  "sql": "SELECT SECH(CAST('NaN' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#sech",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-181",
+  "function": "SECH",
+  "sql": "SELECT SECH(NULL);",
+  "expected_rows": [
+   [
+    "NULL"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#sech",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-182",
+  "function": "SIGN",
+  "sql": "SELECT SIGN(25);",
+  "expected_rows": [
+   [
+    "+1"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#sign",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-183",
+  "function": "SIGN",
+  "sql": "SELECT SIGN(0);",
+  "expected_rows": [
+   [
+    "0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#sign",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-184",
+  "function": "SIGN",
+  "sql": "SELECT SIGN(-25);",
+  "expected_rows": [
+   [
+    "-1"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#sign",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-185",
+  "function": "SIGN",
+  "sql": "SELECT SIGN(CAST('NaN' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#sign",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-186",
+  "function": "SIN",
+  "sql": "SELECT SIN(CAST('+inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#sin",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-187",
+  "function": "SIN",
+  "sql": "SELECT SIN(CAST('-inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#sin",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-188",
+  "function": "SIN",
+  "sql": "SELECT SIN(CAST('NaN' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#sin",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-189",
+  "function": "SINH",
+  "sql": "SELECT SINH(CAST('+inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "+inf"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#sinh",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-190",
+  "function": "SINH",
+  "sql": "SELECT SINH(CAST('-inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "-inf"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#sinh",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-191",
+  "function": "SINH",
+  "sql": "SELECT SINH(CAST('NaN' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#sinh",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-192",
+  "function": "SQRT",
+  "sql": "SELECT SQRT(25.0);",
+  "expected_rows": [
+   [
+    "5.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#sqrt",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-193",
+  "function": "SQRT",
+  "sql": "SELECT SQRT(CAST('+inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "+inf"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#sqrt",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-194",
+  "function": "TAN",
+  "sql": "SELECT TAN(CAST('+inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#tan",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-195",
+  "function": "TAN",
+  "sql": "SELECT TAN(CAST('-inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#tan",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-196",
+  "function": "TAN",
+  "sql": "SELECT TAN(CAST('NaN' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#tan",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-197",
+  "function": "TANH",
+  "sql": "SELECT TANH(CAST('+inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "1.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#tanh",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-198",
+  "function": "TANH",
+  "sql": "SELECT TANH(CAST('-inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "-1.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#tanh",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-199",
+  "function": "TANH",
+  "sql": "SELECT TANH(CAST('NaN' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#tanh",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-200",
+  "function": "TRUNC",
+  "sql": "SELECT TRUNC(2.0);",
+  "expected_rows": [
+   [
+    "2.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#trunc",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-201",
+  "function": "TRUNC",
+  "sql": "SELECT TRUNC(2.3);",
+  "expected_rows": [
+   [
+    "2.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#trunc",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-202",
+  "function": "TRUNC",
+  "sql": "SELECT TRUNC(2.8);",
+  "expected_rows": [
+   [
+    "2.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#trunc",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-203",
+  "function": "TRUNC",
+  "sql": "SELECT TRUNC(2.5);",
+  "expected_rows": [
+   [
+    "2.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#trunc",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-204",
+  "function": "TRUNC",
+  "sql": "SELECT TRUNC(-2.3);",
+  "expected_rows": [
+   [
+    "-2.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#trunc",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-205",
+  "function": "TRUNC",
+  "sql": "SELECT TRUNC(-2.8);",
+  "expected_rows": [
+   [
+    "-2.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#trunc",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-206",
+  "function": "TRUNC",
+  "sql": "SELECT TRUNC(-2.5);",
+  "expected_rows": [
+   [
+    "-2.0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#trunc",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-207",
+  "function": "TRUNC",
+  "sql": "SELECT TRUNC(0);",
+  "expected_rows": [
+   [
+    "0"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#trunc",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL)."
+ },
+ {
+  "id": "bq-math-208",
+  "function": "TRUNC",
+  "sql": "SELECT TRUNC(CAST('+inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "+inf"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#trunc",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-209",
+  "function": "TRUNC",
+  "sql": "SELECT TRUNC(CAST('-inf' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "-inf"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#trunc",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ },
+ {
+  "id": "bq-math-210",
+  "function": "TRUNC",
+  "sql": "SELECT TRUNC(CAST('NaN' AS FLOAT64));",
+  "expected_rows": [
+   [
+    "NaN"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#trunc",
+  "notes": "From the docs input/output table (docs notation for the result: +inf/-inf/NaN/NULL). Special values built with CAST('..' AS FLOAT64)."
+ }
+]

@@ -1,0 +1,232 @@
+[
+ {
+  "specifier": "%a",
+  "meaning": "Abbreviated weekday name (Sun..Sat)",
+  "applies_to": "both"
+ },
+ {
+  "specifier": "%b",
+  "meaning": "Abbreviated month name (Jan..Dec)",
+  "applies_to": "both"
+ },
+ {
+  "specifier": "%c",
+  "meaning": "Month, numeric (0..12)",
+  "applies_to": "both"
+ },
+ {
+  "specifier": "%D",
+  "meaning": "Day of month with English suffix",
+  "applies_to": "both"
+ },
+ {
+  "specifier": "%d",
+  "meaning": "Day of month, numeric (00..31)",
+  "applies_to": "both"
+ },
+ {
+  "specifier": "%e",
+  "meaning": "Day of month, numeric (0..31)",
+  "applies_to": "both"
+ },
+ {
+  "specifier": "%f",
+  "meaning": "Microseconds (000000..999999)",
+  "applies_to": "both"
+ },
+ {
+  "specifier": "%H",
+  "meaning": "Hour (00..23)",
+  "applies_to": "both"
+ },
+ {
+  "specifier": "%h",
+  "meaning": "Hour (01..12)",
+  "applies_to": "both"
+ },
+ {
+  "specifier": "%I",
+  "meaning": "Hour (01..12)",
+  "applies_to": "both"
+ },
+ {
+  "specifier": "%i",
+  "meaning": "Minutes, numeric (00..59)",
+  "applies_to": "both"
+ },
+ {
+  "specifier": "%j",
+  "meaning": "Day of year (001..366)",
+  "applies_to": "both"
+ },
+ {
+  "specifier": "%k",
+  "meaning": "Hour (0..23)",
+  "applies_to": "both"
+ },
+ {
+  "specifier": "%l",
+  "meaning": "Hour (1..12)",
+  "applies_to": "both"
+ },
+ {
+  "specifier": "%M",
+  "meaning": "Month name (January..December)",
+  "applies_to": "both"
+ },
+ {
+  "specifier": "%m",
+  "meaning": "Month, numeric (00..12)",
+  "applies_to": "both"
+ },
+ {
+  "specifier": "%p",
+  "meaning": "AM or PM",
+  "applies_to": "both"
+ },
+ {
+  "specifier": "%r",
+  "meaning": "Time, 12-hour (hh:mm:ss AM/PM)",
+  "applies_to": "both"
+ },
+ {
+  "specifier": "%S",
+  "meaning": "Seconds (00..59)",
+  "applies_to": "both"
+ },
+ {
+  "specifier": "%s",
+  "meaning": "Seconds (00..59)",
+  "applies_to": "both"
+ },
+ {
+  "specifier": "%T",
+  "meaning": "Time, 24-hour (hh:mm:ss)",
+  "applies_to": "both"
+ },
+ {
+  "specifier": "%U",
+  "meaning": "Week (00..53), Sunday first; WEEK mode 0",
+  "applies_to": "both"
+ },
+ {
+  "specifier": "%u",
+  "meaning": "Week (00..53), Monday first; WEEK mode 1",
+  "applies_to": "both"
+ },
+ {
+  "specifier": "%V",
+  "meaning": "Week (01..53), Sunday first; mode 2; with %X",
+  "applies_to": "both"
+ },
+ {
+  "specifier": "%v",
+  "meaning": "Week (01..53), Monday first; mode 3; with %x",
+  "applies_to": "both"
+ },
+ {
+  "specifier": "%W",
+  "meaning": "Weekday name (Sunday..Saturday)",
+  "applies_to": "both"
+ },
+ {
+  "specifier": "%w",
+  "meaning": "Day of week (0=Sunday..6=Saturday)",
+  "applies_to": "both"
+ },
+ {
+  "specifier": "%X",
+  "meaning": "Week year, Sunday first, 4 digits; with %V",
+  "applies_to": "both"
+ },
+ {
+  "specifier": "%x",
+  "meaning": "Week year, Monday first, 4 digits; with %v",
+  "applies_to": "both"
+ },
+ {
+  "specifier": "%Y",
+  "meaning": "Year, numeric, four digits",
+  "applies_to": "both"
+ },
+ {
+  "specifier": "%y",
+  "meaning": "Year, numeric, two digits",
+  "applies_to": "both"
+ },
+ {
+  "specifier": "%%",
+  "meaning": "A literal % character",
+  "applies_to": "both"
+ },
+ {
+  "specifier": "%<x>",
+  "meaning": "x itself, for any x not listed above",
+  "applies_to": "both"
+ },
+ {
+  "specifier": "(note)",
+  "meaning": "Manual: table also applies to TIME_FORMAT, UNIX_TIMESTAMP",
+  "applies_to": "both"
+ },
+ {
+  "specifier": "(note)",
+  "meaning": "Month/day ranges start at 0 (incomplete dates allowed)",
+  "applies_to": "DATE_FORMAT"
+ },
+ {
+  "specifier": "(note)",
+  "meaning": "Day/month names language set by lc_time_names",
+  "applies_to": "DATE_FORMAT"
+ },
+ {
+  "specifier": "(note)",
+  "meaning": "DATE_FORMAT result uses connection charset and collation",
+  "applies_to": "DATE_FORMAT"
+ },
+ {
+  "specifier": "(note)",
+  "meaning": "STR_TO_DATE: literal format chars must match literally",
+  "applies_to": "STR_TO_DATE"
+ },
+ {
+  "specifier": "(note)",
+  "meaning": "STR_TO_DATE: scan starts at string start; fails on mismatch",
+  "applies_to": "STR_TO_DATE"
+ },
+ {
+  "specifier": "(note)",
+  "meaning": "STR_TO_DATE: extra trailing characters in str are ignored",
+  "applies_to": "STR_TO_DATE"
+ },
+ {
+  "specifier": "(note)",
+  "meaning": "STR_TO_DATE: unspecified date/time parts default to 0",
+  "applies_to": "STR_TO_DATE"
+ },
+ {
+  "specifier": "%X%V",
+  "meaning": "STR_TO_DATE: year-week alone cannot give a date; add %W",
+  "applies_to": "STR_TO_DATE"
+ },
+ {
+  "specifier": "(note)",
+  "meaning": "STR_TO_DATE: checks year 0-9999, month 1-12, day 1-31 individually",
+  "applies_to": "STR_TO_DATE"
+ },
+ {
+  "specifier": "(note)",
+  "meaning": "STR_TO_DATE: NULL plus warning if string cannot be parsed",
+  "applies_to": "STR_TO_DATE"
+ },
+ {
+  "specifier": "(note)",
+  "meaning": "STR_TO_DATE: NO_ZERO_DATE mode gives NULL for zero dates",
+  "applies_to": "STR_TO_DATE"
+ },
+ {
+  "specifier": "(note)",
+  "meaning": "STR_TO_DATE returns DATETIME, DATE or TIME by parts present",
+  "applies_to": "STR_TO_DATE"
+ }
+]

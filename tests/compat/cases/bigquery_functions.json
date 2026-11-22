@@ -1,0 +1,1727 @@
+[
+ {
+  "name": "CURRENT_DATE",
+  "category": "date",
+  "has_example": false
+ },
+ {
+  "name": "DATE",
+  "category": "date",
+  "has_example": true
+ },
+ {
+  "name": "DATE_ADD",
+  "category": "date",
+  "has_example": true
+ },
+ {
+  "name": "DATE_DIFF",
+  "category": "date",
+  "has_example": true
+ },
+ {
+  "name": "DATE_FROM_UNIX_DATE",
+  "category": "date",
+  "has_example": true
+ },
+ {
+  "name": "DATE_SUB",
+  "category": "date",
+  "has_example": true
+ },
+ {
+  "name": "DATE_TRUNC",
+  "category": "date",
+  "has_example": true
+ },
+ {
+  "name": "EXTRACT",
+  "category": "date",
+  "has_example": true
+ },
+ {
+  "name": "FORMAT_DATE",
+  "category": "date",
+  "has_example": true
+ },
+ {
+  "name": "GENERATE_DATE_ARRAY",
+  "category": "date",
+  "has_example": true
+ },
+ {
+  "name": "LAST_DAY",
+  "category": "date",
+  "has_example": true
+ },
+ {
+  "name": "PARSE_DATE",
+  "category": "date",
+  "has_example": true
+ },
+ {
+  "name": "UNIX_DATE",
+  "category": "date",
+  "has_example": true
+ },
+ {
+  "name": "CURRENT_DATETIME",
+  "category": "datetime",
+  "has_example": false
+ },
+ {
+  "name": "DATETIME",
+  "category": "datetime",
+  "has_example": true
+ },
+ {
+  "name": "DATETIME_ADD",
+  "category": "datetime",
+  "has_example": true
+ },
+ {
+  "name": "DATETIME_DIFF",
+  "category": "datetime",
+  "has_example": true
+ },
+ {
+  "name": "DATETIME_SUB",
+  "category": "datetime",
+  "has_example": true
+ },
+ {
+  "name": "DATETIME_TRUNC",
+  "category": "datetime",
+  "has_example": true
+ },
+ {
+  "name": "EXTRACT",
+  "category": "datetime",
+  "has_example": true
+ },
+ {
+  "name": "FORMAT_DATETIME",
+  "category": "datetime",
+  "has_example": true
+ },
+ {
+  "name": "LAST_DAY",
+  "category": "datetime",
+  "has_example": true
+ },
+ {
+  "name": "PARSE_DATETIME",
+  "category": "datetime",
+  "has_example": true
+ },
+ {
+  "name": "CURRENT_TIMESTAMP",
+  "category": "timestamp",
+  "has_example": false
+ },
+ {
+  "name": "EXTRACT",
+  "category": "timestamp",
+  "has_example": true
+ },
+ {
+  "name": "FORMAT_TIMESTAMP",
+  "category": "timestamp",
+  "has_example": true
+ },
+ {
+  "name": "GENERATE_TIMESTAMP_ARRAY",
+  "category": "timestamp",
+  "has_example": true
+ },
+ {
+  "name": "PARSE_TIMESTAMP",
+  "category": "timestamp",
+  "has_example": true
+ },
+ {
+  "name": "STRING (Timestamp)",
+  "category": "timestamp",
+  "has_example": true
+ },
+ {
+  "name": "TIMESTAMP",
+  "category": "timestamp",
+  "has_example": true
+ },
+ {
+  "name": "TIMESTAMP_ADD",
+  "category": "timestamp",
+  "has_example": true
+ },
+ {
+  "name": "TIMESTAMP_DIFF",
+  "category": "timestamp",
+  "has_example": true
+ },
+ {
+  "name": "TIMESTAMP_MICROS",
+  "category": "timestamp",
+  "has_example": true
+ },
+ {
+  "name": "TIMESTAMP_MILLIS",
+  "category": "timestamp",
+  "has_example": true
+ },
+ {
+  "name": "TIMESTAMP_SECONDS",
+  "category": "timestamp",
+  "has_example": true
+ },
+ {
+  "name": "TIMESTAMP_SUB",
+  "category": "timestamp",
+  "has_example": true
+ },
+ {
+  "name": "TIMESTAMP_TRUNC",
+  "category": "timestamp",
+  "has_example": true
+ },
+ {
+  "name": "UNIX_MICROS",
+  "category": "timestamp",
+  "has_example": true
+ },
+ {
+  "name": "UNIX_MILLIS",
+  "category": "timestamp",
+  "has_example": true
+ },
+ {
+  "name": "UNIX_SECONDS",
+  "category": "timestamp",
+  "has_example": true
+ },
+ {
+  "name": "CURRENT_TIME",
+  "category": "time",
+  "has_example": false
+ },
+ {
+  "name": "EXTRACT",
+  "category": "time",
+  "has_example": true
+ },
+ {
+  "name": "FORMAT_TIME",
+  "category": "time",
+  "has_example": true
+ },
+ {
+  "name": "PARSE_TIME",
+  "category": "time",
+  "has_example": true
+ },
+ {
+  "name": "TIME",
+  "category": "time",
+  "has_example": true
+ },
+ {
+  "name": "TIME_ADD",
+  "category": "time",
+  "has_example": true
+ },
+ {
+  "name": "TIME_DIFF",
+  "category": "time",
+  "has_example": true
+ },
+ {
+  "name": "TIME_SUB",
+  "category": "time",
+  "has_example": true
+ },
+ {
+  "name": "TIME_TRUNC",
+  "category": "time",
+  "has_example": true
+ },
+ {
+  "name": "ARRAY_TO_STRING",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "ASCII",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "BYTE_LENGTH",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "CHAR_LENGTH",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "CHARACTER_LENGTH",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "CHR",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "CODE_POINTS_TO_BYTES",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "CODE_POINTS_TO_STRING",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "COLLATE",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "CONCAT",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "CONTAINS_SUBSTR",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "EDIT_DISTANCE",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "ENDS_WITH",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "FORMAT",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "FROM_BASE32",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "FROM_BASE64",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "FROM_HEX",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "INITCAP",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "INSTR",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "LAX_STRING",
+  "category": "string",
+  "has_example": false
+ },
+ {
+  "name": "LEFT",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "LENGTH",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "LOWER",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "LPAD",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "LTRIM",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "NORMALIZE",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "NORMALIZE_AND_CASEFOLD",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "OCTET_LENGTH",
+  "category": "string",
+  "has_example": false
+ },
+ {
+  "name": "REGEXP_CONTAINS",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "REGEXP_EXTRACT",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "REGEXP_EXTRACT_GROUPS",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "REGEXP_EXTRACT_ALL",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "REGEXP_INSTR",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "REGEXP_REPLACE",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "REGEXP_SUBSTR",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "REPEAT",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "REPLACE",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "REVERSE",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "RIGHT",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "RPAD",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "RTRIM",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "SAFE_CONVERT_BYTES_TO_STRING",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "SOUNDEX",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "SPLIT",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "STARTS_WITH",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "STRING (JSON)",
+  "category": "string",
+  "has_example": false
+ },
+ {
+  "name": "STRING (Timestamp)",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "STRING_AGG",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "STRPOS",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "SUBSTR",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "SUBSTRING",
+  "category": "string",
+  "has_example": false
+ },
+ {
+  "name": "TO_BASE32",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "TO_BASE64",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "TO_CODE_POINTS",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "TO_HEX",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "TRANSLATE",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "TRIM",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "UNICODE",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "UPPER",
+  "category": "string",
+  "has_example": true
+ },
+ {
+  "name": "ARRAY",
+  "category": "array",
+  "has_example": true
+ },
+ {
+  "name": "ARRAY_AGG",
+  "category": "array",
+  "has_example": true
+ },
+ {
+  "name": "ARRAY_CONCAT",
+  "category": "array",
+  "has_example": true
+ },
+ {
+  "name": "ARRAY_CONCAT_AGG",
+  "category": "array",
+  "has_example": true
+ },
+ {
+  "name": "ARRAY_FIRST",
+  "category": "array",
+  "has_example": true
+ },
+ {
+  "name": "ARRAY_LAST",
+  "category": "array",
+  "has_example": true
+ },
+ {
+  "name": "ARRAY_LENGTH",
+  "category": "array",
+  "has_example": true
+ },
+ {
+  "name": "ARRAY_REVERSE",
+  "category": "array",
+  "has_example": true
+ },
+ {
+  "name": "ARRAY_SLICE",
+  "category": "array",
+  "has_example": true
+ },
+ {
+  "name": "ARRAY_TO_STRING",
+  "category": "array",
+  "has_example": true
+ },
+ {
+  "name": "GENERATE_ARRAY",
+  "category": "array",
+  "has_example": true
+ },
+ {
+  "name": "GENERATE_DATE_ARRAY",
+  "category": "array",
+  "has_example": true
+ },
+ {
+  "name": "GENERATE_RANGE_ARRAY",
+  "category": "array",
+  "has_example": false
+ },
+ {
+  "name": "GENERATE_TIMESTAMP_ARRAY",
+  "category": "array",
+  "has_example": true
+ },
+ {
+  "name": "JSON_ARRAY",
+  "category": "array",
+  "has_example": false
+ },
+ {
+  "name": "JSON_ARRAY_APPEND",
+  "category": "array",
+  "has_example": false
+ },
+ {
+  "name": "JSON_ARRAY_INSERT",
+  "category": "array",
+  "has_example": false
+ },
+ {
+  "name": "JSON_EXTRACT_ARRAY",
+  "category": "array",
+  "has_example": false
+ },
+ {
+  "name": "JSON_EXTRACT_STRING_ARRAY",
+  "category": "array",
+  "has_example": false
+ },
+ {
+  "name": "JSON_QUERY_ARRAY",
+  "category": "array",
+  "has_example": false
+ },
+ {
+  "name": "JSON_VALUE_ARRAY",
+  "category": "array",
+  "has_example": false
+ },
+ {
+  "name": "RANGE_BUCKET",
+  "category": "array",
+  "has_example": true
+ },
+ {
+  "name": "ABS",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "ACOS",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "ACOSH",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "ASIN",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "ASINH",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "ATAN",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "ATAN2",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "ATANH",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "AVG",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "AVG (Differential Privacy)",
+  "category": "math",
+  "has_example": false
+ },
+ {
+  "name": "CBRT",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "CEIL",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "CEILING",
+  "category": "math",
+  "has_example": false
+ },
+ {
+  "name": "COS",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "COSH",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "COSINE_DISTANCE",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "COT",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "COTH",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "CSC",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "CSCH",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "DIV",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "EXP",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "EUCLIDEAN_DISTANCE",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "FLOOR",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "GREATEST",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "IEEE_DIVIDE",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "IS_INF",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "IS_NAN",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "LEAST",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "LN",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "LOG",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "LOG10",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "MAX",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "MAX_BY",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "MIN_BY",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "MOD",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "POW",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "POWER",
+  "category": "math",
+  "has_example": false
+ },
+ {
+  "name": "RAND",
+  "category": "math",
+  "has_example": false
+ },
+ {
+  "name": "RANGE_BUCKET",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "ROUND",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "SAFE_ADD",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "SAFE_DIVIDE",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "SAFE_MULTIPLY",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "SAFE_NEGATE",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "SAFE_SUBTRACT",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "SEC",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "SECH",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "SIGN",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "SIN",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "SINH",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "SQRT",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "SUM",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "SUM (Differential Privacy)",
+  "category": "math",
+  "has_example": false
+ },
+ {
+  "name": "TAN",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "TANH",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "TRUNC",
+  "category": "math",
+  "has_example": true
+ },
+ {
+  "name": "CASE expr",
+  "category": "conditional",
+  "has_example": true
+ },
+ {
+  "name": "CASE",
+  "category": "conditional",
+  "has_example": true
+ },
+ {
+  "name": "COALESCE",
+  "category": "conditional",
+  "has_example": true
+ },
+ {
+  "name": "IF",
+  "category": "conditional",
+  "has_example": true
+ },
+ {
+  "name": "IFNULL",
+  "category": "conditional",
+  "has_example": true
+ },
+ {
+  "name": "NULLIF",
+  "category": "conditional",
+  "has_example": true
+ },
+ {
+  "name": "ARRAY_TO_STRING",
+  "category": "conversion",
+  "has_example": true
+ },
+ {
+  "name": "BOOL",
+  "category": "conversion",
+  "has_example": false
+ },
+ {
+  "name": "CAST",
+  "category": "conversion",
+  "has_example": true
+ },
+ {
+  "name": "CHR",
+  "category": "conversion",
+  "has_example": true
+ },
+ {
+  "name": "CODE_POINTS_TO_BYTES",
+  "category": "conversion",
+  "has_example": true
+ },
+ {
+  "name": "CODE_POINTS_TO_STRING",
+  "category": "conversion",
+  "has_example": true
+ },
+ {
+  "name": "DATE_FROM_UNIX_DATE",
+  "category": "conversion",
+  "has_example": true
+ },
+ {
+  "name": "FROM_BASE32",
+  "category": "conversion",
+  "has_example": true
+ },
+ {
+  "name": "FROM_BASE64",
+  "category": "conversion",
+  "has_example": true
+ },
+ {
+  "name": "FROM_HEX",
+  "category": "conversion",
+  "has_example": true
+ },
+ {
+  "name": "INT64",
+  "category": "conversion",
+  "has_example": false
+ },
+ {
+  "name": "LAX_BOOL",
+  "category": "conversion",
+  "has_example": false
+ },
+ {
+  "name": "LAX_FLOAT64",
+  "category": "conversion",
+  "has_example": false
+ },
+ {
+  "name": "LAX_INT64",
+  "category": "conversion",
+  "has_example": false
+ },
+ {
+  "name": "LAX_STRING",
+  "category": "conversion",
+  "has_example": false
+ },
+ {
+  "name": "PARSE_BIGNUMERIC",
+  "category": "conversion",
+  "has_example": true
+ },
+ {
+  "name": "PARSE_DATE",
+  "category": "conversion",
+  "has_example": true
+ },
+ {
+  "name": "PARSE_DATETIME",
+  "category": "conversion",
+  "has_example": true
+ },
+ {
+  "name": "PARSE_JSON",
+  "category": "conversion",
+  "has_example": false
+ },
+ {
+  "name": "PARSE_NUMERIC",
+  "category": "conversion",
+  "has_example": true
+ },
+ {
+  "name": "PARSE_TIME",
+  "category": "conversion",
+  "has_example": true
+ },
+ {
+  "name": "PARSE_TIMESTAMP",
+  "category": "conversion",
+  "has_example": true
+ },
+ {
+  "name": "SAFE_CAST",
+  "category": "conversion",
+  "has_example": true
+ },
+ {
+  "name": "SAFE_CONVERT_BYTES_TO_STRING",
+  "category": "conversion",
+  "has_example": true
+ },
+ {
+  "name": "STRING (JSON)",
+  "category": "conversion",
+  "has_example": false
+ },
+ {
+  "name": "STRING (Timestamp)",
+  "category": "conversion",
+  "has_example": true
+ },
+ {
+  "name": "TIMESTAMP_MICROS",
+  "category": "conversion",
+  "has_example": true
+ },
+ {
+  "name": "TIMESTAMP_MILLIS",
+  "category": "conversion",
+  "has_example": true
+ },
+ {
+  "name": "TIMESTAMP_SECONDS",
+  "category": "conversion",
+  "has_example": true
+ },
+ {
+  "name": "TO_BASE32",
+  "category": "conversion",
+  "has_example": true
+ },
+ {
+  "name": "TO_BASE64",
+  "category": "conversion",
+  "has_example": true
+ },
+ {
+  "name": "TO_CODE_POINTS",
+  "category": "conversion",
+  "has_example": true
+ },
+ {
+  "name": "TO_HEX",
+  "category": "conversion",
+  "has_example": true
+ },
+ {
+  "name": "TO_JSON",
+  "category": "conversion",
+  "has_example": false
+ },
+ {
+  "name": "TO_JSON_STRING",
+  "category": "conversion",
+  "has_example": false
+ },
+ {
+  "name": "UNIX_DATE",
+  "category": "conversion",
+  "has_example": true
+ },
+ {
+  "name": "UNIX_MICROS",
+  "category": "conversion",
+  "has_example": true
+ },
+ {
+  "name": "UNIX_MILLIS",
+  "category": "conversion",
+  "has_example": true
+ },
+ {
+  "name": "UNIX_SECONDS",
+  "category": "conversion",
+  "has_example": true
+ },
+ {
+  "name": "AGG",
+  "category": "aggregate",
+  "has_example": false
+ },
+ {
+  "name": "ANY_VALUE",
+  "category": "aggregate",
+  "has_example": true
+ },
+ {
+  "name": "APPROX_COUNT_DISTINCT",
+  "category": "aggregate",
+  "has_example": false
+ },
+ {
+  "name": "APPROX_QUANTILES",
+  "category": "aggregate",
+  "has_example": false
+ },
+ {
+  "name": "APPROX_TOP_COUNT",
+  "category": "aggregate",
+  "has_example": false
+ },
+ {
+  "name": "APPROX_TOP_SUM",
+  "category": "aggregate",
+  "has_example": false
+ },
+ {
+  "name": "ARRAY_AGG",
+  "category": "aggregate",
+  "has_example": true
+ },
+ {
+  "name": "ARRAY_CONCAT_AGG",
+  "category": "aggregate",
+  "has_example": true
+ },
+ {
+  "name": "AVG",
+  "category": "aggregate",
+  "has_example": true
+ },
+ {
+  "name": "AVG (Differential Privacy)",
+  "category": "aggregate",
+  "has_example": false
+ },
+ {
+  "name": "BIT_AND",
+  "category": "aggregate",
+  "has_example": true
+ },
+ {
+  "name": "BIT_OR",
+  "category": "aggregate",
+  "has_example": true
+ },
+ {
+  "name": "BIT_XOR",
+  "category": "aggregate",
+  "has_example": true
+ },
+ {
+  "name": "CORR",
+  "category": "aggregate",
+  "has_example": false
+ },
+ {
+  "name": "COUNT",
+  "category": "aggregate",
+  "has_example": true
+ },
+ {
+  "name": "COUNT (Differential Privacy)",
+  "category": "aggregate",
+  "has_example": false
+ },
+ {
+  "name": "COUNTIF",
+  "category": "aggregate",
+  "has_example": true
+ },
+ {
+  "name": "COVAR_POP",
+  "category": "aggregate",
+  "has_example": false
+ },
+ {
+  "name": "COVAR_SAMP",
+  "category": "aggregate",
+  "has_example": false
+ },
+ {
+  "name": "GROUPING",
+  "category": "aggregate",
+  "has_example": true
+ },
+ {
+  "name": "LOGICAL_AND",
+  "category": "aggregate",
+  "has_example": true
+ },
+ {
+  "name": "LOGICAL_OR",
+  "category": "aggregate",
+  "has_example": true
+ },
+ {
+  "name": "MAX",
+  "category": "aggregate",
+  "has_example": true
+ },
+ {
+  "name": "MAX_BY",
+  "category": "aggregate",
+  "has_example": true
+ },
+ {
+  "name": "MIN",
+  "category": "aggregate",
+  "has_example": true
+ },
+ {
+  "name": "MIN_BY",
+  "category": "aggregate",
+  "has_example": true
+ },
+ {
+  "name": "PERCENTILE_CONT",
+  "category": "aggregate",
+  "has_example": true
+ },
+ {
+  "name": "PERCENTILE_CONT (Differential Privacy)",
+  "category": "aggregate",
+  "has_example": false
+ },
+ {
+  "name": "PERCENTILE_DISC",
+  "category": "aggregate",
+  "has_example": true
+ },
+ {
+  "name": "ST_CENTROID_AGG",
+  "category": "aggregate",
+  "has_example": false
+ },
+ {
+  "name": "ST_EXTENT",
+  "category": "aggregate",
+  "has_example": false
+ },
+ {
+  "name": "ST_UNION_AGG",
+  "category": "aggregate",
+  "has_example": false
+ },
+ {
+  "name": "STDDEV",
+  "category": "aggregate",
+  "has_example": false
+ },
+ {
+  "name": "STDDEV_POP",
+  "category": "aggregate",
+  "has_example": false
+ },
+ {
+  "name": "STDDEV_SAMP",
+  "category": "aggregate",
+  "has_example": false
+ },
+ {
+  "name": "STRING_AGG",
+  "category": "aggregate",
+  "has_example": true
+ },
+ {
+  "name": "SUM",
+  "category": "aggregate",
+  "has_example": true
+ },
+ {
+  "name": "SUM (Differential Privacy)",
+  "category": "aggregate",
+  "has_example": false
+ },
+ {
+  "name": "VAR_POP",
+  "category": "aggregate",
+  "has_example": false
+ },
+ {
+  "name": "VAR_SAMP",
+  "category": "aggregate",
+  "has_example": false
+ },
+ {
+  "name": "VARIANCE",
+  "category": "aggregate",
+  "has_example": false
+ },
+ {
+  "name": "FIRST_VALUE",
+  "category": "window",
+  "has_example": true
+ },
+ {
+  "name": "LAG",
+  "category": "window",
+  "has_example": true
+ },
+ {
+  "name": "LAST_VALUE",
+  "category": "window",
+  "has_example": true
+ },
+ {
+  "name": "LEAD",
+  "category": "window",
+  "has_example": true
+ },
+ {
+  "name": "NTH_VALUE",
+  "category": "window",
+  "has_example": true
+ },
+ {
+  "name": "PERCENTILE_CONT",
+  "category": "window",
+  "has_example": true
+ },
+ {
+  "name": "PERCENTILE_DISC",
+  "category": "window",
+  "has_example": true
+ },
+ {
+  "name": "CUME_DIST",
+  "category": "window",
+  "has_example": true
+ },
+ {
+  "name": "DENSE_RANK",
+  "category": "window",
+  "has_example": true
+ },
+ {
+  "name": "NTILE",
+  "category": "window",
+  "has_example": true
+ },
+ {
+  "name": "PERCENT_RANK",
+  "category": "window",
+  "has_example": true
+ },
+ {
+  "name": "RANK",
+  "category": "window",
+  "has_example": true
+ },
+ {
+  "name": "ROW_NUMBER",
+  "category": "window",
+  "has_example": true
+ },
+ {
+  "name": "Field access operator",
+  "category": "operator",
+  "has_example": true
+ },
+ {
+  "name": "Array subscript operator",
+  "category": "operator",
+  "has_example": true
+ },
+ {
+  "name": "Struct subscript operator",
+  "category": "operator",
+  "has_example": true
+ },
+ {
+  "name": "JSON subscript operator",
+  "category": "operator",
+  "has_example": true
+ },
+ {
+  "name": "Arithmetic operators",
+  "category": "operator",
+  "has_example": false
+ },
+ {
+  "name": "Date arithmetics operators",
+  "category": "operator",
+  "has_example": true
+ },
+ {
+  "name": "Datetime subtraction",
+  "category": "operator",
+  "has_example": true
+ },
+ {
+  "name": "Interval arithmetic operators",
+  "category": "operator",
+  "has_example": true
+ },
+ {
+  "name": "Bitwise operators",
+  "category": "operator",
+  "has_example": false
+ },
+ {
+  "name": "Logical operators",
+  "category": "operator",
+  "has_example": true
+ },
+ {
+  "name": "Comparison operators",
+  "category": "operator",
+  "has_example": true
+ },
+ {
+  "name": "EXISTS operator",
+  "category": "operator",
+  "has_example": true
+ },
+ {
+  "name": "IN operator",
+  "category": "operator",
+  "has_example": true
+ },
+ {
+  "name": "IS operators",
+  "category": "operator",
+  "has_example": false
+ },
+ {
+  "name": "IS DISTINCT FROM operator",
+  "category": "operator",
+  "has_example": true
+ },
+ {
+  "name": "LIKE operator",
+  "category": "operator",
+  "has_example": true
+ },
+ {
+  "name": "Quantified LIKE operator",
+  "category": "operator",
+  "has_example": true
+ },
+ {
+  "name": "Concatenation operator",
+  "category": "operator",
+  "has_example": false
+ },
+ {
+  "name": "WITH expression",
+  "category": "operator",
+  "has_example": true
+ },
+ {
+  "name": "Graph logical operators",
+  "category": "operator",
+  "has_example": false
+ },
+ {
+  "name": "ALL_DIFFERENT predicate",
+  "category": "operator",
+  "has_example": false
+ },
+ {
+  "name": "IS DESTINATION predicate",
+  "category": "operator",
+  "has_example": false
+ },
+ {
+  "name": "IS SOURCE predicate",
+  "category": "operator",
+  "has_example": false
+ },
+ {
+  "name": "SAME predicate",
+  "category": "operator",
+  "has_example": false
+ },
+ {
+  "name": "+ (unary plus)",
+  "category": "operator",
+  "has_example": false
+ },
+ {
+  "name": "- (unary minus)",
+  "category": "operator",
+  "has_example": false
+ },
+ {
+  "name": "~",
+  "category": "operator",
+  "has_example": false
+ },
+ {
+  "name": "* (multiplication)",
+  "category": "operator",
+  "has_example": true
+ },
+ {
+  "name": "/ (division)",
+  "category": "operator",
+  "has_example": true
+ },
+ {
+  "name": "|| (concatenation)",
+  "category": "operator",
+  "has_example": false
+ },
+ {
+  "name": "+ (addition)",
+  "category": "operator",
+  "has_example": true
+ },
+ {
+  "name": "- (subtraction)",
+  "category": "operator",
+  "has_example": true
+ },
+ {
+  "name": "<<",
+  "category": "operator",
+  "has_example": false
+ },
+ {
+  "name": ">>",
+  "category": "operator",
+  "has_example": false
+ },
+ {
+  "name": "&",
+  "category": "operator",
+  "has_example": false
+ },
+ {
+  "name": "^",
+  "category": "operator",
+  "has_example": false
+ },
+ {
+  "name": "| (bitwise or)",
+  "category": "operator",
+  "has_example": false
+ },
+ {
+  "name": "=",
+  "category": "operator",
+  "has_example": true
+ },
+ {
+  "name": "<",
+  "category": "operator",
+  "has_example": false
+ },
+ {
+  "name": ">",
+  "category": "operator",
+  "has_example": false
+ },
+ {
+  "name": "<=",
+  "category": "operator",
+  "has_example": false
+ },
+ {
+  "name": ">=",
+  "category": "operator",
+  "has_example": false
+ },
+ {
+  "name": "!=, <>",
+  "category": "operator",
+  "has_example": false
+ },
+ {
+  "name": "[NOT] LIKE",
+  "category": "operator",
+  "has_example": true
+ },
+ {
+  "name": "LIKE ANY / SOME / ALL",
+  "category": "operator",
+  "has_example": true
+ },
+ {
+  "name": "[NOT] BETWEEN",
+  "category": "operator",
+  "has_example": false
+ },
+ {
+  "name": "[NOT] IN",
+  "category": "operator",
+  "has_example": true
+ },
+ {
+  "name": "IS [NOT] DISTINCT FROM",
+  "category": "operator",
+  "has_example": true
+ },
+ {
+  "name": "IS [NOT] NULL",
+  "category": "operator",
+  "has_example": false
+ },
+ {
+  "name": "IS [NOT] TRUE",
+  "category": "operator",
+  "has_example": false
+ },
+ {
+  "name": "IS [NOT] FALSE",
+  "category": "operator",
+  "has_example": false
+ },
+ {
+  "name": "IS [NOT] UNKNOWN",
+  "category": "operator",
+  "has_example": false
+ },
+ {
+  "name": "NOT",
+  "category": "operator",
+  "has_example": true
+ },
+ {
+  "name": "AND",
+  "category": "operator",
+  "has_example": true
+ },
+ {
+  "name": "OR",
+  "category": "operator",
+  "has_example": true
+ },
+ {
+  "name": "EXISTS",
+  "category": "operator",
+  "has_example": true
+ },
+ {
+  "name": "WITH(...)",
+  "category": "operator",
+  "has_example": true
+ },
+ {
+  "name": ". (field access)",
+  "category": "operator",
+  "has_example": true
+ },
+ {
+  "name": "[ ] (array subscript, OFFSET/ORDINAL/SAFE_OFFSET/SAFE_ORDINAL)",
+  "category": "operator",
+  "has_example": true
+ }
+]

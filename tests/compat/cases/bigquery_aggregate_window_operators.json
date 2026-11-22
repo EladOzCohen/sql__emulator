@@ -1,0 +1,3686 @@
+[
+ {
+  "id": "bq-agg-001",
+  "function": "ANY_VALUE",
+  "sql": "SELECT ANY_VALUE(fruit) as any_value\nFROM UNNEST([\"apple\", \"banana\", \"pear\"]) as fruit;",
+  "expected_rows": [
+   [
+    "apple"
+   ]
+  ],
+  "expected_columns": [
+   "any_value"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#any_value",
+  "notes": "ANY_VALUE result is non-deterministic in general; docs show one possible output."
+ },
+ {
+  "id": "bq-agg-002",
+  "function": "ANY_VALUE",
+  "sql": "SELECT\n  fruit,\n  ANY_VALUE(fruit) OVER (ORDER BY LENGTH(fruit) ROWS BETWEEN 1 PRECEDING AND CURRENT ROW) AS any_value\nFROM UNNEST([\"apple\", \"banana\", \"pear\"]) as fruit;",
+  "expected_rows": [
+   [
+    "pear",
+    "pear"
+   ],
+   [
+    "apple",
+    "pear"
+   ],
+   [
+    "banana",
+    "apple"
+   ]
+  ],
+  "expected_columns": [
+   "fruit",
+   "any_value"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#any_value",
+  "notes": "ANY_VALUE result is non-deterministic in general; docs show one possible output. Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-agg-003",
+  "function": "ANY_VALUE",
+  "sql": "WITH\n  Store AS (\n    SELECT 20 AS sold, \"apples\" AS fruit\n    UNION ALL\n    SELECT 30 AS sold, \"pears\" AS fruit\n    UNION ALL\n    SELECT 30 AS sold, \"bananas\" AS fruit\n    UNION ALL\n    SELECT 10 AS sold, \"oranges\" AS fruit\n  )\nSELECT ANY_VALUE(fruit HAVING MAX sold) AS a_highest_selling_fruit FROM Store;",
+  "expected_rows": [
+   [
+    "pears"
+   ]
+  ],
+  "expected_columns": [
+   "a_highest_selling_fruit"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#any_value",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-004",
+  "function": "ANY_VALUE",
+  "sql": "WITH\n  Store AS (\n    SELECT 20 AS sold, \"apples\" AS fruit\n    UNION ALL\n    SELECT 30 AS sold, \"pears\" AS fruit\n    UNION ALL\n    SELECT 30 AS sold, \"bananas\" AS fruit\n    UNION ALL\n    SELECT 10 AS sold, \"oranges\" AS fruit\n  )\nSELECT ANY_VALUE(fruit HAVING MIN sold) AS a_lowest_selling_fruit FROM Store;",
+  "expected_rows": [
+   [
+    "oranges"
+   ]
+  ],
+  "expected_columns": [
+   "a_lowest_selling_fruit"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#any_value",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-005",
+  "function": "ARRAY_AGG",
+  "sql": "SELECT ARRAY_AGG(x) AS array_agg FROM UNNEST([2, 1,-2, 3, -2, 1, 2]) AS x;",
+  "expected_rows": [
+   [
+    "[2, 1, -2, 3, -2, 1, 2]"
+   ]
+  ],
+  "expected_columns": [
+   "array_agg"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#array_agg",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-006",
+  "function": "ARRAY_AGG",
+  "sql": "SELECT ARRAY_AGG(DISTINCT x) AS array_agg\nFROM UNNEST([2, 1, -2, 3, -2, 1, 2]) AS x;",
+  "expected_rows": [
+   [
+    "[2, 1, -2, 3]"
+   ]
+  ],
+  "expected_columns": [
+   "array_agg"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#array_agg",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-007",
+  "function": "ARRAY_AGG",
+  "sql": "SELECT ARRAY_AGG(x IGNORE NULLS) AS array_agg\nFROM UNNEST([NULL, 1, -2, 3, -2, 1, NULL]) AS x;",
+  "expected_rows": [
+   [
+    "[1, -2, 3, -2, 1]"
+   ]
+  ],
+  "expected_columns": [
+   "array_agg"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#array_agg",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-008",
+  "function": "ARRAY_AGG",
+  "sql": "SELECT\n  ARRAY_AGG(x IGNORE NULLS WHERE x < 0) AS negative_array_agg,\n  ARRAY_AGG(x IGNORE NULLS WHERE x > 0) AS positive_array_agg\nFROM UNNEST([NULL, 1, -2, 3, -2, 1, NULL]) AS x;",
+  "expected_rows": [
+   [
+    "[-2, -2]",
+    "[1, 3, 1]"
+   ]
+  ],
+  "expected_columns": [
+   "negative_array_agg",
+   "positive_array_agg"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#array_agg",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-009",
+  "function": "ARRAY_AGG",
+  "sql": "SELECT ARRAY_AGG(x ORDER BY ABS(x)) AS array_agg\nFROM UNNEST([2, 1, -2, 3, -2, 1, 2]) AS x;",
+  "expected_rows": [
+   [
+    "[1, 1, 2, -2, -2, 2, 3]"
+   ]
+  ],
+  "expected_columns": [
+   "array_agg"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#array_agg",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-010",
+  "function": "ARRAY_AGG",
+  "sql": "SELECT ARRAY_AGG(x LIMIT 5) AS array_agg\nFROM UNNEST([2, 1, -2, 3, -2, 1, 2]) AS x;",
+  "expected_rows": [
+   [
+    "[2, 1, -2, 3, -2]"
+   ]
+  ],
+  "expected_columns": [
+   "array_agg"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#array_agg",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-011",
+  "function": "ARRAY_AGG",
+  "sql": "WITH vals AS\n  (\n    SELECT 1 x UNION ALL\n    SELECT -2 x UNION ALL\n    SELECT 3 x UNION ALL\n    SELECT -2 x UNION ALL\n    SELECT 1 x\n  )\nSELECT ARRAY_AGG(DISTINCT x ORDER BY x) as array_agg\nFROM vals;",
+  "expected_rows": [
+   [
+    "[-2, 1, 3]"
+   ]
+  ],
+  "expected_columns": [
+   "array_agg"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#array_agg",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-012",
+  "function": "ARRAY_AGG",
+  "sql": "WITH vals AS\n  (\n    SELECT 1 x, 'a' y UNION ALL\n    SELECT 1 x, 'b' y UNION ALL\n    SELECT 2 x, 'a' y UNION ALL\n    SELECT 2 x, 'c' y\n  )\nSELECT x, ARRAY_AGG(y) as array_agg\nFROM vals\nGROUP BY x;",
+  "expected_rows": [
+   [
+    "1",
+    "[a, b]"
+   ],
+   [
+    "2",
+    "[a, c]"
+   ]
+  ],
+  "expected_columns": [
+   "x",
+   "array_agg"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#array_agg",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-agg-013",
+  "function": "ARRAY_AGG",
+  "sql": "SELECT\n  x,\n  ARRAY_AGG(x) OVER (ORDER BY ABS(x)) AS array_agg\nFROM UNNEST([2, 1, -2, 3, -2, 1, 2]) AS x;",
+  "expected_rows": [
+   [
+    "1",
+    "[1, 1]"
+   ],
+   [
+    "1",
+    "[1, 1]"
+   ],
+   [
+    "2",
+    "[1, 1, 2, -2, -2, 2]"
+   ],
+   [
+    "-2",
+    "[1, 1, 2, -2, -2, 2]"
+   ],
+   [
+    "-2",
+    "[1, 1, 2, -2, -2, 2]"
+   ],
+   [
+    "2",
+    "[1, 1, 2, -2, -2, 2]"
+   ],
+   [
+    "3",
+    "[1, 1, 2, -2, -2, 2, 3]"
+   ]
+  ],
+  "expected_columns": [
+   "x",
+   "array_agg"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#array_agg",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-agg-014",
+  "function": "ARRAY_CONCAT_AGG",
+  "sql": "SELECT FORMAT(\"%T\", ARRAY_CONCAT_AGG(x)) AS array_concat_agg FROM (\n  SELECT [NULL, 1, 2, 3, 4] AS x\n  UNION ALL SELECT NULL\n  UNION ALL SELECT [5, 6]\n  UNION ALL SELECT [7, 8, 9]\n);",
+  "expected_rows": [
+   [
+    "[NULL, 1, 2, 3, 4, 5, 6, 7, 8, 9]"
+   ]
+  ],
+  "expected_columns": [
+   "array_concat_agg"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#array_concat_agg",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-015",
+  "function": "ARRAY_CONCAT_AGG",
+  "sql": "SELECT FORMAT(\"%T\", ARRAY_CONCAT_AGG(x ORDER BY ARRAY_LENGTH(x))) AS array_concat_agg FROM (\n  SELECT [1, 2, 3, 4] AS x\n  UNION ALL SELECT [5, 6]\n  UNION ALL SELECT [7, 8, 9]\n);",
+  "expected_rows": [
+   [
+    "[5, 6, 7, 8, 9, 1, 2, 3, 4]"
+   ]
+  ],
+  "expected_columns": [
+   "array_concat_agg"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#array_concat_agg",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-016",
+  "function": "ARRAY_CONCAT_AGG",
+  "sql": "SELECT FORMAT(\"%T\", ARRAY_CONCAT_AGG(x LIMIT 2)) AS array_concat_agg FROM (\n  SELECT [1, 2, 3, 4] AS x\n  UNION ALL SELECT [5, 6]\n  UNION ALL SELECT [7, 8, 9]\n);",
+  "expected_rows": [
+   [
+    "[1, 2, 3, 4, 5, 6]"
+   ]
+  ],
+  "expected_columns": [
+   "array_concat_agg"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#array_concat_agg",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-017",
+  "function": "ARRAY_CONCAT_AGG",
+  "sql": "SELECT FORMAT(\"%T\", ARRAY_CONCAT_AGG(x ORDER BY ARRAY_LENGTH(x) LIMIT 2)) AS array_concat_agg FROM (\n  SELECT [1, 2, 3, 4] AS x\n  UNION ALL SELECT [5, 6]\n  UNION ALL SELECT [7, 8, 9]\n);",
+  "expected_rows": [
+   [
+    "[5, 6, 7, 8, 9]"
+   ]
+  ],
+  "expected_columns": [
+   "array_concat_agg"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#array_concat_agg",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-018",
+  "function": "AVG",
+  "sql": "SELECT AVG(x) as avg\nFROM UNNEST([0, 2, 4, 4, 5]) as x;",
+  "expected_rows": [
+   [
+    "3"
+   ]
+  ],
+  "expected_columns": [
+   "avg"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#avg",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-019",
+  "function": "AVG",
+  "sql": "SELECT AVG(DISTINCT x) AS avg\nFROM UNNEST([0, 2, 4, 4, 5]) AS x;",
+  "expected_rows": [
+   [
+    "2.75"
+   ]
+  ],
+  "expected_columns": [
+   "avg"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#avg",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-020",
+  "function": "AVG",
+  "sql": "SELECT\n  x,\n  AVG(x) OVER (ORDER BY x ROWS BETWEEN 1 PRECEDING AND CURRENT ROW) AS avg\nFROM UNNEST([0, 2, NULL, 4, 4, 5]) AS x;",
+  "expected_rows": [
+   [
+    "NULL",
+    "NULL"
+   ],
+   [
+    "0",
+    "0"
+   ],
+   [
+    "2",
+    "1"
+   ],
+   [
+    "4",
+    "3"
+   ],
+   [
+    "4",
+    "4"
+   ],
+   [
+    "5",
+    "4.5"
+   ]
+  ],
+  "expected_columns": [
+   "x",
+   "avg"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#avg",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-agg-021",
+  "function": "BIT_AND",
+  "sql": "SELECT BIT_AND(x) as bit_and FROM UNNEST([0xF001, 0x00A1]) as x;",
+  "expected_rows": [
+   [
+    "1"
+   ]
+  ],
+  "expected_columns": [
+   "bit_and"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#bit_and",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-022",
+  "function": "BIT_OR",
+  "sql": "SELECT BIT_OR(x) as bit_or FROM UNNEST([0xF001, 0x00A1]) as x;",
+  "expected_rows": [
+   [
+    "61601"
+   ]
+  ],
+  "expected_columns": [
+   "bit_or"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#bit_or",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-023",
+  "function": "BIT_XOR",
+  "sql": "SELECT BIT_XOR(x) AS bit_xor FROM UNNEST([5678, 1234]) AS x;",
+  "expected_rows": [
+   [
+    "4860"
+   ]
+  ],
+  "expected_columns": [
+   "bit_xor"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#bit_xor",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-024",
+  "function": "BIT_XOR",
+  "sql": "SELECT BIT_XOR(x) AS bit_xor FROM UNNEST([1234, 5678, 1234]) AS x;",
+  "expected_rows": [
+   [
+    "5678"
+   ]
+  ],
+  "expected_columns": [
+   "bit_xor"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#bit_xor",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-025",
+  "function": "BIT_XOR",
+  "sql": "SELECT BIT_XOR(DISTINCT x) AS bit_xor FROM UNNEST([1234, 5678, 1234]) AS x;",
+  "expected_rows": [
+   [
+    "4860"
+   ]
+  ],
+  "expected_columns": [
+   "bit_xor"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#bit_xor",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-026",
+  "function": "COUNT",
+  "sql": "SELECT\n  COUNT(*) AS count_star,\n  COUNT(DISTINCT x) AS count_dist_x\nFROM UNNEST([1, 4, 4, 5]) AS x;",
+  "expected_rows": [
+   [
+    "4",
+    "3"
+   ]
+  ],
+  "expected_columns": [
+   "count_star",
+   "count_dist_x"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#count",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-027",
+  "function": "COUNT",
+  "sql": "SELECT\n  x,\n  COUNT(*) OVER (PARTITION BY MOD(x, 3)) AS count_star,\n  COUNT(DISTINCT x) OVER (PARTITION BY MOD(x, 3)) AS count_dist_x\nFROM UNNEST([1, 4, 4, 5]) AS x;",
+  "expected_rows": [
+   [
+    "1",
+    "3",
+    "2"
+   ],
+   [
+    "4",
+    "3",
+    "2"
+   ],
+   [
+    "4",
+    "3",
+    "2"
+   ],
+   [
+    "5",
+    "1",
+    "1"
+   ]
+  ],
+  "expected_columns": [
+   "x",
+   "count_star",
+   "count_dist_x"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#count",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-agg-028",
+  "function": "COUNT",
+  "sql": "SELECT\n  x,\n  COUNT(*) OVER (PARTITION BY MOD(x, 3)) AS count_star,\n  COUNT(x) OVER (PARTITION BY MOD(x, 3)) AS count_x\nFROM UNNEST([1, 4, NULL, 4, 5]) AS x;",
+  "expected_rows": [
+   [
+    "NULL",
+    "1",
+    "0"
+   ],
+   [
+    "1",
+    "3",
+    "3"
+   ],
+   [
+    "4",
+    "3",
+    "3"
+   ],
+   [
+    "4",
+    "3",
+    "3"
+   ],
+   [
+    "5",
+    "1",
+    "1"
+   ]
+  ],
+  "expected_columns": [
+   "x",
+   "count_star",
+   "count_x"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#count",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-agg-029",
+  "function": "COUNT",
+  "sql": "SELECT COUNT(DISTINCT x WHERE x > 0) AS distinct_positive\nFROM UNNEST([1, -2, 4, 1, -5, 4, 1, 3, -6, 1]) AS x;",
+  "expected_rows": [
+   [
+    "3"
+   ]
+  ],
+  "expected_columns": [
+   "distinct_positive"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#count",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-030",
+  "function": "COUNT",
+  "sql": "WITH Events AS (\n  SELECT DATE '2021-01-01' AS event_date, 'SUCCESS' AS event_type\n  UNION ALL\n  SELECT DATE '2021-01-02' AS event_date, 'SUCCESS' AS event_type\n  UNION ALL\n  SELECT DATE '2021-01-02' AS event_date, 'FAILURE' AS event_type\n  UNION ALL\n  SELECT DATE '2021-01-03' AS event_date, 'SUCCESS' AS event_type\n  UNION ALL\n  SELECT DATE '2021-01-04' AS event_date, 'FAILURE' AS event_type\n  UNION ALL\n  SELECT DATE '2021-01-04' AS event_date, 'FAILURE' AS event_type\n)\nSELECT\n  COUNT(DISTINCT event_date WHERE event_type = 'FAILURE')\n    AS distinct_dates_with_failures\nFROM Events;",
+  "expected_rows": [
+   [
+    "2"
+   ]
+  ],
+  "expected_columns": [
+   "distinct_dates_with_failures"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#count",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-031",
+  "function": "COUNT",
+  "sql": "WITH\n  customers AS (\n    SELECT 1934 AS id, 'a' AS team UNION ALL\n    SELECT 2991, 'b' UNION ALL\n    SELECT 3988, 'c'),\n  vendors AS (\n    SELECT 1934 AS id, 'd' AS team UNION ALL\n    SELECT 2991, 'e' UNION ALL\n    SELECT 4366, 'f')\nSELECT\n  COUNT(DISTINCT id WHERE id IN (SELECT id FROM customers)) AS result\nFROM vendors;",
+  "expected_rows": [
+   [
+    "2"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#count",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-032",
+  "function": "COUNTIF",
+  "sql": "SELECT COUNTIF(x<0) AS num_negative, COUNTIF(x>0) AS num_positive\nFROM UNNEST([5, -2, 3, 6, -10, -7, 4, 0]) AS x;",
+  "expected_rows": [
+   [
+    "3",
+    "4"
+   ]
+  ],
+  "expected_columns": [
+   "num_negative",
+   "num_positive"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#countif",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-033",
+  "function": "COUNTIF",
+  "sql": "SELECT\n  x,\n  COUNTIF(x<0) OVER (ORDER BY ABS(x) ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING) AS num_negative\nFROM UNNEST([5, -2, 3, 6, -10, NULL, -7, 4, 0]) AS x;",
+  "expected_rows": [
+   [
+    "NULL",
+    "0"
+   ],
+   [
+    "0",
+    "1"
+   ],
+   [
+    "-2",
+    "1"
+   ],
+   [
+    "3",
+    "1"
+   ],
+   [
+    "4",
+    "0"
+   ],
+   [
+    "5",
+    "0"
+   ],
+   [
+    "6",
+    "1"
+   ],
+   [
+    "-7",
+    "2"
+   ],
+   [
+    "-10",
+    "2"
+   ]
+  ],
+  "expected_columns": [
+   "x",
+   "num_negative"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#countif",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-agg-034",
+  "function": "GROUPING",
+  "sql": "WITH\n  Products AS (\n    SELECT 'shirt' AS product_type, 't-shirt' AS product_name, 3 AS product_count UNION ALL\n    SELECT 'shirt', 't-shirt', 8 UNION ALL\n    SELECT 'shirt', 'polo', 25 UNION ALL\n    SELECT 'pants', 'jeans', 6\n  )\nSELECT\n  product_type,\n  product_name,\n  SUM(product_count) AS product_sum,\n  GROUPING(product_type) AS product_type_agg,\n  GROUPING(product_name) AS product_name_agg,\nFROM Products\nGROUP BY GROUPING SETS(product_type, product_name, ())\nORDER BY product_name;",
+  "expected_rows": [
+   [
+    "NULL",
+    "NULL",
+    "42",
+    "1",
+    "1"
+   ],
+   [
+    "shirt",
+    "NULL",
+    "36",
+    "0",
+    "1"
+   ],
+   [
+    "pants",
+    "NULL",
+    "6",
+    "0",
+    "1"
+   ],
+   [
+    "NULL",
+    "jeans",
+    "6",
+    "1",
+    "0"
+   ],
+   [
+    "NULL",
+    "polo",
+    "25",
+    "1",
+    "0"
+   ],
+   [
+    "NULL",
+    "t-shirt",
+    "11",
+    "1",
+    "0"
+   ]
+  ],
+  "expected_columns": [
+   "product_type",
+   "product_name",
+   "product_sum",
+   "product_type_agg",
+   "product_name_agg"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#grouping",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-035",
+  "function": "GROUPING",
+  "sql": "WITH\n  Products AS (\n    SELECT 'shirt' AS product_type, 't-shirt' AS product_name, 3 AS product_count UNION ALL\n    SELECT 'shirt', 't-shirt', 8 UNION ALL\n    SELECT NULL, 'polo', 25 UNION ALL\n    SELECT 'pants', 'jeans', 6\n  )\nSELECT\n  product_type,\n  product_name,\n  SUM(product_count) AS product_sum,\n  GROUPING(product_type) AS product_type_is_aggregated\nFROM Products\nGROUP BY GROUPING SETS(product_type, product_name)\nORDER BY product_name;",
+  "expected_rows": [
+   [
+    "shirt",
+    "NULL",
+    "11",
+    "0"
+   ],
+   [
+    "NULL",
+    "NULL",
+    "25",
+    "0"
+   ],
+   [
+    "pants",
+    "NULL",
+    "6",
+    "0"
+   ],
+   [
+    "NULL",
+    "jeans",
+    "6",
+    "1"
+   ],
+   [
+    "NULL",
+    "polo",
+    "25",
+    "1"
+   ],
+   [
+    "NULL",
+    "t-shirt",
+    "11",
+    "1"
+   ]
+  ],
+  "expected_columns": [
+   "product_type",
+   "product_name",
+   "product_sum",
+   "product_type_is_aggregated"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#grouping",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-036",
+  "function": "LOGICAL_AND",
+  "sql": "SELECT LOGICAL_AND(x < 3) AS logical_and FROM UNNEST([1, 2, 4]) AS x;",
+  "expected_rows": [
+   [
+    "FALSE"
+   ]
+  ],
+  "expected_columns": [
+   "logical_and"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#logical_and",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-037",
+  "function": "LOGICAL_OR",
+  "sql": "SELECT LOGICAL_OR(x < 3) AS logical_or FROM UNNEST([1, 2, 4]) AS x;",
+  "expected_rows": [
+   [
+    "TRUE"
+   ]
+  ],
+  "expected_columns": [
+   "logical_or"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#logical_or",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-038",
+  "function": "MAX",
+  "sql": "SELECT MAX(x) AS max\nFROM UNNEST([8, 37, 55, 4]) AS x;",
+  "expected_rows": [
+   [
+    "55"
+   ]
+  ],
+  "expected_columns": [
+   "max"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#max",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-039",
+  "function": "MAX",
+  "sql": "SELECT x, MAX(x) OVER (PARTITION BY MOD(x, 2)) AS max\nFROM UNNEST([8, NULL, 37, 55, NULL, 4]) AS x;",
+  "expected_rows": [
+   [
+    "NULL",
+    "NULL"
+   ],
+   [
+    "NULL",
+    "NULL"
+   ],
+   [
+    "8",
+    "8"
+   ],
+   [
+    "4",
+    "8"
+   ],
+   [
+    "37",
+    "55"
+   ],
+   [
+    "55",
+    "55"
+   ]
+  ],
+  "expected_columns": [
+   "x",
+   "max"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#max",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-agg-040",
+  "function": "MAX_BY",
+  "sql": "WITH fruits AS (\n  SELECT \"apple\"  fruit, 3.55 price UNION ALL\n  SELECT \"banana\"  fruit, 2.10 price UNION ALL\n  SELECT \"pear\"  fruit, 4.30 price\n)\nSELECT MAX_BY(fruit, price) as fruit\nFROM fruits;",
+  "expected_rows": [
+   [
+    "pear"
+   ]
+  ],
+  "expected_columns": [
+   "fruit"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#max_by",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-041",
+  "function": "MIN",
+  "sql": "SELECT MIN(x) AS min\nFROM UNNEST([8, 37, 4, 55]) AS x;",
+  "expected_rows": [
+   [
+    "4"
+   ]
+  ],
+  "expected_columns": [
+   "min"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#min",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-042",
+  "function": "MIN",
+  "sql": "SELECT x, MIN(x) OVER (PARTITION BY MOD(x, 2)) AS min\nFROM UNNEST([8, NULL, 37, 4, NULL, 55]) AS x;",
+  "expected_rows": [
+   [
+    "NULL",
+    "NULL"
+   ],
+   [
+    "NULL",
+    "NULL"
+   ],
+   [
+    "8",
+    "4"
+   ],
+   [
+    "4",
+    "4"
+   ],
+   [
+    "37",
+    "37"
+   ],
+   [
+    "55",
+    "37"
+   ]
+  ],
+  "expected_columns": [
+   "x",
+   "min"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#min",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-agg-043",
+  "function": "MIN_BY",
+  "sql": "WITH fruits AS (\n  SELECT \"apple\"  fruit, 3.55 price UNION ALL\n  SELECT \"banana\"  fruit, 2.10 price UNION ALL\n  SELECT \"pear\"  fruit, 4.30 price\n)\nSELECT MIN_BY(fruit, price) as fruit\nFROM fruits;",
+  "expected_rows": [
+   [
+    "banana"
+   ]
+  ],
+  "expected_columns": [
+   "fruit"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#min_by",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-044",
+  "function": "STRING_AGG",
+  "sql": "SELECT STRING_AGG(fruit) AS string_agg\nFROM UNNEST([\"apple\", NULL, \"pear\", \"banana\", \"pear\"]) AS fruit;",
+  "expected_rows": [
+   [
+    "apple,pear,banana,pear"
+   ]
+  ],
+  "expected_columns": [
+   "string_agg"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#string_agg",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-045",
+  "function": "STRING_AGG",
+  "sql": "SELECT STRING_AGG(fruit, \" & \") AS string_agg\nFROM UNNEST([\"apple\", \"pear\", \"banana\", \"pear\"]) AS fruit;",
+  "expected_rows": [
+   [
+    "apple & pear & banana & pear"
+   ]
+  ],
+  "expected_columns": [
+   "string_agg"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#string_agg",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-046",
+  "function": "STRING_AGG",
+  "sql": "SELECT STRING_AGG(DISTINCT fruit, \" & \") AS string_agg\nFROM UNNEST([\"apple\", \"pear\", \"banana\", \"pear\"]) AS fruit;",
+  "expected_rows": [
+   [
+    "apple & pear & banana"
+   ]
+  ],
+  "expected_columns": [
+   "string_agg"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#string_agg",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-047",
+  "function": "STRING_AGG",
+  "sql": "SELECT STRING_AGG(fruit, \" & \" ORDER BY LENGTH(fruit)) AS string_agg\nFROM UNNEST([\"apple\", \"pear\", \"banana\", \"pear\"]) AS fruit;",
+  "expected_rows": [
+   [
+    "pear & pear & apple & banana"
+   ]
+  ],
+  "expected_columns": [
+   "string_agg"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#string_agg",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-048",
+  "function": "STRING_AGG",
+  "sql": "SELECT STRING_AGG(fruit, \" & \" LIMIT 2) AS string_agg\nFROM UNNEST([\"apple\", \"pear\", \"banana\", \"pear\"]) AS fruit;",
+  "expected_rows": [
+   [
+    "apple & pear"
+   ]
+  ],
+  "expected_columns": [
+   "string_agg"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#string_agg",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-049",
+  "function": "STRING_AGG",
+  "sql": "SELECT STRING_AGG(DISTINCT fruit, \" & \" ORDER BY fruit DESC LIMIT 2) AS string_agg\nFROM UNNEST([\"apple\", \"pear\", \"banana\", \"pear\"]) AS fruit;",
+  "expected_rows": [
+   [
+    "pear & banana"
+   ]
+  ],
+  "expected_columns": [
+   "string_agg"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#string_agg",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-050",
+  "function": "STRING_AGG",
+  "sql": "SELECT\n  fruit,\n  STRING_AGG(fruit, \" & \") OVER (ORDER BY LENGTH(fruit)) AS string_agg\nFROM UNNEST([\"apple\", NULL, \"pear\", \"banana\", \"pear\"]) AS fruit;",
+  "expected_rows": [
+   [
+    "NULL",
+    "NULL"
+   ],
+   [
+    "pear",
+    "pear & pear"
+   ],
+   [
+    "pear",
+    "pear & pear"
+   ],
+   [
+    "apple",
+    "pear & pear & apple"
+   ],
+   [
+    "banana",
+    "pear & pear & apple & banana"
+   ]
+  ],
+  "expected_columns": [
+   "fruit",
+   "string_agg"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#string_agg",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-agg-051",
+  "function": "SUM",
+  "sql": "SELECT SUM(x) AS sum\nFROM UNNEST([1, 2, 3, 4, 5, 4, 3, 2, 1]) AS x;",
+  "expected_rows": [
+   [
+    "25"
+   ]
+  ],
+  "expected_columns": [
+   "sum"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#sum",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-052",
+  "function": "SUM",
+  "sql": "SELECT SUM(DISTINCT x) AS sum\nFROM UNNEST([1, 2, 3, 4, 5, 4, 3, 2, 1]) AS x;",
+  "expected_rows": [
+   [
+    "15"
+   ]
+  ],
+  "expected_columns": [
+   "sum"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#sum",
+  "notes": ""
+ },
+ {
+  "id": "bq-agg-053",
+  "function": "SUM",
+  "sql": "SELECT\n  x,\n  SUM(x) OVER (PARTITION BY MOD(x, 3)) AS sum\nFROM UNNEST([1, 2, 3, 4, 5, 4, 3, 2, 1]) AS x;",
+  "expected_rows": [
+   [
+    "3",
+    "6"
+   ],
+   [
+    "3",
+    "6"
+   ],
+   [
+    "1",
+    "10"
+   ],
+   [
+    "4",
+    "10"
+   ],
+   [
+    "4",
+    "10"
+   ],
+   [
+    "1",
+    "10"
+   ],
+   [
+    "2",
+    "9"
+   ],
+   [
+    "5",
+    "9"
+   ],
+   [
+    "2",
+    "9"
+   ]
+  ],
+  "expected_columns": [
+   "x",
+   "sum"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#sum",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-agg-054",
+  "function": "SUM",
+  "sql": "SELECT\n  x,\n  SUM(DISTINCT x) OVER (PARTITION BY MOD(x, 3)) AS sum\nFROM UNNEST([1, 2, 3, 4, 5, 4, 3, 2, 1]) AS x;",
+  "expected_rows": [
+   [
+    "3",
+    "3"
+   ],
+   [
+    "3",
+    "3"
+   ],
+   [
+    "1",
+    "5"
+   ],
+   [
+    "4",
+    "5"
+   ],
+   [
+    "4",
+    "5"
+   ],
+   [
+    "1",
+    "5"
+   ],
+   [
+    "2",
+    "7"
+   ],
+   [
+    "5",
+    "7"
+   ],
+   [
+    "2",
+    "7"
+   ]
+  ],
+  "expected_columns": [
+   "x",
+   "sum"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#sum",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-agg-055",
+  "function": "SUM",
+  "sql": "SELECT SUM(x) AS sum\nFROM UNNEST([]) AS x;",
+  "expected_rows": [
+   [
+    "NULL"
+   ]
+  ],
+  "expected_columns": [
+   "sum"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#sum",
+  "notes": ""
+ },
+ {
+  "id": "bq-win-001",
+  "function": "FIRST_VALUE",
+  "sql": "WITH finishers AS\n (SELECT 'Sophia Liu' as name,\n  TIMESTAMP '2016-10-18 2:51:45' as finish_time,\n  'F30-34' as division\n  UNION ALL SELECT 'Lisa Stelzner', TIMESTAMP '2016-10-18 2:54:11', 'F35-39'\n  UNION ALL SELECT 'Nikki Leith', TIMESTAMP '2016-10-18 2:59:01', 'F30-34'\n  UNION ALL SELECT 'Lauren Matthews', TIMESTAMP '2016-10-18 3:01:17', 'F35-39'\n  UNION ALL SELECT 'Desiree Berry', TIMESTAMP '2016-10-18 3:05:42', 'F35-39'\n  UNION ALL SELECT 'Suzy Slane', TIMESTAMP '2016-10-18 3:06:24', 'F35-39'\n  UNION ALL SELECT 'Jen Edwards', TIMESTAMP '2016-10-18 3:06:36', 'F30-34'\n  UNION ALL SELECT 'Meghan Lederer', TIMESTAMP '2016-10-18 3:07:41', 'F30-34'\n  UNION ALL SELECT 'Carly Forte', TIMESTAMP '2016-10-18 3:08:58', 'F25-29'\n  UNION ALL SELECT 'Lauren Reasoner', TIMESTAMP '2016-10-18 3:10:14', 'F30-34')\nSELECT name,\n  FORMAT_TIMESTAMP('%X', finish_time) AS finish_time,\n  division,\n  FORMAT_TIMESTAMP('%X', fastest_time) AS fastest_time,\n  TIMESTAMP_DIFF(finish_time, fastest_time, SECOND) AS delta_in_seconds\nFROM (\n  SELECT name,\n  finish_time,\n  division,\n  FIRST_VALUE(finish_time)\n    OVER (PARTITION BY division ORDER BY finish_time ASC\n    ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS fastest_time\n  FROM finishers);",
+  "expected_rows": [
+   [
+    "Carly Forte",
+    "03:08:58",
+    "F25-29",
+    "03:08:58",
+    "0"
+   ],
+   [
+    "Sophia Liu",
+    "02:51:45",
+    "F30-34",
+    "02:51:45",
+    "0"
+   ],
+   [
+    "Nikki Leith",
+    "02:59:01",
+    "F30-34",
+    "02:51:45",
+    "436"
+   ],
+   [
+    "Jen Edwards",
+    "03:06:36",
+    "F30-34",
+    "02:51:45",
+    "891"
+   ],
+   [
+    "Meghan Lederer",
+    "03:07:41",
+    "F30-34",
+    "02:51:45",
+    "956"
+   ],
+   [
+    "Lauren Reasoner",
+    "03:10:14",
+    "F30-34",
+    "02:51:45",
+    "1109"
+   ],
+   [
+    "Lisa Stelzner",
+    "02:54:11",
+    "F35-39",
+    "02:54:11",
+    "0"
+   ],
+   [
+    "Lauren Matthews",
+    "03:01:17",
+    "F35-39",
+    "02:54:11",
+    "426"
+   ],
+   [
+    "Desiree Berry",
+    "03:05:42",
+    "F35-39",
+    "02:54:11",
+    "691"
+   ],
+   [
+    "Suzy Slane",
+    "03:06:24",
+    "F35-39",
+    "02:54:11",
+    "733"
+   ]
+  ],
+  "expected_columns": [
+   "name",
+   "finish_time",
+   "division",
+   "fastest_time",
+   "delta_in_seconds"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/navigation_functions#first_value",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-win-002",
+  "function": "LAG",
+  "sql": "WITH finishers AS\n (SELECT 'Sophia Liu' as name,\n  TIMESTAMP '2016-10-18 2:51:45' as finish_time,\n  'F30-34' as division\n  UNION ALL SELECT 'Lisa Stelzner', TIMESTAMP '2016-10-18 2:54:11', 'F35-39'\n  UNION ALL SELECT 'Nikki Leith', TIMESTAMP '2016-10-18 2:59:01', 'F30-34'\n  UNION ALL SELECT 'Lauren Matthews', TIMESTAMP '2016-10-18 3:01:17', 'F35-39'\n  UNION ALL SELECT 'Desiree Berry', TIMESTAMP '2016-10-18 3:05:42', 'F35-39'\n  UNION ALL SELECT 'Suzy Slane', TIMESTAMP '2016-10-18 3:06:24', 'F35-39'\n  UNION ALL SELECT 'Jen Edwards', TIMESTAMP '2016-10-18 3:06:36', 'F30-34'\n  UNION ALL SELECT 'Meghan Lederer', TIMESTAMP '2016-10-18 3:07:41', 'F30-34'\n  UNION ALL SELECT 'Carly Forte', TIMESTAMP '2016-10-18 3:08:58', 'F25-29'\n  UNION ALL SELECT 'Lauren Reasoner', TIMESTAMP '2016-10-18 3:10:14', 'F30-34')\nSELECT name,\n  finish_time,\n  division,\n  LAG(name)\n    OVER (PARTITION BY division ORDER BY finish_time ASC) AS preceding_runner\nFROM finishers;",
+  "expected_rows": [
+   [
+    "Carly Forte",
+    "03:08:58",
+    "F25-29",
+    "NULL"
+   ],
+   [
+    "Sophia Liu",
+    "02:51:45",
+    "F30-34",
+    "NULL"
+   ],
+   [
+    "Nikki Leith",
+    "02:59:01",
+    "F30-34",
+    "Sophia Liu"
+   ],
+   [
+    "Jen Edwards",
+    "03:06:36",
+    "F30-34",
+    "Nikki Leith"
+   ],
+   [
+    "Meghan Lederer",
+    "03:07:41",
+    "F30-34",
+    "Jen Edwards"
+   ],
+   [
+    "Lauren Reasoner",
+    "03:10:14",
+    "F30-34",
+    "Meghan Lederer"
+   ],
+   [
+    "Lisa Stelzner",
+    "02:54:11",
+    "F35-39",
+    "NULL"
+   ],
+   [
+    "Lauren Matthews",
+    "03:01:17",
+    "F35-39",
+    "Lisa Stelzner"
+   ],
+   [
+    "Desiree Berry",
+    "03:05:42",
+    "F35-39",
+    "Lauren Matthews"
+   ],
+   [
+    "Suzy Slane",
+    "03:06:24",
+    "F35-39",
+    "Desiree Berry"
+   ]
+  ],
+  "expected_columns": [
+   "name",
+   "finish_time",
+   "division",
+   "preceding_runner"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/navigation_functions#lag",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-win-003",
+  "function": "LAG",
+  "sql": "WITH finishers AS\n (SELECT 'Sophia Liu' as name,\n  TIMESTAMP '2016-10-18 2:51:45' as finish_time,\n  'F30-34' as division\n  UNION ALL SELECT 'Lisa Stelzner', TIMESTAMP '2016-10-18 2:54:11', 'F35-39'\n  UNION ALL SELECT 'Nikki Leith', TIMESTAMP '2016-10-18 2:59:01', 'F30-34'\n  UNION ALL SELECT 'Lauren Matthews', TIMESTAMP '2016-10-18 3:01:17', 'F35-39'\n  UNION ALL SELECT 'Desiree Berry', TIMESTAMP '2016-10-18 3:05:42', 'F35-39'\n  UNION ALL SELECT 'Suzy Slane', TIMESTAMP '2016-10-18 3:06:24', 'F35-39'\n  UNION ALL SELECT 'Jen Edwards', TIMESTAMP '2016-10-18 3:06:36', 'F30-34'\n  UNION ALL SELECT 'Meghan Lederer', TIMESTAMP '2016-10-18 3:07:41', 'F30-34'\n  UNION ALL SELECT 'Carly Forte', TIMESTAMP '2016-10-18 3:08:58', 'F25-29'\n  UNION ALL SELECT 'Lauren Reasoner', TIMESTAMP '2016-10-18 3:10:14', 'F30-34')\nSELECT name,\n  finish_time,\n  division,\n  LAG(name, 2)\n    OVER (PARTITION BY division ORDER BY finish_time ASC) AS two_runners_ahead\nFROM finishers;",
+  "expected_rows": [
+   [
+    "Carly Forte",
+    "03:08:58",
+    "F25-29",
+    "NULL"
+   ],
+   [
+    "Sophia Liu",
+    "02:51:45",
+    "F30-34",
+    "NULL"
+   ],
+   [
+    "Nikki Leith",
+    "02:59:01",
+    "F30-34",
+    "NULL"
+   ],
+   [
+    "Jen Edwards",
+    "03:06:36",
+    "F30-34",
+    "Sophia Liu"
+   ],
+   [
+    "Meghan Lederer",
+    "03:07:41",
+    "F30-34",
+    "Nikki Leith"
+   ],
+   [
+    "Lauren Reasoner",
+    "03:10:14",
+    "F30-34",
+    "Jen Edwards"
+   ],
+   [
+    "Lisa Stelzner",
+    "02:54:11",
+    "F35-39",
+    "NULL"
+   ],
+   [
+    "Lauren Matthews",
+    "03:01:17",
+    "F35-39",
+    "NULL"
+   ],
+   [
+    "Desiree Berry",
+    "03:05:42",
+    "F35-39",
+    "Lisa Stelzner"
+   ],
+   [
+    "Suzy Slane",
+    "03:06:24",
+    "F35-39",
+    "Lauren Matthews"
+   ]
+  ],
+  "expected_columns": [
+   "name",
+   "finish_time",
+   "division",
+   "two_runners_ahead"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/navigation_functions#lag",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-win-004",
+  "function": "LAG",
+  "sql": "WITH finishers AS\n (SELECT 'Sophia Liu' as name,\n  TIMESTAMP '2016-10-18 2:51:45' as finish_time,\n  'F30-34' as division\n  UNION ALL SELECT 'Lisa Stelzner', TIMESTAMP '2016-10-18 2:54:11', 'F35-39'\n  UNION ALL SELECT 'Nikki Leith', TIMESTAMP '2016-10-18 2:59:01', 'F30-34'\n  UNION ALL SELECT 'Lauren Matthews', TIMESTAMP '2016-10-18 3:01:17', 'F35-39'\n  UNION ALL SELECT 'Desiree Berry', TIMESTAMP '2016-10-18 3:05:42', 'F35-39'\n  UNION ALL SELECT 'Suzy Slane', TIMESTAMP '2016-10-18 3:06:24', 'F35-39'\n  UNION ALL SELECT 'Jen Edwards', TIMESTAMP '2016-10-18 3:06:36', 'F30-34'\n  UNION ALL SELECT 'Meghan Lederer', TIMESTAMP '2016-10-18 3:07:41', 'F30-34'\n  UNION ALL SELECT 'Carly Forte', TIMESTAMP '2016-10-18 3:08:58', 'F25-29'\n  UNION ALL SELECT 'Lauren Reasoner', TIMESTAMP '2016-10-18 3:10:14', 'F30-34')\nSELECT name,\n  finish_time,\n  division,\n  LAG(name, 2, 'Nobody')\n    OVER (PARTITION BY division ORDER BY finish_time ASC) AS two_runners_ahead\nFROM finishers;",
+  "expected_rows": [
+   [
+    "Carly Forte",
+    "03:08:58",
+    "F25-29",
+    "Nobody"
+   ],
+   [
+    "Sophia Liu",
+    "02:51:45",
+    "F30-34",
+    "Nobody"
+   ],
+   [
+    "Nikki Leith",
+    "02:59:01",
+    "F30-34",
+    "Nobody"
+   ],
+   [
+    "Jen Edwards",
+    "03:06:36",
+    "F30-34",
+    "Sophia Liu"
+   ],
+   [
+    "Meghan Lederer",
+    "03:07:41",
+    "F30-34",
+    "Nikki Leith"
+   ],
+   [
+    "Lauren Reasoner",
+    "03:10:14",
+    "F30-34",
+    "Jen Edwards"
+   ],
+   [
+    "Lisa Stelzner",
+    "02:54:11",
+    "F35-39",
+    "Nobody"
+   ],
+   [
+    "Lauren Matthews",
+    "03:01:17",
+    "F35-39",
+    "Nobody"
+   ],
+   [
+    "Desiree Berry",
+    "03:05:42",
+    "F35-39",
+    "Lisa Stelzner"
+   ],
+   [
+    "Suzy Slane",
+    "03:06:24",
+    "F35-39",
+    "Lauren Matthews"
+   ]
+  ],
+  "expected_columns": [
+   "name",
+   "finish_time",
+   "division",
+   "two_runners_ahead"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/navigation_functions#lag",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-win-005",
+  "function": "LAST_VALUE",
+  "sql": "WITH finishers AS\n (SELECT 'Sophia Liu' as name,\n  TIMESTAMP '2016-10-18 2:51:45' as finish_time,\n  'F30-34' as division\n  UNION ALL SELECT 'Lisa Stelzner', TIMESTAMP '2016-10-18 2:54:11', 'F35-39'\n  UNION ALL SELECT 'Nikki Leith', TIMESTAMP '2016-10-18 2:59:01', 'F30-34'\n  UNION ALL SELECT 'Lauren Matthews', TIMESTAMP '2016-10-18 3:01:17', 'F35-39'\n  UNION ALL SELECT 'Desiree Berry', TIMESTAMP '2016-10-18 3:05:42', 'F35-39'\n  UNION ALL SELECT 'Suzy Slane', TIMESTAMP '2016-10-18 3:06:24', 'F35-39'\n  UNION ALL SELECT 'Jen Edwards', TIMESTAMP '2016-10-18 3:06:36', 'F30-34'\n  UNION ALL SELECT 'Meghan Lederer', TIMESTAMP '2016-10-18 3:07:41', 'F30-34'\n  UNION ALL SELECT 'Carly Forte', TIMESTAMP '2016-10-18 3:08:58', 'F25-29'\n  UNION ALL SELECT 'Lauren Reasoner', TIMESTAMP '2016-10-18 3:10:14', 'F30-34')\nSELECT name,\n  FORMAT_TIMESTAMP('%X', finish_time) AS finish_time,\n  division,\n  FORMAT_TIMESTAMP('%X', slowest_time) AS slowest_time,\n  TIMESTAMP_DIFF(slowest_time, finish_time, SECOND) AS delta_in_seconds\nFROM (\n  SELECT name,\n  finish_time,\n  division,\n  LAST_VALUE(finish_time)\n    OVER (PARTITION BY division ORDER BY finish_time ASC\n    ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS slowest_time\n  FROM finishers);",
+  "expected_rows": [
+   [
+    "Carly Forte",
+    "03:08:58",
+    "F25-29",
+    "03:08:58",
+    "0"
+   ],
+   [
+    "Sophia Liu",
+    "02:51:45",
+    "F30-34",
+    "03:10:14",
+    "1109"
+   ],
+   [
+    "Nikki Leith",
+    "02:59:01",
+    "F30-34",
+    "03:10:14",
+    "673"
+   ],
+   [
+    "Jen Edwards",
+    "03:06:36",
+    "F30-34",
+    "03:10:14",
+    "218"
+   ],
+   [
+    "Meghan Lederer",
+    "03:07:41",
+    "F30-34",
+    "03:10:14",
+    "153"
+   ],
+   [
+    "Lauren Reasoner",
+    "03:10:14",
+    "F30-34",
+    "03:10:14",
+    "0"
+   ],
+   [
+    "Lisa Stelzner",
+    "02:54:11",
+    "F35-39",
+    "03:06:24",
+    "733"
+   ],
+   [
+    "Lauren Matthews",
+    "03:01:17",
+    "F35-39",
+    "03:06:24",
+    "307"
+   ],
+   [
+    "Desiree Berry",
+    "03:05:42",
+    "F35-39",
+    "03:06:24",
+    "42"
+   ],
+   [
+    "Suzy Slane",
+    "03:06:24",
+    "F35-39",
+    "03:06:24",
+    "0"
+   ]
+  ],
+  "expected_columns": [
+   "name",
+   "finish_time",
+   "division",
+   "slowest_time",
+   "delta_in_seconds"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/navigation_functions#last_value",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-win-006",
+  "function": "LEAD",
+  "sql": "WITH finishers AS\n (SELECT 'Sophia Liu' as name,\n  TIMESTAMP '2016-10-18 2:51:45' as finish_time,\n  'F30-34' as division\n  UNION ALL SELECT 'Lisa Stelzner', TIMESTAMP '2016-10-18 2:54:11', 'F35-39'\n  UNION ALL SELECT 'Nikki Leith', TIMESTAMP '2016-10-18 2:59:01', 'F30-34'\n  UNION ALL SELECT 'Lauren Matthews', TIMESTAMP '2016-10-18 3:01:17', 'F35-39'\n  UNION ALL SELECT 'Desiree Berry', TIMESTAMP '2016-10-18 3:05:42', 'F35-39'\n  UNION ALL SELECT 'Suzy Slane', TIMESTAMP '2016-10-18 3:06:24', 'F35-39'\n  UNION ALL SELECT 'Jen Edwards', TIMESTAMP '2016-10-18 3:06:36', 'F30-34'\n  UNION ALL SELECT 'Meghan Lederer', TIMESTAMP '2016-10-18 3:07:41', 'F30-34'\n  UNION ALL SELECT 'Carly Forte', TIMESTAMP '2016-10-18 3:08:58', 'F25-29'\n  UNION ALL SELECT 'Lauren Reasoner', TIMESTAMP '2016-10-18 3:10:14', 'F30-34')\nSELECT name,\n  finish_time,\n  division,\n  LEAD(name)\n    OVER (PARTITION BY division ORDER BY finish_time ASC) AS followed_by\nFROM finishers;",
+  "expected_rows": [
+   [
+    "Carly Forte",
+    "03:08:58",
+    "F25-29",
+    "NULL"
+   ],
+   [
+    "Sophia Liu",
+    "02:51:45",
+    "F30-34",
+    "Nikki Leith"
+   ],
+   [
+    "Nikki Leith",
+    "02:59:01",
+    "F30-34",
+    "Jen Edwards"
+   ],
+   [
+    "Jen Edwards",
+    "03:06:36",
+    "F30-34",
+    "Meghan Lederer"
+   ],
+   [
+    "Meghan Lederer",
+    "03:07:41",
+    "F30-34",
+    "Lauren Reasoner"
+   ],
+   [
+    "Lauren Reasoner",
+    "03:10:14",
+    "F30-34",
+    "NULL"
+   ],
+   [
+    "Lisa Stelzner",
+    "02:54:11",
+    "F35-39",
+    "Lauren Matthews"
+   ],
+   [
+    "Lauren Matthews",
+    "03:01:17",
+    "F35-39",
+    "Desiree Berry"
+   ],
+   [
+    "Desiree Berry",
+    "03:05:42",
+    "F35-39",
+    "Suzy Slane"
+   ],
+   [
+    "Suzy Slane",
+    "03:06:24",
+    "F35-39",
+    "NULL"
+   ]
+  ],
+  "expected_columns": [
+   "name",
+   "finish_time",
+   "division",
+   "followed_by"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/navigation_functions#lead",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-win-007",
+  "function": "LEAD",
+  "sql": "WITH finishers AS\n (SELECT 'Sophia Liu' as name,\n  TIMESTAMP '2016-10-18 2:51:45' as finish_time,\n  'F30-34' as division\n  UNION ALL SELECT 'Lisa Stelzner', TIMESTAMP '2016-10-18 2:54:11', 'F35-39'\n  UNION ALL SELECT 'Nikki Leith', TIMESTAMP '2016-10-18 2:59:01', 'F30-34'\n  UNION ALL SELECT 'Lauren Matthews', TIMESTAMP '2016-10-18 3:01:17', 'F35-39'\n  UNION ALL SELECT 'Desiree Berry', TIMESTAMP '2016-10-18 3:05:42', 'F35-39'\n  UNION ALL SELECT 'Suzy Slane', TIMESTAMP '2016-10-18 3:06:24', 'F35-39'\n  UNION ALL SELECT 'Jen Edwards', TIMESTAMP '2016-10-18 3:06:36', 'F30-34'\n  UNION ALL SELECT 'Meghan Lederer', TIMESTAMP '2016-10-18 3:07:41', 'F30-34'\n  UNION ALL SELECT 'Carly Forte', TIMESTAMP '2016-10-18 3:08:58', 'F25-29'\n  UNION ALL SELECT 'Lauren Reasoner', TIMESTAMP '2016-10-18 3:10:14', 'F30-34')\nSELECT name,\n  finish_time,\n  division,\n  LEAD(name, 2)\n    OVER (PARTITION BY division ORDER BY finish_time ASC) AS two_runners_back\nFROM finishers;",
+  "expected_rows": [
+   [
+    "Carly Forte",
+    "03:08:58",
+    "F25-29",
+    "NULL"
+   ],
+   [
+    "Sophia Liu",
+    "02:51:45",
+    "F30-34",
+    "Jen Edwards"
+   ],
+   [
+    "Nikki Leith",
+    "02:59:01",
+    "F30-34",
+    "Meghan Lederer"
+   ],
+   [
+    "Jen Edwards",
+    "03:06:36",
+    "F30-34",
+    "Lauren Reasoner"
+   ],
+   [
+    "Meghan Lederer",
+    "03:07:41",
+    "F30-34",
+    "NULL"
+   ],
+   [
+    "Lauren Reasoner",
+    "03:10:14",
+    "F30-34",
+    "NULL"
+   ],
+   [
+    "Lisa Stelzner",
+    "02:54:11",
+    "F35-39",
+    "Desiree Berry"
+   ],
+   [
+    "Lauren Matthews",
+    "03:01:17",
+    "F35-39",
+    "Suzy Slane"
+   ],
+   [
+    "Desiree Berry",
+    "03:05:42",
+    "F35-39",
+    "NULL"
+   ],
+   [
+    "Suzy Slane",
+    "03:06:24",
+    "F35-39",
+    "NULL"
+   ]
+  ],
+  "expected_columns": [
+   "name",
+   "finish_time",
+   "division",
+   "two_runners_back"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/navigation_functions#lead",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-win-008",
+  "function": "LEAD",
+  "sql": "WITH finishers AS\n (SELECT 'Sophia Liu' as name,\n  TIMESTAMP '2016-10-18 2:51:45' as finish_time,\n  'F30-34' as division\n  UNION ALL SELECT 'Lisa Stelzner', TIMESTAMP '2016-10-18 2:54:11', 'F35-39'\n  UNION ALL SELECT 'Nikki Leith', TIMESTAMP '2016-10-18 2:59:01', 'F30-34'\n  UNION ALL SELECT 'Lauren Matthews', TIMESTAMP '2016-10-18 3:01:17', 'F35-39'\n  UNION ALL SELECT 'Desiree Berry', TIMESTAMP '2016-10-18 3:05:42', 'F35-39'\n  UNION ALL SELECT 'Suzy Slane', TIMESTAMP '2016-10-18 3:06:24', 'F35-39'\n  UNION ALL SELECT 'Jen Edwards', TIMESTAMP '2016-10-18 3:06:36', 'F30-34'\n  UNION ALL SELECT 'Meghan Lederer', TIMESTAMP '2016-10-18 3:07:41', 'F30-34'\n  UNION ALL SELECT 'Carly Forte', TIMESTAMP '2016-10-18 3:08:58', 'F25-29'\n  UNION ALL SELECT 'Lauren Reasoner', TIMESTAMP '2016-10-18 3:10:14', 'F30-34')\nSELECT name,\n  finish_time,\n  division,\n  LEAD(name, 2, 'Nobody')\n    OVER (PARTITION BY division ORDER BY finish_time ASC) AS two_runners_back\nFROM finishers;",
+  "expected_rows": [
+   [
+    "Carly Forte",
+    "03:08:58",
+    "F25-29",
+    "Nobody"
+   ],
+   [
+    "Sophia Liu",
+    "02:51:45",
+    "F30-34",
+    "Jen Edwards"
+   ],
+   [
+    "Nikki Leith",
+    "02:59:01",
+    "F30-34",
+    "Meghan Lederer"
+   ],
+   [
+    "Jen Edwards",
+    "03:06:36",
+    "F30-34",
+    "Lauren Reasoner"
+   ],
+   [
+    "Meghan Lederer",
+    "03:07:41",
+    "F30-34",
+    "Nobody"
+   ],
+   [
+    "Lauren Reasoner",
+    "03:10:14",
+    "F30-34",
+    "Nobody"
+   ],
+   [
+    "Lisa Stelzner",
+    "02:54:11",
+    "F35-39",
+    "Desiree Berry"
+   ],
+   [
+    "Lauren Matthews",
+    "03:01:17",
+    "F35-39",
+    "Suzy Slane"
+   ],
+   [
+    "Desiree Berry",
+    "03:05:42",
+    "F35-39",
+    "Nobody"
+   ],
+   [
+    "Suzy Slane",
+    "03:06:24",
+    "F35-39",
+    "Nobody"
+   ]
+  ],
+  "expected_columns": [
+   "name",
+   "finish_time",
+   "division",
+   "two_runners_back"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/navigation_functions#lead",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-win-009",
+  "function": "NTH_VALUE",
+  "sql": "WITH finishers AS\n (SELECT 'Sophia Liu' as name,\n  TIMESTAMP '2016-10-18 2:51:45' as finish_time,\n  'F30-34' as division\n  UNION ALL SELECT 'Lisa Stelzner', TIMESTAMP '2016-10-18 2:54:11', 'F35-39'\n  UNION ALL SELECT 'Nikki Leith', TIMESTAMP '2016-10-18 2:59:01', 'F30-34'\n  UNION ALL SELECT 'Lauren Matthews', TIMESTAMP '2016-10-18 3:01:17', 'F35-39'\n  UNION ALL SELECT 'Desiree Berry', TIMESTAMP '2016-10-18 3:05:42', 'F35-39'\n  UNION ALL SELECT 'Suzy Slane', TIMESTAMP '2016-10-18 3:06:24', 'F35-39'\n  UNION ALL SELECT 'Jen Edwards', TIMESTAMP '2016-10-18 3:06:36', 'F30-34'\n  UNION ALL SELECT 'Meghan Lederer', TIMESTAMP '2016-10-18 3:07:41', 'F30-34'\n  UNION ALL SELECT 'Carly Forte', TIMESTAMP '2016-10-18 3:08:58', 'F25-29'\n  UNION ALL SELECT 'Lauren Reasoner', TIMESTAMP '2016-10-18 3:10:14', 'F30-34')\nSELECT name,\n  FORMAT_TIMESTAMP('%X', finish_time) AS finish_time,\n  division,\n  FORMAT_TIMESTAMP('%X', fastest_time) AS fastest_time,\n  FORMAT_TIMESTAMP('%X', second_fastest) AS second_fastest\nFROM (\n  SELECT name,\n  finish_time,\n  division,finishers,\n  FIRST_VALUE(finish_time)\n    OVER w1 AS fastest_time,\n  NTH_VALUE(finish_time, 2)\n    OVER w1 as second_fastest\n  FROM finishers\n  WINDOW w1 AS (\n    PARTITION BY division ORDER BY finish_time ASC\n    ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING));",
+  "expected_rows": [
+   [
+    "Carly Forte",
+    "03:08:58",
+    "F25-29",
+    "03:08:58",
+    "NULL"
+   ],
+   [
+    "Sophia Liu",
+    "02:51:45",
+    "F30-34",
+    "02:51:45",
+    "02:59:01"
+   ],
+   [
+    "Nikki Leith",
+    "02:59:01",
+    "F30-34",
+    "02:51:45",
+    "02:59:01"
+   ],
+   [
+    "Jen Edwards",
+    "03:06:36",
+    "F30-34",
+    "02:51:45",
+    "02:59:01"
+   ],
+   [
+    "Meghan Lederer",
+    "03:07:41",
+    "F30-34",
+    "02:51:45",
+    "02:59:01"
+   ],
+   [
+    "Lauren Reasoner",
+    "03:10:14",
+    "F30-34",
+    "02:51:45",
+    "02:59:01"
+   ],
+   [
+    "Lisa Stelzner",
+    "02:54:11",
+    "F35-39",
+    "02:54:11",
+    "03:01:17"
+   ],
+   [
+    "Lauren Matthews",
+    "03:01:17",
+    "F35-39",
+    "02:54:11",
+    "03:01:17"
+   ],
+   [
+    "Desiree Berry",
+    "03:05:42",
+    "F35-39",
+    "02:54:11",
+    "03:01:17"
+   ],
+   [
+    "Suzy Slane",
+    "03:06:24",
+    "F35-39",
+    "02:54:11",
+    "03:01:17"
+   ]
+  ],
+  "expected_columns": [
+   "name",
+   "finish_time",
+   "division",
+   "fastest_time",
+   "second_fastest"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/navigation_functions#nth_value",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-win-010",
+  "function": "PERCENTILE_CONT",
+  "sql": "SELECT\n  PERCENTILE_CONT(x, 0) OVER() AS min,\n  PERCENTILE_CONT(x, 0.01) OVER() AS percentile1,\n  PERCENTILE_CONT(x, 0.5) OVER() AS median,\n  PERCENTILE_CONT(x, 0.9) OVER() AS percentile90,\n  PERCENTILE_CONT(x, 1) OVER() AS max\nFROM UNNEST([0, 3, NULL, 1, 2]) AS x LIMIT 1;",
+  "expected_rows": [
+   [
+    "0",
+    "0.03",
+    "1.5",
+    "2.7",
+    "3"
+   ]
+  ],
+  "expected_columns": [
+   "min",
+   "percentile1",
+   "median",
+   "percentile90",
+   "max"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/navigation_functions#percentile_cont",
+  "notes": ""
+ },
+ {
+  "id": "bq-win-011",
+  "function": "PERCENTILE_CONT",
+  "sql": "SELECT\n  PERCENTILE_CONT(x, 0 RESPECT NULLS) OVER() AS min,\n  PERCENTILE_CONT(x, 0.01 RESPECT NULLS) OVER() AS percentile1,\n  PERCENTILE_CONT(x, 0.5 RESPECT NULLS) OVER() AS median,\n  PERCENTILE_CONT(x, 0.9 RESPECT NULLS) OVER() AS percentile90,\n  PERCENTILE_CONT(x, 1 RESPECT NULLS) OVER() AS max\nFROM UNNEST([0, 3, NULL, 1, 2]) AS x LIMIT 1;",
+  "expected_rows": [
+   [
+    "NULL",
+    "0",
+    "1",
+    "2.6",
+    "3"
+   ]
+  ],
+  "expected_columns": [
+   "min",
+   "percentile1",
+   "median",
+   "percentile90",
+   "max"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/navigation_functions#percentile_cont",
+  "notes": ""
+ },
+ {
+  "id": "bq-win-012",
+  "function": "PERCENTILE_DISC",
+  "sql": "SELECT\n  x,\n  PERCENTILE_DISC(x, 0) OVER() AS min,\n  PERCENTILE_DISC(x, 0.5) OVER() AS median,\n  PERCENTILE_DISC(x, 1) OVER() AS max\nFROM UNNEST(['c', NULL, 'b', 'a']) AS x;",
+  "expected_rows": [
+   [
+    "c",
+    "a",
+    "b",
+    "c"
+   ],
+   [
+    "NULL",
+    "a",
+    "b",
+    "c"
+   ],
+   [
+    "b",
+    "a",
+    "b",
+    "c"
+   ],
+   [
+    "a",
+    "a",
+    "b",
+    "c"
+   ]
+  ],
+  "expected_columns": [
+   "x",
+   "min",
+   "median",
+   "max"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/navigation_functions#percentile_disc",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-win-013",
+  "function": "PERCENTILE_DISC",
+  "sql": "SELECT\n  x,\n  PERCENTILE_DISC(x, 0 RESPECT NULLS) OVER() AS min,\n  PERCENTILE_DISC(x, 0.5 RESPECT NULLS) OVER() AS median,\n  PERCENTILE_DISC(x, 1 RESPECT NULLS) OVER() AS max\nFROM UNNEST(['c', NULL, 'b', 'a']) AS x;",
+  "expected_rows": [
+   [
+    "c",
+    "NULL",
+    "a",
+    "c"
+   ],
+   [
+    "NULL",
+    "NULL",
+    "a",
+    "c"
+   ],
+   [
+    "b",
+    "NULL",
+    "a",
+    "c"
+   ],
+   [
+    "a",
+    "NULL",
+    "a",
+    "c"
+   ]
+  ],
+  "expected_columns": [
+   "x",
+   "min",
+   "median",
+   "max"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/navigation_functions#percentile_disc",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-win-014",
+  "function": "CUME_DIST",
+  "sql": "WITH finishers AS\n (SELECT 'Sophia Liu' as name,\n  TIMESTAMP '2016-10-18 2:51:45' as finish_time,\n  'F30-34' as division\n  UNION ALL SELECT 'Lisa Stelzner', TIMESTAMP '2016-10-18 2:54:11', 'F35-39'\n  UNION ALL SELECT 'Nikki Leith', TIMESTAMP '2016-10-18 2:59:01', 'F30-34'\n  UNION ALL SELECT 'Lauren Matthews', TIMESTAMP '2016-10-18 3:01:17', 'F35-39'\n  UNION ALL SELECT 'Desiree Berry', TIMESTAMP '2016-10-18 3:05:42', 'F35-39'\n  UNION ALL SELECT 'Suzy Slane', TIMESTAMP '2016-10-18 3:06:24', 'F35-39'\n  UNION ALL SELECT 'Jen Edwards', TIMESTAMP '2016-10-18 3:06:36', 'F30-34'\n  UNION ALL SELECT 'Meghan Lederer', TIMESTAMP '2016-10-18 2:59:01', 'F30-34')\nSELECT name,\n  finish_time,\n  division,\n  CUME_DIST() OVER (PARTITION BY division ORDER BY finish_time ASC) AS finish_rank\nFROM finishers;",
+  "expected_rows": [
+   [
+    "Sophia Liu",
+    "2016-10-18 09:51:45+00",
+    "F30-34",
+    "0.25"
+   ],
+   [
+    "Meghan Lederer",
+    "2016-10-18 09:59:01+00",
+    "F30-34",
+    "0.75"
+   ],
+   [
+    "Nikki Leith",
+    "2016-10-18 09:59:01+00",
+    "F30-34",
+    "0.75"
+   ],
+   [
+    "Jen Edwards",
+    "2016-10-18 10:06:36+00",
+    "F30-34",
+    "1"
+   ],
+   [
+    "Lisa Stelzner",
+    "2016-10-18 09:54:11+00",
+    "F35-39",
+    "0.25"
+   ],
+   [
+    "Lauren Matthews",
+    "2016-10-18 10:01:17+00",
+    "F35-39",
+    "0.5"
+   ],
+   [
+    "Desiree Berry",
+    "2016-10-18 10:05:42+00",
+    "F35-39",
+    "0.75"
+   ],
+   [
+    "Suzy Slane",
+    "2016-10-18 10:06:24+00",
+    "F35-39",
+    "1"
+   ]
+  ],
+  "expected_columns": [
+   "name",
+   "finish_time",
+   "division",
+   "finish_rank"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/numbering_functions#cume_dist",
+  "notes": "AMBIGUOUS: docs display TIMESTAMP literals typed without a zone (e.g. 2:51:45) shifted by +7h (09:51:45+00), i.e. docs were produced in a non-UTC default time zone. Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-win-015",
+  "function": "DENSE_RANK",
+  "sql": "WITH Numbers AS\n (SELECT 1 as x\n  UNION ALL SELECT 2\n  UNION ALL SELECT 2\n  UNION ALL SELECT 5\n  UNION ALL SELECT 8\n  UNION ALL SELECT 10\n  UNION ALL SELECT 10\n)\nSELECT x,\n  DENSE_RANK() OVER (ORDER BY x ASC) AS dense_rank\nFROM Numbers;",
+  "expected_rows": [
+   [
+    "1",
+    "1"
+   ],
+   [
+    "2",
+    "2"
+   ],
+   [
+    "2",
+    "2"
+   ],
+   [
+    "5",
+    "3"
+   ],
+   [
+    "8",
+    "4"
+   ],
+   [
+    "10",
+    "5"
+   ],
+   [
+    "10",
+    "5"
+   ]
+  ],
+  "expected_columns": [
+   "x",
+   "dense_rank"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/numbering_functions#dense_rank",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-win-016",
+  "function": "DENSE_RANK",
+  "sql": "WITH finishers AS\n (SELECT 'Sophia Liu' as name,\n  TIMESTAMP '2016-10-18 2:51:45' as finish_time,\n  'F30-34' as division\n  UNION ALL SELECT 'Lisa Stelzner', TIMESTAMP '2016-10-18 2:54:11', 'F35-39'\n  UNION ALL SELECT 'Nikki Leith', TIMESTAMP '2016-10-18 2:59:01', 'F30-34'\n  UNION ALL SELECT 'Lauren Matthews', TIMESTAMP '2016-10-18 3:01:17', 'F35-39'\n  UNION ALL SELECT 'Desiree Berry', TIMESTAMP '2016-10-18 3:05:42', 'F35-39'\n  UNION ALL SELECT 'Suzy Slane', TIMESTAMP '2016-10-18 3:06:24', 'F35-39'\n  UNION ALL SELECT 'Jen Edwards', TIMESTAMP '2016-10-18 3:06:36', 'F30-34'\n  UNION ALL SELECT 'Meghan Lederer', TIMESTAMP '2016-10-18 2:59:01', 'F30-34')\nSELECT name,\n  finish_time,\n  division,\n  DENSE_RANK() OVER (PARTITION BY division ORDER BY finish_time ASC) AS finish_rank\nFROM finishers;",
+  "expected_rows": [
+   [
+    "Sophia Liu",
+    "2016-10-18 09:51:45+00",
+    "F30-34",
+    "1"
+   ],
+   [
+    "Meghan Lederer",
+    "2016-10-18 09:59:01+00",
+    "F30-34",
+    "2"
+   ],
+   [
+    "Nikki Leith",
+    "2016-10-18 09:59:01+00",
+    "F30-34",
+    "2"
+   ],
+   [
+    "Jen Edwards",
+    "2016-10-18 10:06:36+00",
+    "F30-34",
+    "3"
+   ],
+   [
+    "Lisa Stelzner",
+    "2016-10-18 09:54:11+00",
+    "F35-39",
+    "1"
+   ],
+   [
+    "Lauren Matthews",
+    "2016-10-18 10:01:17+00",
+    "F35-39",
+    "2"
+   ],
+   [
+    "Desiree Berry",
+    "2016-10-18 10:05:42+00",
+    "F35-39",
+    "3"
+   ],
+   [
+    "Suzy Slane",
+    "2016-10-18 10:06:24+00",
+    "F35-39",
+    "4"
+   ]
+  ],
+  "expected_columns": [
+   "name",
+   "finish_time",
+   "division",
+   "finish_rank"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/numbering_functions#dense_rank",
+  "notes": "AMBIGUOUS: docs display TIMESTAMP literals typed without a zone (e.g. 2:51:45) shifted by +7h (09:51:45+00), i.e. docs were produced in a non-UTC default time zone. Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-win-017",
+  "function": "NTILE",
+  "sql": "WITH finishers AS\n (SELECT 'Sophia Liu' as name,\n  TIMESTAMP '2016-10-18 2:51:45' as finish_time,\n  'F30-34' as division\n  UNION ALL SELECT 'Lisa Stelzner', TIMESTAMP '2016-10-18 2:54:11', 'F35-39'\n  UNION ALL SELECT 'Nikki Leith', TIMESTAMP '2016-10-18 2:59:01', 'F30-34'\n  UNION ALL SELECT 'Lauren Matthews', TIMESTAMP '2016-10-18 3:01:17', 'F35-39'\n  UNION ALL SELECT 'Desiree Berry', TIMESTAMP '2016-10-18 3:05:42', 'F35-39'\n  UNION ALL SELECT 'Suzy Slane', TIMESTAMP '2016-10-18 3:06:24', 'F35-39'\n  UNION ALL SELECT 'Jen Edwards', TIMESTAMP '2016-10-18 3:06:36', 'F30-34'\n  UNION ALL SELECT 'Meghan Lederer', TIMESTAMP '2016-10-18 2:59:01', 'F30-34')\nSELECT name,\n  finish_time,\n  division,\n  NTILE(3) OVER (PARTITION BY division ORDER BY finish_time ASC) AS finish_rank\nFROM finishers;",
+  "expected_rows": [
+   [
+    "Sophia Liu",
+    "2016-10-18 09:51:45+00",
+    "F30-34",
+    "1"
+   ],
+   [
+    "Meghan Lederer",
+    "2016-10-18 09:59:01+00",
+    "F30-34",
+    "1"
+   ],
+   [
+    "Nikki Leith",
+    "2016-10-18 09:59:01+00",
+    "F30-34",
+    "2"
+   ],
+   [
+    "Jen Edwards",
+    "2016-10-18 10:06:36+00",
+    "F30-34",
+    "3"
+   ],
+   [
+    "Lisa Stelzner",
+    "2016-10-18 09:54:11+00",
+    "F35-39",
+    "1"
+   ],
+   [
+    "Lauren Matthews",
+    "2016-10-18 10:01:17+00",
+    "F35-39",
+    "1"
+   ],
+   [
+    "Desiree Berry",
+    "2016-10-18 10:05:42+00",
+    "F35-39",
+    "2"
+   ],
+   [
+    "Suzy Slane",
+    "2016-10-18 10:06:24+00",
+    "F35-39",
+    "3"
+   ]
+  ],
+  "expected_columns": [
+   "name",
+   "finish_time",
+   "division",
+   "finish_rank"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/numbering_functions#ntile",
+  "notes": "AMBIGUOUS: docs display TIMESTAMP literals typed without a zone (e.g. 2:51:45) shifted by +7h (09:51:45+00), i.e. docs were produced in a non-UTC default time zone. Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-win-018",
+  "function": "PERCENT_RANK",
+  "sql": "WITH finishers AS\n (SELECT 'Sophia Liu' as name,\n  TIMESTAMP '2016-10-18 2:51:45' as finish_time,\n  'F30-34' as division\n  UNION ALL SELECT 'Lisa Stelzner', TIMESTAMP '2016-10-18 2:54:11', 'F35-39'\n  UNION ALL SELECT 'Nikki Leith', TIMESTAMP '2016-10-18 2:59:01', 'F30-34'\n  UNION ALL SELECT 'Lauren Matthews', TIMESTAMP '2016-10-18 3:01:17', 'F35-39'\n  UNION ALL SELECT 'Desiree Berry', TIMESTAMP '2016-10-18 3:05:42', 'F35-39'\n  UNION ALL SELECT 'Suzy Slane', TIMESTAMP '2016-10-18 3:06:24', 'F35-39'\n  UNION ALL SELECT 'Jen Edwards', TIMESTAMP '2016-10-18 3:06:36', 'F30-34'\n  UNION ALL SELECT 'Meghan Lederer', TIMESTAMP '2016-10-18 2:59:01', 'F30-34')\nSELECT name,\n  finish_time,\n  division,\n  PERCENT_RANK() OVER (PARTITION BY division ORDER BY finish_time ASC) AS finish_rank\nFROM finishers;",
+  "expected_rows": [
+   [
+    "Sophia Liu",
+    "2016-10-18 09:51:45+00",
+    "F30-34",
+    "0"
+   ],
+   [
+    "Meghan Lederer",
+    "2016-10-18 09:59:01+00",
+    "F30-34",
+    "0.33333333333333331"
+   ],
+   [
+    "Nikki Leith",
+    "2016-10-18 09:59:01+00",
+    "F30-34",
+    "0.33333333333333331"
+   ],
+   [
+    "Jen Edwards",
+    "2016-10-18 10:06:36+00",
+    "F30-34",
+    "1"
+   ],
+   [
+    "Lisa Stelzner",
+    "2016-10-18 09:54:11+00",
+    "F35-39",
+    "0"
+   ],
+   [
+    "Lauren Matthews",
+    "2016-10-18 10:01:17+00",
+    "F35-39",
+    "0.33333333333333331"
+   ],
+   [
+    "Desiree Berry",
+    "2016-10-18 10:05:42+00",
+    "F35-39",
+    "0.66666666666666663"
+   ],
+   [
+    "Suzy Slane",
+    "2016-10-18 10:06:24+00",
+    "F35-39",
+    "1"
+   ]
+  ],
+  "expected_columns": [
+   "name",
+   "finish_time",
+   "division",
+   "finish_rank"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/numbering_functions#percent_rank",
+  "notes": "AMBIGUOUS: docs display TIMESTAMP literals typed without a zone (e.g. 2:51:45) shifted by +7h (09:51:45+00), i.e. docs were produced in a non-UTC default time zone. Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-win-019",
+  "function": "RANK",
+  "sql": "WITH Numbers AS\n (SELECT 1 as x\n  UNION ALL SELECT 2\n  UNION ALL SELECT 2\n  UNION ALL SELECT 5\n  UNION ALL SELECT 8\n  UNION ALL SELECT 10\n  UNION ALL SELECT 10\n)\nSELECT x,\n  RANK() OVER (ORDER BY x ASC) AS rank\nFROM Numbers;",
+  "expected_rows": [
+   [
+    "1",
+    "1"
+   ],
+   [
+    "2",
+    "2"
+   ],
+   [
+    "2",
+    "2"
+   ],
+   [
+    "5",
+    "4"
+   ],
+   [
+    "8",
+    "5"
+   ],
+   [
+    "10",
+    "6"
+   ],
+   [
+    "10",
+    "6"
+   ]
+  ],
+  "expected_columns": [
+   "x",
+   "rank"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/numbering_functions#rank",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-win-020",
+  "function": "RANK",
+  "sql": "WITH finishers AS\n (SELECT 'Sophia Liu' as name,\n  TIMESTAMP '2016-10-18 2:51:45' as finish_time,\n  'F30-34' as division\n  UNION ALL SELECT 'Lisa Stelzner', TIMESTAMP '2016-10-18 2:54:11', 'F35-39'\n  UNION ALL SELECT 'Nikki Leith', TIMESTAMP '2016-10-18 2:59:01', 'F30-34'\n  UNION ALL SELECT 'Lauren Matthews', TIMESTAMP '2016-10-18 3:01:17', 'F35-39'\n  UNION ALL SELECT 'Desiree Berry', TIMESTAMP '2016-10-18 3:05:42', 'F35-39'\n  UNION ALL SELECT 'Suzy Slane', TIMESTAMP '2016-10-18 3:06:24', 'F35-39'\n  UNION ALL SELECT 'Jen Edwards', TIMESTAMP '2016-10-18 3:06:36', 'F30-34'\n  UNION ALL SELECT 'Meghan Lederer', TIMESTAMP '2016-10-18 2:59:01', 'F30-34')\nSELECT name,\n  finish_time,\n  division,\n  RANK() OVER (PARTITION BY division ORDER BY finish_time ASC) AS finish_rank\nFROM finishers;",
+  "expected_rows": [
+   [
+    "Sophia Liu",
+    "2016-10-18 09:51:45+00",
+    "F30-34",
+    "1"
+   ],
+   [
+    "Meghan Lederer",
+    "2016-10-18 09:59:01+00",
+    "F30-34",
+    "2"
+   ],
+   [
+    "Nikki Leith",
+    "2016-10-18 09:59:01+00",
+    "F30-34",
+    "2"
+   ],
+   [
+    "Jen Edwards",
+    "2016-10-18 10:06:36+00",
+    "F30-34",
+    "4"
+   ],
+   [
+    "Lisa Stelzner",
+    "2016-10-18 09:54:11+00",
+    "F35-39",
+    "1"
+   ],
+   [
+    "Lauren Matthews",
+    "2016-10-18 10:01:17+00",
+    "F35-39",
+    "2"
+   ],
+   [
+    "Desiree Berry",
+    "2016-10-18 10:05:42+00",
+    "F35-39",
+    "3"
+   ],
+   [
+    "Suzy Slane",
+    "2016-10-18 10:06:24+00",
+    "F35-39",
+    "4"
+   ]
+  ],
+  "expected_columns": [
+   "name",
+   "finish_time",
+   "division",
+   "finish_rank"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/numbering_functions#rank",
+  "notes": "AMBIGUOUS: docs display TIMESTAMP literals typed without a zone (e.g. 2:51:45) shifted by +7h (09:51:45+00), i.e. docs were produced in a non-UTC default time zone. Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-win-021",
+  "function": "ROW_NUMBER",
+  "sql": "WITH Numbers AS\n (SELECT 1 as x\n  UNION ALL SELECT 2\n  UNION ALL SELECT 2\n  UNION ALL SELECT 5\n  UNION ALL SELECT 8\n  UNION ALL SELECT 10\n  UNION ALL SELECT 10\n)\nSELECT x,\n  ROW_NUMBER() OVER (ORDER BY x) AS row_num\nFROM Numbers;",
+  "expected_rows": [
+   [
+    "1",
+    "1"
+   ],
+   [
+    "2",
+    "2"
+   ],
+   [
+    "2",
+    "3"
+   ],
+   [
+    "5",
+    "4"
+   ],
+   [
+    "8",
+    "5"
+   ],
+   [
+    "10",
+    "6"
+   ],
+   [
+    "10",
+    "7"
+   ]
+  ],
+  "expected_columns": [
+   "x",
+   "row_num"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/numbering_functions#row_number",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-win-022",
+  "function": "ROW_NUMBER",
+  "sql": "WITH finishers AS\n (SELECT 'Sophia Liu' as name,\n  TIMESTAMP '2016-10-18 2:51:45' as finish_time,\n  'F30-34' as division\n  UNION ALL SELECT 'Lisa Stelzner', TIMESTAMP '2016-10-18 2:54:11', 'F35-39'\n  UNION ALL SELECT 'Nikki Leith', TIMESTAMP '2016-10-18 2:59:01', 'F30-34'\n  UNION ALL SELECT 'Lauren Matthews', TIMESTAMP '2016-10-18 3:01:17', 'F35-39'\n  UNION ALL SELECT 'Desiree Berry', TIMESTAMP '2016-10-18 3:05:42', 'F35-39'\n  UNION ALL SELECT 'Suzy Slane', TIMESTAMP '2016-10-18 3:06:24', 'F35-39'\n  UNION ALL SELECT 'Jen Edwards', TIMESTAMP '2016-10-18 3:06:36', 'F30-34'\n  UNION ALL SELECT 'Meghan Lederer', TIMESTAMP '2016-10-18 2:59:01', 'F30-34')\nSELECT name,\n  finish_time,\n  division,\n  ROW_NUMBER() OVER (PARTITION BY division ORDER BY finish_time ASC) AS finish_rank\nFROM finishers;",
+  "expected_rows": [
+   [
+    "Sophia Liu",
+    "2016-10-18 09:51:45+00",
+    "F30-34",
+    "1"
+   ],
+   [
+    "Meghan Lederer",
+    "2016-10-18 09:59:01+00",
+    "F30-34",
+    "2"
+   ],
+   [
+    "Nikki Leith",
+    "2016-10-18 09:59:01+00",
+    "F30-34",
+    "3"
+   ],
+   [
+    "Jen Edwards",
+    "2016-10-18 10:06:36+00",
+    "F30-34",
+    "4"
+   ],
+   [
+    "Lisa Stelzner",
+    "2016-10-18 09:54:11+00",
+    "F35-39",
+    "1"
+   ],
+   [
+    "Lauren Matthews",
+    "2016-10-18 10:01:17+00",
+    "F35-39",
+    "2"
+   ],
+   [
+    "Desiree Berry",
+    "2016-10-18 10:05:42+00",
+    "F35-39",
+    "3"
+   ],
+   [
+    "Suzy Slane",
+    "2016-10-18 10:06:24+00",
+    "F35-39",
+    "4"
+   ]
+  ],
+  "expected_columns": [
+   "name",
+   "finish_time",
+   "division",
+   "finish_rank"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/numbering_functions#row_number",
+  "notes": "AMBIGUOUS: docs display TIMESTAMP literals typed without a zone (e.g. 2:51:45) shifted by +7h (09:51:45+00), i.e. docs were produced in a non-UTC default time zone. Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-op-001",
+  "function": "Field access operator",
+  "sql": "SELECT\n  STRUCT(\n    STRUCT('Yonge Street' AS street, 'Canada' AS country)\n      AS address).address.country;",
+  "expected_rows": [
+   [
+    "Canada"
+   ]
+  ],
+  "expected_columns": [
+   "country"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#field_access_operator",
+  "notes": ""
+ },
+ {
+  "id": "bq-op-002",
+  "function": "Array subscript operator",
+  "sql": "SELECT\n  [\"coffee\", \"tea\", \"milk\"] AS item_array,\n  [\"coffee\", \"tea\", \"milk\"][0] AS item_index,\n  [\"coffee\", \"tea\", \"milk\"][OFFSET(0)] AS item_offset,\n  [\"coffee\", \"tea\", \"milk\"][ORDINAL(1)] AS item_ordinal,\n  [\"coffee\", \"tea\", \"milk\"][SAFE_OFFSET(6)] AS item_safe_offset;",
+  "expected_rows": [
+   [
+    "[coffee, tea, milk]",
+    "coffee",
+    "coffee",
+    "coffee",
+    "NULL"
+   ]
+  ],
+  "expected_columns": [
+   "item_array",
+   "item_index",
+   "item_offset",
+   "item_ordinal",
+   "item_safe_offset"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#array_subscript_operator",
+  "notes": ""
+ },
+ {
+  "id": "bq-op-003",
+  "function": "Struct subscript operator",
+  "sql": "SELECT\n  STRUCT<INT64, STRING, BOOL>(23, \"tea\", FALSE)[0] AS field_index,\n  STRUCT<INT64, STRING, BOOL>(23, \"tea\", FALSE)[OFFSET(0)] AS field_offset,\n  STRUCT<INT64, STRING, BOOL>(23, \"tea\", FALSE)[ORDINAL(1)] AS field_ordinal;",
+  "expected_rows": [
+   [
+    "23",
+    "23",
+    "23"
+   ]
+  ],
+  "expected_columns": [
+   "field_index",
+   "field_offset",
+   "field_ordinal"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#struct_subscript_operator",
+  "notes": ""
+ },
+ {
+  "id": "bq-op-004",
+  "function": "JSON subscript operator",
+  "sql": "SELECT json_value.class.students[0]['name'] AS first_student\nFROM\n  UNNEST(\n    [\n      JSON '{\"class\" : {\"students\" : [{\"name\" : \"Jane\"}]}}',\n      JSON '{\"class\" : {\"students\" : []}}',\n      JSON '{\"class\" : {\"students\" : [{\"name\" : \"John\"}, {\"name\": \"Jamie\"}]}}'])\n    AS json_value;",
+  "expected_rows": [
+   [
+    "\"Jane\""
+   ],
+   [
+    "NULL"
+   ],
+   [
+    "\"John\""
+   ]
+  ],
+  "expected_columns": [
+   "first_student"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#json_subscript_operator",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-op-005",
+  "function": "Date arithmetics operators",
+  "sql": "SELECT DATE \"2020-09-22\" + 1 AS day_later, DATE \"2020-09-22\" - 7 AS week_ago;",
+  "expected_rows": [
+   [
+    "2020-09-23",
+    "2020-09-15"
+   ]
+  ],
+  "expected_columns": [
+   "day_later",
+   "week_ago"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#date_arithmetics_operators",
+  "notes": ""
+ },
+ {
+  "id": "bq-op-006",
+  "function": "Datetime subtraction",
+  "sql": "SELECT\n  DATE \"2021-05-20\" - DATE \"2020-04-19\" AS date_diff,\n  TIMESTAMP \"2021-06-01 12:34:56.789\" - TIMESTAMP \"2021-05-31 00:00:00\" AS time_diff;",
+  "expected_rows": [
+   [
+    "0-0 396 0:0:0",
+    "0-0 0 36:34:56.789"
+   ]
+  ],
+  "expected_columns": [
+   "date_diff",
+   "time_diff"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#datetime_subtraction",
+  "notes": ""
+ },
+ {
+  "id": "bq-op-007",
+  "function": "Interval arithmetic operators",
+  "sql": "SELECT\n  DATE \"2021-04-20\" + INTERVAL 25 HOUR AS date_plus,\n  TIMESTAMP \"2021-05-02 00:01:02.345+00\" - INTERVAL 10 SECOND AS time_minus;",
+  "expected_rows": [
+   [
+    "2021-04-21 01:00:00",
+    "2021-05-02 00:00:52.345+00"
+   ]
+  ],
+  "expected_columns": [
+   "date_plus",
+   "time_minus"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#interval_arithmetic_operators",
+  "notes": ""
+ },
+ {
+  "id": "bq-op-008",
+  "function": "Interval arithmetic operators",
+  "sql": "SELECT\n  INTERVAL '1:2:3' HOUR TO SECOND * 10 AS mul1,\n  INTERVAL 35 SECOND * 4 AS mul2,\n  INTERVAL 10 YEAR / 3 AS div1,\n  INTERVAL 1 MONTH / 12 AS div2;",
+  "expected_rows": [
+   [
+    "0-0 0 10:20:30",
+    "0-0 0 0:2:20",
+    "3-4 0 0:0:0",
+    "0-0 2 12:0:0"
+   ]
+  ],
+  "expected_columns": [
+   "mul1",
+   "mul2",
+   "div1",
+   "div2"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#interval_arithmetic_operators",
+  "notes": ""
+ },
+ {
+  "id": "bq-op-009",
+  "function": "EXISTS operator",
+  "sql": "WITH Words AS (\n  SELECT 'Intend' as value, 'east' as direction UNION ALL\n  SELECT 'Secure', 'north' UNION ALL\n  SELECT 'Clarity', 'west'\n )\nSELECT EXISTS( SELECT value FROM Words WHERE direction = 'south' ) as result;",
+  "expected_rows": [
+   [
+    "FALSE"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#exists_operator",
+  "notes": ""
+ },
+ {
+  "id": "bq-op-010",
+  "function": "LIKE operator",
+  "sql": "WITH Words AS\n (SELECT 'Intend with clarity.' as value UNION ALL\n  SELECT 'Secure with intention.' UNION ALL\n  SELECT 'Clarity and security.')\nSELECT value\nFROM Words WHERE\n  EXISTS(\n    SELECT value FROM UNNEST(['%ity%', '%and%']) AS pattern\n    WHERE value LIKE pattern\n  );",
+  "expected_rows": [
+   [
+    "Intend with clarity."
+   ],
+   [
+    "Clarity and security."
+   ]
+  ],
+  "expected_columns": [
+   "value"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#like_operator",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-op-011",
+  "function": "WITH expression",
+  "sql": "SELECT WITH(a AS '123',               -- a is '123'\n            b AS CONCAT(a, '456'),    -- b is '123456'\n            c AS '789',               -- c is '789'\n            CONCAT(b, c)) AS result;  -- b + c is '123456789';",
+  "expected_rows": [
+   [
+    "'123456789'"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#with_expression",
+  "notes": "Docs result shows the value with surrounding single quotes."
+ },
+ {
+  "id": "bq-op-012",
+  "function": "WITH expression",
+  "sql": "SELECT WITH(s AS SUM(input), c AS COUNT(input), s/c) AS result\nFROM UNNEST([1.0, 2.0, 3.0]) AS input;",
+  "expected_rows": [
+   [
+    "2.0"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#with_expression",
+  "notes": "Alias added to match the column name shown in the docs result."
+ },
+ {
+  "id": "bq-op-013",
+  "function": "WITH expression",
+  "sql": "WITH my_table AS (\n  SELECT 1 AS x, 2 AS y\n  UNION ALL\n  SELECT 3 AS x, 4 AS y\n  UNION ALL\n  SELECT 5 AS x, 6 AS y\n)\nSELECT WITH(a AS SUM(x), b AS COUNT(x), a/b) AS avg_x, AVG(y) AS avg_y\nFROM my_table\nWHERE x > 1;",
+  "expected_rows": [
+   [
+    "4",
+    "5"
+   ]
+  ],
+  "expected_columns": [
+   "avg_x",
+   "avg_y"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#with_expression",
+  "notes": ""
+ },
+ {
+  "id": "bq-op-014",
+  "function": "IN operator",
+  "sql": "WITH Words AS (\n  SELECT 'Intend' as value UNION ALL\n  SELECT 'Secure' UNION ALL\n  SELECT 'Clarity' UNION ALL\n  SELECT 'Peace' UNION ALL\n  SELECT 'Intend'\n )\nSELECT * FROM Words WHERE value IN ('Intend', 'Secure');",
+  "expected_rows": [
+   [
+    "Intend"
+   ],
+   [
+    "Secure"
+   ],
+   [
+    "Intend"
+   ]
+  ],
+  "expected_columns": [
+   "value"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#in_operator",
+  "notes": "Docs define table Words/Items as a separate query; its CTE definition was prepended to make the SQL self-contained. Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-op-015",
+  "function": "IN operator",
+  "sql": "WITH Words AS (\n  SELECT 'Intend' as value UNION ALL\n  SELECT 'Secure' UNION ALL\n  SELECT 'Clarity' UNION ALL\n  SELECT 'Peace' UNION ALL\n  SELECT 'Intend'\n )\nSELECT * FROM Words WHERE value NOT IN ('Intend');",
+  "expected_rows": [
+   [
+    "Secure"
+   ],
+   [
+    "Clarity"
+   ],
+   [
+    "Peace"
+   ]
+  ],
+  "expected_columns": [
+   "value"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#in_operator",
+  "notes": "Docs define table Words/Items as a separate query; its CTE definition was prepended to make the SQL self-contained. Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-op-016",
+  "function": "IN operator",
+  "sql": "WITH Words AS (\n  SELECT 'Intend' as value UNION ALL\n  SELECT 'Secure' UNION ALL\n  SELECT 'Clarity' UNION ALL\n  SELECT 'Peace' UNION ALL\n  SELECT 'Intend'\n )\nSELECT * FROM Words WHERE value IN ((SELECT 'Intend'), 'Clarity');",
+  "expected_rows": [
+   [
+    "Intend"
+   ],
+   [
+    "Clarity"
+   ],
+   [
+    "Intend"
+   ]
+  ],
+  "expected_columns": [
+   "value"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#in_operator",
+  "notes": "Docs define table Words/Items as a separate query; its CTE definition was prepended to make the SQL self-contained. Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-op-017",
+  "function": "IN operator",
+  "sql": "WITH Words AS (\n  SELECT 'Intend' as value UNION ALL\n  SELECT 'Secure' UNION ALL\n  SELECT 'Clarity' UNION ALL\n  SELECT 'Peace' UNION ALL\n  SELECT 'Intend'\n )\nSELECT * FROM Words WHERE value IN UNNEST(['Secure', 'Clarity']);",
+  "expected_rows": [
+   [
+    "Secure"
+   ],
+   [
+    "Clarity"
+   ]
+  ],
+  "expected_columns": [
+   "value"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#in_operator",
+  "notes": "Docs define table Words/Items as a separate query; its CTE definition was prepended to make the SQL self-contained. Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-op-018",
+  "function": "IN operator",
+  "sql": "WITH\n  Items AS (\n    SELECT STRUCT('blue' AS color, 'round' AS shape) AS info UNION ALL\n    SELECT STRUCT('blue', 'square') UNION ALL\n    SELECT STRUCT('red', 'round')\n  )\nSELECT\n  Items.info as item\nFROM\n  Items\nWHERE (info.shape, info.color) IN (('round', 'blue'));",
+  "expected_rows": [
+   [
+    "{ {blue color, round shape} info }"
+   ]
+  ],
+  "expected_columns": [
+   "item"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#in_operator",
+  "notes": "Docs define table Words/Items as a separate query; its CTE definition was prepended to make the SQL self-contained. Struct result shown by docs in an unusual nested form."
+ },
+ {
+  "id": "bq-op-019",
+  "function": "Quantified LIKE operator",
+  "sql": "WITH Words AS\n (SELECT 'Intend with clarity.' as value UNION ALL\n  SELECT 'Secure with intention.' UNION ALL\n  SELECT 'Clarity and security.')\nSELECT * FROM Words WHERE value LIKE ANY ('Intend%', '%intention%');",
+  "expected_rows": [
+   [
+    "Intend with clarity."
+   ],
+   [
+    "Secure with intention."
+   ]
+  ],
+  "expected_columns": [
+   "value"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#quantified_like_operator",
+  "notes": "Docs define table Words/Items as a separate query; its CTE definition was prepended to make the SQL self-contained. Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-op-020",
+  "function": "Quantified LIKE operator",
+  "sql": "WITH Words AS\n (SELECT 'Intend with clarity.' as value UNION ALL\n  SELECT 'Secure with intention.' UNION ALL\n  SELECT 'Clarity and security.')\nSELECT * FROM Words WHERE value LIKE ALL ('%ity%');",
+  "expected_rows": [
+   [
+    "Intend with clarity."
+   ],
+   [
+    "Clarity and security."
+   ]
+  ],
+  "expected_columns": [
+   "value"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#quantified_like_operator",
+  "notes": "Docs define table Words/Items as a separate query; its CTE definition was prepended to make the SQL self-contained. Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-op-021",
+  "function": "Quantified LIKE operator",
+  "sql": "WITH Words AS\n (SELECT 'Intend with clarity.' as value UNION ALL\n  SELECT 'Secure with intention.' UNION ALL\n  SELECT 'Clarity and security.')\nSELECT * FROM Words WHERE value NOT LIKE ('%ity%');",
+  "expected_rows": [
+   [
+    "Secure with intention."
+   ]
+  ],
+  "expected_columns": [
+   "value"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#quantified_like_operator",
+  "notes": "Docs define table Words/Items as a separate query; its CTE definition was prepended to make the SQL self-contained."
+ },
+ {
+  "id": "bq-op-022",
+  "function": "Quantified LIKE operator",
+  "sql": "WITH Words AS\n (SELECT 'Intend with clarity.' as value UNION ALL\n  SELECT 'Secure with intention.' UNION ALL\n  SELECT 'Clarity and security.')\nSELECT * FROM Words WHERE value LIKE ANY UNNEST(['%ion%', '%and%']);",
+  "expected_rows": [
+   [
+    "Secure with intention."
+   ],
+   [
+    "Clarity and security."
+   ]
+  ],
+  "expected_columns": [
+   "value"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#quantified_like_operator",
+  "notes": "Docs define table Words/Items as a separate query; its CTE definition was prepended to make the SQL self-contained. Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-op-023",
+  "function": "Array subscript operator",
+  "sql": "SELECT [\"coffee\", \"tea\", \"milk\"][6] AS item_offset;",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#array_subscript_operator",
+  "notes": "error: Docs: error, array index 6 is out of bounds.",
+  "error": true
+ },
+ {
+  "id": "bq-op-024",
+  "function": "Array subscript operator",
+  "sql": "SELECT [\"coffee\", \"tea\", \"milk\"][OFFSET(6)] AS item_offset;",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#array_subscript_operator",
+  "notes": "error: Docs: error, array index 6 is out of bounds.",
+  "error": true
+ },
+ {
+  "id": "bq-op-025",
+  "function": "Struct subscript operator",
+  "sql": "SELECT STRUCT<INT64, STRING, BOOL>(23, \"tea\", FALSE)[6] AS field_offset;",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#struct_subscript_operator",
+  "notes": "error: Docs: error, field ordinal 6 is out of bounds in STRUCT.",
+  "error": true
+ },
+ {
+  "id": "bq-op-026",
+  "function": "Struct subscript operator",
+  "sql": "SELECT STRUCT<INT64, STRING, BOOL>(23, \"tea\", FALSE)[OFFSET(6)] AS field_offset;",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#struct_subscript_operator",
+  "notes": "error: Docs: error, field ordinal 6 is out of bounds in STRUCT.",
+  "error": true
+ },
+ {
+  "id": "bq-op-027",
+  "function": "WITH expression",
+  "sql": "SELECT WITH(diff AS a - b, AVG(diff))\nFROM UNNEST([\n              STRUCT(1 AS a, 2 AS b),\n              STRUCT(3 AS a, 4 AS b),\n              STRUCT(5 AS a, 6 AS b)\n            ]);",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#with_expression",
+  "notes": "error: Docs: ERROR, WITH variables cannot be used in aggregate or analytic function arguments.",
+  "error": true
+ },
+ {
+  "id": "bq-op-028",
+  "function": "Logical operators",
+  "sql": "SELECT TRUE AND TRUE AS x_and_y, TRUE OR TRUE AS x_or_y;",
+  "expected_rows": [
+   [
+    "TRUE",
+    "TRUE"
+   ]
+  ],
+  "expected_columns": [
+   "x_and_y",
+   "x_or_y"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#logical_operators",
+  "notes": "From the docs three-valued-logic truth table (x=TRUE, y=TRUE); NULL built with CAST(NULL AS BOOL)."
+ },
+ {
+  "id": "bq-op-029",
+  "function": "Logical operators",
+  "sql": "SELECT TRUE AND FALSE AS x_and_y, TRUE OR FALSE AS x_or_y;",
+  "expected_rows": [
+   [
+    "FALSE",
+    "TRUE"
+   ]
+  ],
+  "expected_columns": [
+   "x_and_y",
+   "x_or_y"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#logical_operators",
+  "notes": "From the docs three-valued-logic truth table (x=TRUE, y=FALSE); NULL built with CAST(NULL AS BOOL)."
+ },
+ {
+  "id": "bq-op-030",
+  "function": "Logical operators",
+  "sql": "SELECT TRUE AND CAST(NULL AS BOOL) AS x_and_y, TRUE OR CAST(NULL AS BOOL) AS x_or_y;",
+  "expected_rows": [
+   [
+    "NULL",
+    "TRUE"
+   ]
+  ],
+  "expected_columns": [
+   "x_and_y",
+   "x_or_y"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#logical_operators",
+  "notes": "From the docs three-valued-logic truth table (x=TRUE, y=NULL); NULL built with CAST(NULL AS BOOL)."
+ },
+ {
+  "id": "bq-op-031",
+  "function": "Logical operators",
+  "sql": "SELECT FALSE AND TRUE AS x_and_y, FALSE OR TRUE AS x_or_y;",
+  "expected_rows": [
+   [
+    "FALSE",
+    "TRUE"
+   ]
+  ],
+  "expected_columns": [
+   "x_and_y",
+   "x_or_y"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#logical_operators",
+  "notes": "From the docs three-valued-logic truth table (x=FALSE, y=TRUE); NULL built with CAST(NULL AS BOOL)."
+ },
+ {
+  "id": "bq-op-032",
+  "function": "Logical operators",
+  "sql": "SELECT FALSE AND FALSE AS x_and_y, FALSE OR FALSE AS x_or_y;",
+  "expected_rows": [
+   [
+    "FALSE",
+    "FALSE"
+   ]
+  ],
+  "expected_columns": [
+   "x_and_y",
+   "x_or_y"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#logical_operators",
+  "notes": "From the docs three-valued-logic truth table (x=FALSE, y=FALSE); NULL built with CAST(NULL AS BOOL)."
+ },
+ {
+  "id": "bq-op-033",
+  "function": "Logical operators",
+  "sql": "SELECT FALSE AND CAST(NULL AS BOOL) AS x_and_y, FALSE OR CAST(NULL AS BOOL) AS x_or_y;",
+  "expected_rows": [
+   [
+    "FALSE",
+    "NULL"
+   ]
+  ],
+  "expected_columns": [
+   "x_and_y",
+   "x_or_y"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#logical_operators",
+  "notes": "From the docs three-valued-logic truth table (x=FALSE, y=NULL); NULL built with CAST(NULL AS BOOL)."
+ },
+ {
+  "id": "bq-op-034",
+  "function": "Logical operators",
+  "sql": "SELECT CAST(NULL AS BOOL) AND TRUE AS x_and_y, CAST(NULL AS BOOL) OR TRUE AS x_or_y;",
+  "expected_rows": [
+   [
+    "NULL",
+    "TRUE"
+   ]
+  ],
+  "expected_columns": [
+   "x_and_y",
+   "x_or_y"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#logical_operators",
+  "notes": "From the docs three-valued-logic truth table (x=NULL, y=TRUE); NULL built with CAST(NULL AS BOOL)."
+ },
+ {
+  "id": "bq-op-035",
+  "function": "Logical operators",
+  "sql": "SELECT CAST(NULL AS BOOL) AND FALSE AS x_and_y, CAST(NULL AS BOOL) OR FALSE AS x_or_y;",
+  "expected_rows": [
+   [
+    "FALSE",
+    "NULL"
+   ]
+  ],
+  "expected_columns": [
+   "x_and_y",
+   "x_or_y"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#logical_operators",
+  "notes": "From the docs three-valued-logic truth table (x=NULL, y=FALSE); NULL built with CAST(NULL AS BOOL)."
+ },
+ {
+  "id": "bq-op-036",
+  "function": "Logical operators",
+  "sql": "SELECT CAST(NULL AS BOOL) AND CAST(NULL AS BOOL) AS x_and_y, CAST(NULL AS BOOL) OR CAST(NULL AS BOOL) AS x_or_y;",
+  "expected_rows": [
+   [
+    "NULL",
+    "NULL"
+   ]
+  ],
+  "expected_columns": [
+   "x_and_y",
+   "x_or_y"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#logical_operators",
+  "notes": "From the docs three-valued-logic truth table (x=NULL, y=NULL); NULL built with CAST(NULL AS BOOL)."
+ },
+ {
+  "id": "bq-op-037",
+  "function": "Logical operators",
+  "sql": "SELECT NOT TRUE AS not_x;",
+  "expected_rows": [
+   [
+    "FALSE"
+   ]
+  ],
+  "expected_columns": [
+   "not_x"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#logical_operators",
+  "notes": "From the docs truth table for NOT."
+ },
+ {
+  "id": "bq-op-038",
+  "function": "Logical operators",
+  "sql": "SELECT NOT FALSE AS not_x;",
+  "expected_rows": [
+   [
+    "TRUE"
+   ]
+  ],
+  "expected_columns": [
+   "not_x"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#logical_operators",
+  "notes": "From the docs truth table for NOT."
+ },
+ {
+  "id": "bq-op-039",
+  "function": "Logical operators",
+  "sql": "SELECT NOT CAST(NULL AS BOOL) AS not_x;",
+  "expected_rows": [
+   [
+    "NULL"
+   ]
+  ],
+  "expected_columns": [
+   "not_x"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#logical_operators",
+  "notes": "From the docs truth table for NOT."
+ },
+ {
+  "id": "bq-op-040",
+  "function": "Comparison operators",
+  "sql": "SELECT STRUCT(1, NULL) = STRUCT(1, NULL) AS eq;",
+  "expected_rows": [
+   [
+    "NULL"
+   ]
+  ],
+  "expected_columns": [
+   "eq"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#comparison_operators",
+  "notes": "From the docs STRUCT equality table (Struct1 = Struct2)."
+ },
+ {
+  "id": "bq-op-041",
+  "function": "Comparison operators",
+  "sql": "SELECT STRUCT(1, NULL) = STRUCT(2, NULL) AS eq;",
+  "expected_rows": [
+   [
+    "FALSE"
+   ]
+  ],
+  "expected_columns": [
+   "eq"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#comparison_operators",
+  "notes": "From the docs STRUCT equality table (Struct1 = Struct2)."
+ },
+ {
+  "id": "bq-op-042",
+  "function": "Comparison operators",
+  "sql": "SELECT STRUCT(1,2) = STRUCT(1, NULL) AS eq;",
+  "expected_rows": [
+   [
+    "NULL"
+   ]
+  ],
+  "expected_columns": [
+   "eq"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#comparison_operators",
+  "notes": "From the docs STRUCT equality table (Struct1 = Struct2)."
+ },
+ {
+  "id": "bq-op-043",
+  "function": "IS DISTINCT FROM operator",
+  "sql": "SELECT 1 IS DISTINCT FROM 2;",
+  "expected_rows": [
+   [
+    "TRUE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#is_distinct_from_operator",
+  "notes": "Result stated in docs prose (\"These return TRUE\")."
+ },
+ {
+  "id": "bq-op-044",
+  "function": "IS DISTINCT FROM operator",
+  "sql": "SELECT 1 IS DISTINCT FROM NULL;",
+  "expected_rows": [
+   [
+    "TRUE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#is_distinct_from_operator",
+  "notes": "Result stated in docs prose (\"These return TRUE\")."
+ },
+ {
+  "id": "bq-op-045",
+  "function": "IS DISTINCT FROM operator",
+  "sql": "SELECT 1 IS NOT DISTINCT FROM 1;",
+  "expected_rows": [
+   [
+    "TRUE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#is_distinct_from_operator",
+  "notes": "Result stated in docs prose (\"These return TRUE\")."
+ },
+ {
+  "id": "bq-op-046",
+  "function": "IS DISTINCT FROM operator",
+  "sql": "SELECT NULL IS NOT DISTINCT FROM NULL;",
+  "expected_rows": [
+   [
+    "TRUE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#is_distinct_from_operator",
+  "notes": "Result stated in docs prose (\"These return TRUE\")."
+ },
+ {
+  "id": "bq-op-047",
+  "function": "IS DISTINCT FROM operator",
+  "sql": "SELECT NULL IS DISTINCT FROM NULL;",
+  "expected_rows": [
+   [
+    "FALSE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#is_distinct_from_operator",
+  "notes": "Result stated in docs prose (\"These return FALSE\")."
+ },
+ {
+  "id": "bq-op-048",
+  "function": "IS DISTINCT FROM operator",
+  "sql": "SELECT 1 IS DISTINCT FROM 1;",
+  "expected_rows": [
+   [
+    "FALSE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#is_distinct_from_operator",
+  "notes": "Result stated in docs prose (\"These return FALSE\")."
+ },
+ {
+  "id": "bq-op-049",
+  "function": "IS DISTINCT FROM operator",
+  "sql": "SELECT 1 IS NOT DISTINCT FROM 2;",
+  "expected_rows": [
+   [
+    "FALSE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#is_distinct_from_operator",
+  "notes": "Result stated in docs prose (\"These return FALSE\")."
+ },
+ {
+  "id": "bq-op-050",
+  "function": "IS DISTINCT FROM operator",
+  "sql": "SELECT 1 IS NOT DISTINCT FROM NULL;",
+  "expected_rows": [
+   [
+    "FALSE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#is_distinct_from_operator",
+  "notes": "Result stated in docs prose (\"These return FALSE\")."
+ },
+ {
+  "id": "bq-op-051",
+  "function": "LIKE operator",
+  "sql": "SELECT 'apple' LIKE 'a%';",
+  "expected_rows": [
+   [
+    "TRUE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#like_operator",
+  "notes": "Result stated in a docs comment."
+ },
+ {
+  "id": "bq-op-052",
+  "function": "LIKE operator",
+  "sql": "SELECT '%a' LIKE 'apple';",
+  "expected_rows": [
+   [
+    "FALSE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#like_operator",
+  "notes": "Result stated in a docs comment."
+ },
+ {
+  "id": "bq-op-053",
+  "function": "LIKE operator",
+  "sql": "SELECT 'apple' NOT LIKE 'a%';",
+  "expected_rows": [
+   [
+    "FALSE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#like_operator",
+  "notes": "Result stated in a docs comment."
+ },
+ {
+  "id": "bq-op-054",
+  "function": "LIKE operator",
+  "sql": "SELECT '%a' NOT LIKE 'apple';",
+  "expected_rows": [
+   [
+    "TRUE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#like_operator",
+  "notes": "Result stated in a docs comment."
+ },
+ {
+  "id": "bq-op-055",
+  "function": "LIKE operator",
+  "sql": "SELECT NULL LIKE 'a%';",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#like_operator",
+  "notes": "error: Docs: produces an error.",
+  "error": true
+ },
+ {
+  "id": "bq-op-056",
+  "function": "LIKE operator",
+  "sql": "SELECT 'apple' LIKE NULL;",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#like_operator",
+  "notes": "error: Docs: produces an error.",
+  "error": true
+ },
+ {
+  "id": "bq-op-057",
+  "function": "LIKE operator",
+  "sql": "SELECT 'Foo' LIKE '%foo%';",
+  "expected_rows": [
+   [
+    "FALSE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#like_operator",
+  "notes": "Result stated in a docs comment."
+ },
+ {
+  "id": "bq-op-058",
+  "function": "LIKE operator",
+  "sql": "SELECT COLLATE('Foo', 'und:ci') LIKE COLLATE('%foo%', 'und:ci');",
+  "expected_rows": [
+   [
+    "TRUE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#like_operator",
+  "notes": "Result stated in a docs comment."
+ },
+ {
+  "id": "bq-op-059",
+  "function": "LIKE operator",
+  "sql": "SELECT COLLATE('Foo', 'und:ci') = COLLATE('foo', 'und:ci');",
+  "expected_rows": [
+   [
+    "TRUE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#like_operator",
+  "notes": "Result stated in a docs comment."
+ },
+ {
+  "id": "bq-op-060",
+  "function": "LIKE operator",
+  "sql": "SELECT COLLATE('Foo', 'und:ci') LIKE COLLATE('%foo%', 'binary');",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#like_operator",
+  "notes": "error: Docs: produces an error.",
+  "error": true
+ },
+ {
+  "id": "bq-op-061",
+  "function": "LIKE operator",
+  "sql": "SELECT COLLATE('Foo', 'und:ci') LIKE COLLATE('%f_o%', 'und:ci');",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#like_operator",
+  "notes": "error: Docs: produces an error.",
+  "error": true
+ },
+ {
+  "id": "bq-op-062",
+  "function": "LIKE operator",
+  "sql": "SELECT COLLATE('Foo_', 'und:ci') LIKE COLLATE('%foo\\\\_%', 'und:ci');",
+  "expected_rows": [
+   [
+    "TRUE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#like_operator",
+  "notes": "Result stated in a docs comment."
+ },
+ {
+  "id": "bq-op-063",
+  "function": "LIKE operator",
+  "sql": "SELECT 'MASSE' LIKE 'Maße';",
+  "expected_rows": [
+   [
+    "FALSE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#like_operator",
+  "notes": "Result stated in a docs comment."
+ },
+ {
+  "id": "bq-op-064",
+  "function": "LIKE operator",
+  "sql": "SELECT COLLATE('MASSE', 'und:ci') LIKE '%Maße%';",
+  "expected_rows": [
+   [
+    "FALSE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#like_operator",
+  "notes": "Result stated in a docs comment."
+ },
+ {
+  "id": "bq-op-065",
+  "function": "LIKE operator",
+  "sql": "SELECT COLLATE('MASSE', 'und:ci') = COLLATE('Maße', 'und:ci');",
+  "expected_rows": [
+   [
+    "FALSE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#like_operator",
+  "notes": "Result stated in a docs comment."
+ },
+ {
+  "id": "bq-op-066",
+  "function": "LIKE operator",
+  "sql": "SELECT '\\u3042' LIKE '%\\u30A2%';",
+  "expected_rows": [
+   [
+    "FALSE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#like_operator",
+  "notes": "Result stated in a docs comment."
+ },
+ {
+  "id": "bq-op-067",
+  "function": "LIKE operator",
+  "sql": "SELECT COLLATE('\\u3042', 'und:ci') LIKE COLLATE('%\\u30A2%', 'und:ci');",
+  "expected_rows": [
+   [
+    "TRUE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#like_operator",
+  "notes": "Result stated in a docs comment."
+ },
+ {
+  "id": "bq-op-068",
+  "function": "LIKE operator",
+  "sql": "SELECT COLLATE('\\u3042', 'und:ci') = COLLATE('\\u30A2', 'und:ci');",
+  "expected_rows": [
+   [
+    "TRUE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#like_operator",
+  "notes": "Result stated in a docs comment."
+ },
+ {
+  "id": "bq-op-069",
+  "function": "LIKE operator",
+  "sql": "SELECT '\\u0061\\u030A' LIKE '%\\u00C5%';",
+  "expected_rows": [
+   [
+    "FALSE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#like_operator",
+  "notes": "Result stated in a docs comment."
+ },
+ {
+  "id": "bq-op-070",
+  "function": "LIKE operator",
+  "sql": "SELECT COLLATE('\\u0061\\u030A', 'und:ci') LIKE '%\\u00C5%';",
+  "expected_rows": [
+   [
+    "TRUE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#like_operator",
+  "notes": "Result stated in a docs comment."
+ },
+ {
+  "id": "bq-op-071",
+  "function": "LIKE operator",
+  "sql": "SELECT COLLATE('\\u0061\\u030A', 'und:ci') = COLLATE('\\u00C5', 'und:ci');",
+  "expected_rows": [
+   [
+    "TRUE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#like_operator",
+  "notes": "Result stated in a docs comment."
+ },
+ {
+  "id": "bq-op-072",
+  "function": "LIKE operator",
+  "sql": "SELECT '\\u0083' LIKE '';",
+  "expected_rows": [
+   [
+    "FALSE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#like_operator",
+  "notes": "Result stated in a docs comment."
+ },
+ {
+  "id": "bq-op-073",
+  "function": "LIKE operator",
+  "sql": "SELECT COLLATE('\\u0083', 'und:ci') LIKE '';",
+  "expected_rows": [
+   [
+    "TRUE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#like_operator",
+  "notes": "Result stated in a docs comment."
+ },
+ {
+  "id": "bq-op-074",
+  "function": "Quantified LIKE operator",
+  "sql": "SELECT\n  NULL LIKE ANY ('a', 'b'), -- NULL\n  'a' LIKE ANY ('a', 'c'), -- TRUE\n  'a' LIKE ANY ('b', 'c'), -- FALSE\n  'a' LIKE ANY ('a', NULL), -- TRUE\n  'a' LIKE ANY ('b', NULL), -- NULL\n  NULL NOT LIKE ANY ('a', 'b'), -- NULL\n  'a' NOT LIKE ANY ('a', 'b'), -- TRUE\n  'a' NOT LIKE ANY ('a', '%a%'), -- FALSE\n  'a' NOT LIKE ANY ('a', NULL), -- NULL\n  'a' NOT LIKE ANY ('b', NULL); -- TRUE;",
+  "expected_rows": [
+   [
+    "NULL",
+    "TRUE",
+    "FALSE",
+    "TRUE",
+    "NULL",
+    "NULL",
+    "TRUE",
+    "FALSE",
+    "NULL",
+    "TRUE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#quantified_like_operator",
+  "notes": "Per-column results stated in docs comments."
+ },
+ {
+  "id": "bq-op-075",
+  "function": "Quantified LIKE operator",
+  "sql": "SELECT\n  NULL LIKE SOME ('a', 'b'), -- NULL\n  'a' LIKE SOME ('a', 'c'), -- TRUE\n  'a' LIKE SOME ('b', 'c'), -- FALSE\n  'a' LIKE SOME ('a', NULL), -- TRUE\n  'a' LIKE SOME ('b', NULL), -- NULL\n  NULL NOT LIKE SOME ('a', 'b'), -- NULL\n  'a' NOT LIKE SOME ('a', 'b'), -- TRUE\n  'a' NOT LIKE SOME ('a', '%a%'), -- FALSE\n  'a' NOT LIKE SOME ('a', NULL), -- NULL\n  'a' NOT LIKE SOME ('b', NULL); -- TRUE;",
+  "expected_rows": [
+   [
+    "NULL",
+    "TRUE",
+    "FALSE",
+    "TRUE",
+    "NULL",
+    "NULL",
+    "TRUE",
+    "FALSE",
+    "NULL",
+    "TRUE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#quantified_like_operator",
+  "notes": "Per-column results stated in docs comments."
+ },
+ {
+  "id": "bq-op-076",
+  "function": "Quantified LIKE operator",
+  "sql": "SELECT\n  NULL LIKE ALL ('a', 'b'), -- NULL\n  'a' LIKE ALL ('a', '%a%'), -- TRUE\n  'a' LIKE ALL ('a', 'c'), -- FALSE\n  'a' LIKE ALL ('a', NULL), -- NULL\n  'a' LIKE ALL ('b', NULL), -- FALSE\n  NULL NOT LIKE ALL ('a', 'b'), -- NULL\n  'a' NOT LIKE ALL ('b', 'c'), -- TRUE\n  'a' NOT LIKE ALL ('a', 'c'), -- FALSE\n  'a' NOT LIKE ALL ('a', NULL), -- FALSE\n  'a' NOT LIKE ALL ('b', NULL); -- NULL;",
+  "expected_rows": [
+   [
+    "NULL",
+    "TRUE",
+    "FALSE",
+    "NULL",
+    "FALSE",
+    "NULL",
+    "TRUE",
+    "FALSE",
+    "FALSE",
+    "NULL"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#quantified_like_operator",
+  "notes": "Per-column results stated in docs comments."
+ },
+ {
+  "id": "bq-op-077",
+  "function": "Quantified LIKE operator",
+  "sql": "SELECT\n  COLLATE('a', 'und:ci') LIKE ALL ('a', 'A'), -- TRUE\n  'a' LIKE ALL (COLLATE('a', 'und:ci'), 'A'), -- TRUE\n  'a' LIKE ALL ('%A%', COLLATE('a', 'und:ci')); -- TRUE;",
+  "expected_rows": [
+   [
+    "TRUE",
+    "TRUE",
+    "TRUE"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#quantified_like_operator",
+  "notes": "Per-column results stated in docs comments."
+ },
+ {
+  "id": "bq-op-078",
+  "function": "Quantified LIKE operator",
+  "sql": "SELECT b'a' LIKE ALL (COLLATE('a', 'und:ci'), 'A');",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/operators#quantified_like_operator",
+  "notes": "error: Docs: ERROR, BYTES and STRING values can't be used together.",
+  "error": true
+ }
+]

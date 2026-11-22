@@ -1,0 +1,1777 @@
+[
+ {
+  "id": "mysql-datetime-001",
+  "function": "DAYOFMONTH",
+  "sql": "SELECT DAYOFMONTH('2001-11-00'), MONTH('2005-00-00');",
+  "expected_rows": [
+   [
+    "0",
+    "0"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#DAYOFMONTH",
+  "notes": "incomplete dates; intro section"
+ },
+ {
+  "id": "mysql-datetime-002",
+  "function": "DATE_ADD",
+  "sql": "SELECT DATE_ADD('2006-05-00',INTERVAL 1 DAY);",
+  "expected_rows": [
+   [
+    "NULL"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#DATE_ADD",
+  "notes": "incomplete date; intro section"
+ },
+ {
+  "id": "mysql-datetime-003",
+  "function": "DAYNAME",
+  "sql": "SELECT DAYNAME('2006-05-00');",
+  "expected_rows": [
+   [
+    "NULL"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#DAYNAME",
+  "notes": "incomplete date; intro section"
+ },
+ {
+  "id": "mysql-datetime-004",
+  "function": "DATE_ADD",
+  "sql": "SELECT DATE_ADD('2008-01-02', INTERVAL 31 DAY);",
+  "expected_rows": [
+   [
+    "2008-02-02"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#ADDDATE",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-005",
+  "function": "ADDDATE",
+  "sql": "SELECT ADDDATE('2008-01-02', INTERVAL 31 DAY);",
+  "expected_rows": [
+   [
+    "2008-02-02"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#ADDDATE",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-006",
+  "function": "ADDDATE",
+  "sql": "SELECT ADDDATE('2008-01-02', 31);",
+  "expected_rows": [
+   [
+    "2008-02-02"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#ADDDATE",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-007",
+  "function": "ADDTIME",
+  "sql": "SELECT ADDTIME('2007-12-31 23:59:59.999999', '1 1:1:1.000002');",
+  "expected_rows": [
+   [
+    "2008-01-02 01:01:01.000001"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#ADDTIME",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-008",
+  "function": "ADDTIME",
+  "sql": "SELECT ADDTIME('01:00:00.999999', '02:00:00.999998');",
+  "expected_rows": [
+   [
+    "03:00:01.999997"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#ADDTIME",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-009",
+  "function": "CONVERT_TZ",
+  "sql": "SELECT CONVERT_TZ('2004-01-01 12:00:00','GMT','MET');",
+  "expected_rows": [
+   [
+    "2004-01-01 13:00:00"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#CONVERT_TZ",
+  "notes": "named zones need time zone tables"
+ },
+ {
+  "id": "mysql-datetime-010",
+  "function": "CONVERT_TZ",
+  "sql": "SELECT CONVERT_TZ('2004-01-01 12:00:00','+00:00','+10:00');",
+  "expected_rows": [
+   [
+    "2004-01-01 22:00:00"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#CONVERT_TZ",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-011",
+  "function": "DATE",
+  "sql": "SELECT DATE('2003-12-31 01:02:03');",
+  "expected_rows": [
+   [
+    "2003-12-31"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#DATE",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-012",
+  "function": "DATE_ADD",
+  "sql": "SELECT DATE_ADD('2018-05-01',INTERVAL 1 DAY);",
+  "expected_rows": [
+   [
+    "2018-05-02"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#DATE_ADD",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-013",
+  "function": "DATE_SUB",
+  "sql": "SELECT DATE_SUB('2018-05-01',INTERVAL 1 YEAR);",
+  "expected_rows": [
+   [
+    "2017-05-01"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#DATE_ADD",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-014",
+  "function": "DATE_ADD",
+  "sql": "SELECT DATE_ADD('2020-12-31 23:59:59', INTERVAL 1 SECOND);",
+  "expected_rows": [
+   [
+    "2021-01-01 00:00:00"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#DATE_ADD",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-015",
+  "function": "DATE_ADD",
+  "sql": "SELECT DATE_ADD('2018-12-31 23:59:59', INTERVAL 1 DAY);",
+  "expected_rows": [
+   [
+    "2019-01-01 23:59:59"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#DATE_ADD",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-016",
+  "function": "DATE_ADD",
+  "sql": "SELECT DATE_ADD('2100-12-31 23:59:59', INTERVAL '1:1' MINUTE_SECOND);",
+  "expected_rows": [
+   [
+    "2101-01-01 00:01:00"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#DATE_ADD",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-017",
+  "function": "DATE_SUB",
+  "sql": "SELECT DATE_SUB('2025-01-01 00:00:00', INTERVAL '1 1:1:1' DAY_SECOND);",
+  "expected_rows": [
+   [
+    "2024-12-30 22:58:59"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#DATE_ADD",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-018",
+  "function": "DATE_ADD",
+  "sql": "SELECT DATE_ADD('1900-01-01 00:00:00', INTERVAL '-1 10' DAY_HOUR);",
+  "expected_rows": [
+   [
+    "1899-12-30 14:00:00"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#DATE_ADD",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-019",
+  "function": "DATE_SUB",
+  "sql": "SELECT DATE_SUB('1998-01-02', INTERVAL 31 DAY);",
+  "expected_rows": [
+   [
+    "1997-12-02"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#DATE_ADD",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-020",
+  "function": "DATE_ADD",
+  "sql": "SELECT DATE_ADD('1992-12-31 23:59:59.000002', INTERVAL '1.999999' SECOND_MICROSECOND);",
+  "expected_rows": [
+   [
+    "1993-01-01 00:00:01.000001"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#DATE_ADD",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-021",
+  "function": "DATE_ADD",
+  "sql": "SELECT DATE_ADD('2024-03-30', INTERVAL 1 MONTH) AS d1, DATE_ADD('2024-03-31', INTERVAL 1 MONTH) AS d2;",
+  "expected_rows": [
+   [
+    "2024-04-30",
+    "2024-04-30"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#DATE_ADD",
+  "notes": "manual shows a result table with columns d1, d2"
+ },
+ {
+  "id": "mysql-datetime-022",
+  "function": "DATE_FORMAT",
+  "sql": "SELECT DATE_FORMAT('2009-10-04 22:23:00', '%W %M %Y');",
+  "expected_rows": [
+   [
+    "Sunday October 2009"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#DATE_FORMAT",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-023",
+  "function": "DATE_FORMAT",
+  "sql": "SELECT DATE_FORMAT('2007-10-04 22:23:00', '%H:%i:%s');",
+  "expected_rows": [
+   [
+    "22:23:00"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#DATE_FORMAT",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-024",
+  "function": "DATE_FORMAT",
+  "sql": "SELECT DATE_FORMAT('1900-10-04 22:23:00', '%D %y %a %d %m %b %j');",
+  "expected_rows": [
+   [
+    "4th 00 Thu 04 10 Oct 277"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#DATE_FORMAT",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-025",
+  "function": "DATE_FORMAT",
+  "sql": "SELECT DATE_FORMAT('1997-10-04 22:23:00', '%H %k %I %r %T %S %w');",
+  "expected_rows": [
+   [
+    "22 22 10 10:23:00 PM 22:23:00 00 6"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#DATE_FORMAT",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-026",
+  "function": "DATE_FORMAT",
+  "sql": "SELECT DATE_FORMAT('1999-01-01', '%X %V');",
+  "expected_rows": [
+   [
+    "1998 52"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#DATE_FORMAT",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-027",
+  "function": "DATE_FORMAT",
+  "sql": "SELECT DATE_FORMAT('2006-06-00', '%d');",
+  "expected_rows": [
+   [
+    "00"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#DATE_FORMAT",
+  "notes": "incomplete date"
+ },
+ {
+  "id": "mysql-datetime-028",
+  "function": "DATEDIFF",
+  "sql": "SELECT DATEDIFF('2007-12-31 23:59:59','2007-12-30');",
+  "expected_rows": [
+   [
+    "1"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#DATEDIFF",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-029",
+  "function": "DATEDIFF",
+  "sql": "SELECT DATEDIFF('2010-11-30 23:59:59','2010-12-31');",
+  "expected_rows": [
+   [
+    "-31"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#DATEDIFF",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-030",
+  "function": "DAYNAME",
+  "sql": "SELECT DAYNAME('2007-02-03');",
+  "expected_rows": [
+   [
+    "Saturday"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#DAYNAME",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-031",
+  "function": "DAYOFMONTH",
+  "sql": "SELECT DAYOFMONTH('2007-02-03');",
+  "expected_rows": [
+   [
+    "3"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#DAYOFMONTH",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-032",
+  "function": "DAYOFWEEK",
+  "sql": "SELECT DAYOFWEEK('2007-02-03');",
+  "expected_rows": [
+   [
+    "7"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#DAYOFWEEK",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-033",
+  "function": "DAYOFYEAR",
+  "sql": "SELECT DAYOFYEAR('2007-02-03');",
+  "expected_rows": [
+   [
+    "34"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#DAYOFYEAR",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-034",
+  "function": "EXTRACT",
+  "sql": "SELECT EXTRACT(YEAR FROM '2019-07-02');",
+  "expected_rows": [
+   [
+    "2019"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#EXTRACT",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-035",
+  "function": "EXTRACT",
+  "sql": "SELECT EXTRACT(YEAR_MONTH FROM '2019-07-02 01:02:03');",
+  "expected_rows": [
+   [
+    "201907"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#EXTRACT",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-036",
+  "function": "EXTRACT",
+  "sql": "SELECT EXTRACT(DAY_MINUTE FROM '2019-07-02 01:02:03');",
+  "expected_rows": [
+   [
+    "20102"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#EXTRACT",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-037",
+  "function": "EXTRACT",
+  "sql": "SELECT EXTRACT(MICROSECOND FROM '2003-01-02 10:30:00.000123');",
+  "expected_rows": [
+   [
+    "123"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#EXTRACT",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-038",
+  "function": "FROM_DAYS",
+  "sql": "SELECT FROM_DAYS(730669);",
+  "expected_rows": [
+   [
+    "2000-07-03"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#FROM_DAYS",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-039",
+  "function": "FROM_UNIXTIME",
+  "sql": "SELECT FROM_UNIXTIME(1447430881);",
+  "expected_rows": [
+   [
+    "2015-11-13 10:08:01"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#FROM_UNIXTIME",
+  "notes": "depends on session time_zone (manual output assumes its own zone)"
+ },
+ {
+  "id": "mysql-datetime-040",
+  "function": "FROM_UNIXTIME",
+  "sql": "SELECT FROM_UNIXTIME(1447430881) + 0;",
+  "expected_rows": [
+   [
+    "20151113100801"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#FROM_UNIXTIME",
+  "notes": "depends on session time_zone (manual output assumes its own zone)"
+ },
+ {
+  "id": "mysql-datetime-041",
+  "function": "FROM_UNIXTIME",
+  "sql": "SELECT FROM_UNIXTIME(1447430881, '%Y %D %M %h:%i:%s %x');",
+  "expected_rows": [
+   [
+    "2015 13th November 10:08:01 2015"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#FROM_UNIXTIME",
+  "notes": "depends on session time_zone (manual output assumes its own zone)"
+ },
+ {
+  "id": "mysql-datetime-042",
+  "function": "GET_FORMAT",
+  "sql": "SELECT DATE_FORMAT('2003-10-03',GET_FORMAT(DATE,'EUR'));",
+  "expected_rows": [
+   [
+    "03.10.2003"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#GET_FORMAT",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-043",
+  "function": "GET_FORMAT",
+  "sql": "SELECT STR_TO_DATE('10.31.2003',GET_FORMAT(DATE,'USA'));",
+  "expected_rows": [
+   [
+    "2003-10-31"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#GET_FORMAT",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-044",
+  "function": "GET_FORMAT",
+  "sql": "SELECT GET_FORMAT(DATE,'USA');",
+  "expected_rows": [
+   [
+    "%m.%d.%Y"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#GET_FORMAT",
+  "notes": "from the GET_FORMAT result table"
+ },
+ {
+  "id": "mysql-datetime-045",
+  "function": "GET_FORMAT",
+  "sql": "SELECT GET_FORMAT(DATE,'JIS');",
+  "expected_rows": [
+   [
+    "%Y-%m-%d"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#GET_FORMAT",
+  "notes": "from the GET_FORMAT result table"
+ },
+ {
+  "id": "mysql-datetime-046",
+  "function": "GET_FORMAT",
+  "sql": "SELECT GET_FORMAT(DATE,'ISO');",
+  "expected_rows": [
+   [
+    "%Y-%m-%d"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#GET_FORMAT",
+  "notes": "from the GET_FORMAT result table"
+ },
+ {
+  "id": "mysql-datetime-047",
+  "function": "GET_FORMAT",
+  "sql": "SELECT GET_FORMAT(DATE,'EUR');",
+  "expected_rows": [
+   [
+    "%d.%m.%Y"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#GET_FORMAT",
+  "notes": "from the GET_FORMAT result table"
+ },
+ {
+  "id": "mysql-datetime-048",
+  "function": "GET_FORMAT",
+  "sql": "SELECT GET_FORMAT(DATE,'INTERNAL');",
+  "expected_rows": [
+   [
+    "%Y%m%d"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#GET_FORMAT",
+  "notes": "from the GET_FORMAT result table"
+ },
+ {
+  "id": "mysql-datetime-049",
+  "function": "GET_FORMAT",
+  "sql": "SELECT GET_FORMAT(DATETIME,'USA');",
+  "expected_rows": [
+   [
+    "%Y-%m-%d %H.%i.%s"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#GET_FORMAT",
+  "notes": "from the GET_FORMAT result table"
+ },
+ {
+  "id": "mysql-datetime-050",
+  "function": "GET_FORMAT",
+  "sql": "SELECT GET_FORMAT(DATETIME,'JIS');",
+  "expected_rows": [
+   [
+    "%Y-%m-%d %H:%i:%s"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#GET_FORMAT",
+  "notes": "from the GET_FORMAT result table"
+ },
+ {
+  "id": "mysql-datetime-051",
+  "function": "GET_FORMAT",
+  "sql": "SELECT GET_FORMAT(DATETIME,'ISO');",
+  "expected_rows": [
+   [
+    "%Y-%m-%d %H:%i:%s"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#GET_FORMAT",
+  "notes": "from the GET_FORMAT result table"
+ },
+ {
+  "id": "mysql-datetime-052",
+  "function": "GET_FORMAT",
+  "sql": "SELECT GET_FORMAT(DATETIME,'EUR');",
+  "expected_rows": [
+   [
+    "%Y-%m-%d %H.%i.%s"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#GET_FORMAT",
+  "notes": "from the GET_FORMAT result table"
+ },
+ {
+  "id": "mysql-datetime-053",
+  "function": "GET_FORMAT",
+  "sql": "SELECT GET_FORMAT(DATETIME,'INTERNAL');",
+  "expected_rows": [
+   [
+    "%Y%m%d%H%i%s"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#GET_FORMAT",
+  "notes": "from the GET_FORMAT result table"
+ },
+ {
+  "id": "mysql-datetime-054",
+  "function": "GET_FORMAT",
+  "sql": "SELECT GET_FORMAT(TIME,'USA');",
+  "expected_rows": [
+   [
+    "%h:%i:%s %p"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#GET_FORMAT",
+  "notes": "from the GET_FORMAT result table"
+ },
+ {
+  "id": "mysql-datetime-055",
+  "function": "GET_FORMAT",
+  "sql": "SELECT GET_FORMAT(TIME,'JIS');",
+  "expected_rows": [
+   [
+    "%H:%i:%s"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#GET_FORMAT",
+  "notes": "from the GET_FORMAT result table"
+ },
+ {
+  "id": "mysql-datetime-056",
+  "function": "GET_FORMAT",
+  "sql": "SELECT GET_FORMAT(TIME,'ISO');",
+  "expected_rows": [
+   [
+    "%H:%i:%s"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#GET_FORMAT",
+  "notes": "from the GET_FORMAT result table"
+ },
+ {
+  "id": "mysql-datetime-057",
+  "function": "GET_FORMAT",
+  "sql": "SELECT GET_FORMAT(TIME,'EUR');",
+  "expected_rows": [
+   [
+    "%H.%i.%s"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#GET_FORMAT",
+  "notes": "from the GET_FORMAT result table"
+ },
+ {
+  "id": "mysql-datetime-058",
+  "function": "GET_FORMAT",
+  "sql": "SELECT GET_FORMAT(TIME,'INTERNAL');",
+  "expected_rows": [
+   [
+    "%H%i%s"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#GET_FORMAT",
+  "notes": "from the GET_FORMAT result table"
+ },
+ {
+  "id": "mysql-datetime-059",
+  "function": "HOUR",
+  "sql": "SELECT HOUR('10:05:03');",
+  "expected_rows": [
+   [
+    "10"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#HOUR",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-060",
+  "function": "HOUR",
+  "sql": "SELECT HOUR('272:59:59');",
+  "expected_rows": [
+   [
+    "272"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#HOUR",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-061",
+  "function": "LAST_DAY",
+  "sql": "SELECT LAST_DAY('2003-02-05');",
+  "expected_rows": [
+   [
+    "2003-02-28"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#LAST_DAY",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-062",
+  "function": "LAST_DAY",
+  "sql": "SELECT LAST_DAY('2004-02-05');",
+  "expected_rows": [
+   [
+    "2004-02-29"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#LAST_DAY",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-063",
+  "function": "LAST_DAY",
+  "sql": "SELECT LAST_DAY('2004-01-01 01:01:01');",
+  "expected_rows": [
+   [
+    "2004-01-31"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#LAST_DAY",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-064",
+  "function": "LAST_DAY",
+  "sql": "SELECT LAST_DAY('2003-03-32');",
+  "expected_rows": [
+   [
+    "NULL"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#LAST_DAY",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-065",
+  "function": "MAKEDATE",
+  "sql": "SELECT MAKEDATE(2011,31), MAKEDATE(2011,32);",
+  "expected_rows": [
+   [
+    "2011-01-31",
+    "2011-02-01"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#MAKEDATE",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-066",
+  "function": "MAKEDATE",
+  "sql": "SELECT MAKEDATE(2011,365), MAKEDATE(2014,365);",
+  "expected_rows": [
+   [
+    "2011-12-31",
+    "2014-12-31"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#MAKEDATE",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-067",
+  "function": "MAKEDATE",
+  "sql": "SELECT MAKEDATE(2011,0);",
+  "expected_rows": [
+   [
+    "NULL"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#MAKEDATE",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-068",
+  "function": "MAKETIME",
+  "sql": "SELECT MAKETIME(12,15,30);",
+  "expected_rows": [
+   [
+    "12:15:30"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#MAKETIME",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-069",
+  "function": "MICROSECOND",
+  "sql": "SELECT MICROSECOND('12:00:00.123456');",
+  "expected_rows": [
+   [
+    "123456"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#MICROSECOND",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-070",
+  "function": "MICROSECOND",
+  "sql": "SELECT MICROSECOND('2019-12-31 23:59:59.000010');",
+  "expected_rows": [
+   [
+    "10"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#MICROSECOND",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-071",
+  "function": "MINUTE",
+  "sql": "SELECT MINUTE('2008-02-03 10:05:03');",
+  "expected_rows": [
+   [
+    "5"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#MINUTE",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-072",
+  "function": "MONTH",
+  "sql": "SELECT MONTH('2008-02-03');",
+  "expected_rows": [
+   [
+    "2"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#MONTH",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-073",
+  "function": "MONTHNAME",
+  "sql": "SELECT MONTHNAME('2008-02-03');",
+  "expected_rows": [
+   [
+    "February"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#MONTHNAME",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-074",
+  "function": "PERIOD_ADD",
+  "sql": "SELECT PERIOD_ADD(200801,2);",
+  "expected_rows": [
+   [
+    "200803"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#PERIOD_ADD",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-075",
+  "function": "PERIOD_DIFF",
+  "sql": "SELECT PERIOD_DIFF(200802,200703);",
+  "expected_rows": [
+   [
+    "11"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#PERIOD_DIFF",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-076",
+  "function": "QUARTER",
+  "sql": "SELECT QUARTER('2008-04-01');",
+  "expected_rows": [
+   [
+    "2"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#QUARTER",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-077",
+  "function": "SEC_TO_TIME",
+  "sql": "SELECT SEC_TO_TIME(2378);",
+  "expected_rows": [
+   [
+    "00:39:38"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#SEC_TO_TIME",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-078",
+  "function": "SEC_TO_TIME",
+  "sql": "SELECT SEC_TO_TIME(2378) + 0;",
+  "expected_rows": [
+   [
+    "3938"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#SEC_TO_TIME",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-079",
+  "function": "SECOND",
+  "sql": "SELECT SECOND('10:05:03');",
+  "expected_rows": [
+   [
+    "3"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#SECOND",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-080",
+  "function": "STR_TO_DATE",
+  "sql": "SELECT STR_TO_DATE('01,5,2013','%d,%m,%Y');",
+  "expected_rows": [
+   [
+    "2013-05-01"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#STR_TO_DATE",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-081",
+  "function": "STR_TO_DATE",
+  "sql": "SELECT STR_TO_DATE('May 1, 2013','%M %d,%Y');",
+  "expected_rows": [
+   [
+    "2013-05-01"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#STR_TO_DATE",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-082",
+  "function": "STR_TO_DATE",
+  "sql": "SELECT STR_TO_DATE('a09:30:17','a%h:%i:%s');",
+  "expected_rows": [
+   [
+    "09:30:17"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#STR_TO_DATE",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-083",
+  "function": "STR_TO_DATE",
+  "sql": "SELECT STR_TO_DATE('a09:30:17','%h:%i:%s');",
+  "expected_rows": [
+   [
+    "NULL"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#STR_TO_DATE",
+  "notes": "literal 'a' does not match format; manual also says a warning is produced"
+ },
+ {
+  "id": "mysql-datetime-084",
+  "function": "STR_TO_DATE",
+  "sql": "SELECT STR_TO_DATE('09:30:17a','%h:%i:%s');",
+  "expected_rows": [
+   [
+    "09:30:17"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#STR_TO_DATE",
+  "notes": "trailing characters ignored"
+ },
+ {
+  "id": "mysql-datetime-085",
+  "function": "STR_TO_DATE",
+  "sql": "SELECT STR_TO_DATE('abc','abc');",
+  "expected_rows": [
+   [
+    "0000-00-00"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#STR_TO_DATE",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-086",
+  "function": "STR_TO_DATE",
+  "sql": "SELECT STR_TO_DATE('9','%m');",
+  "expected_rows": [
+   [
+    "0000-09-00"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#STR_TO_DATE",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-087",
+  "function": "STR_TO_DATE",
+  "sql": "SELECT STR_TO_DATE('9','%s');",
+  "expected_rows": [
+   [
+    "00:00:09"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#STR_TO_DATE",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-088",
+  "function": "STR_TO_DATE",
+  "sql": "SELECT STR_TO_DATE('00/00/0000', '%m/%d/%Y');",
+  "expected_rows": [
+   [
+    "0000-00-00"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#STR_TO_DATE",
+  "notes": "default sql_mode assumed (manual also shows NO_ZERO_DATE variant, skipped)"
+ },
+ {
+  "id": "mysql-datetime-089",
+  "function": "STR_TO_DATE",
+  "sql": "SELECT STR_TO_DATE('04/31/2004', '%m/%d/%Y');",
+  "expected_rows": [
+   [
+    "2004-04-31"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#STR_TO_DATE",
+  "notes": "AMBIGUOUS: manual says 8.4 does full range checking and raises error for invalid dates, yet shows this result"
+ },
+ {
+  "id": "mysql-datetime-090",
+  "function": "STR_TO_DATE",
+  "sql": "SELECT STR_TO_DATE('200442 Monday', '%X%V %W');",
+  "expected_rows": [
+   [
+    "2004-10-18"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#STR_TO_DATE",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-091",
+  "function": "STR_TO_DATE",
+  "sql": "SELECT STR_TO_DATE('23-2-31', '%Y-%m-%d');",
+  "expected_rows": [
+   [
+    "2023-02-31"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#STR_TO_DATE",
+  "notes": "AMBIGUOUS: inline prose example (not a mysql> block); same conflict with 'full range checking' text"
+ },
+ {
+  "id": "mysql-datetime-092",
+  "function": "DATE_SUB",
+  "sql": "SELECT DATE_SUB('2008-01-02', INTERVAL 31 DAY);",
+  "expected_rows": [
+   [
+    "2007-12-02"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#SUBDATE",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-093",
+  "function": "SUBDATE",
+  "sql": "SELECT SUBDATE('2008-01-02', INTERVAL 31 DAY);",
+  "expected_rows": [
+   [
+    "2007-12-02"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#SUBDATE",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-094",
+  "function": "SUBDATE",
+  "sql": "SELECT SUBDATE('2008-01-02 12:00:00', 31);",
+  "expected_rows": [
+   [
+    "2007-12-02 12:00:00"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#SUBDATE",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-095",
+  "function": "SUBTIME",
+  "sql": "SELECT SUBTIME('2007-12-31 23:59:59.999999','1 1:1:1.000002');",
+  "expected_rows": [
+   [
+    "2007-12-30 22:58:58.999997"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#SUBTIME",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-096",
+  "function": "SUBTIME",
+  "sql": "SELECT SUBTIME('01:00:00.999999', '02:00:00.999998');",
+  "expected_rows": [
+   [
+    "-00:59:59.999999"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#SUBTIME",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-097",
+  "function": "TIME",
+  "sql": "SELECT TIME('2003-12-31 01:02:03');",
+  "expected_rows": [
+   [
+    "01:02:03"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#TIME",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-098",
+  "function": "TIME",
+  "sql": "SELECT TIME('2003-12-31 01:02:03.000123');",
+  "expected_rows": [
+   [
+    "01:02:03.000123"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#TIME",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-099",
+  "function": "TIME_FORMAT",
+  "sql": "SELECT TIME_FORMAT('100:00:00', '%H %k %h %I %l');",
+  "expected_rows": [
+   [
+    "100 100 04 04 4"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#TIME_FORMAT",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-100",
+  "function": "TIME_TO_SEC",
+  "sql": "SELECT TIME_TO_SEC('22:23:00');",
+  "expected_rows": [
+   [
+    "80580"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#TIME_TO_SEC",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-101",
+  "function": "TIME_TO_SEC",
+  "sql": "SELECT TIME_TO_SEC('00:39:38');",
+  "expected_rows": [
+   [
+    "2378"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#TIME_TO_SEC",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-102",
+  "function": "TIMEDIFF",
+  "sql": "SELECT TIMEDIFF('2000-01-01 00:00:00', '2000-01-01 00:00:00.000001');",
+  "expected_rows": [
+   [
+    "-00:00:00.000001"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#TIMEDIFF",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-103",
+  "function": "TIMEDIFF",
+  "sql": "SELECT TIMEDIFF('2008-12-31 23:59:59.000001', '2008-12-30 01:01:01.000002');",
+  "expected_rows": [
+   [
+    "46:58:57.999999"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#TIMEDIFF",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-104",
+  "function": "TIMESTAMP",
+  "sql": "SELECT TIMESTAMP('2003-12-31');",
+  "expected_rows": [
+   [
+    "2003-12-31 00:00:00"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#TIMESTAMP",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-105",
+  "function": "TIMESTAMP",
+  "sql": "SELECT TIMESTAMP('2003-12-31 12:00:00','12:00:00');",
+  "expected_rows": [
+   [
+    "2004-01-01 00:00:00"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#TIMESTAMP",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-106",
+  "function": "TIMESTAMPADD",
+  "sql": "SELECT TIMESTAMPADD(MINUTE, 1, '2003-01-02');",
+  "expected_rows": [
+   [
+    "2003-01-02 00:01:00"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#TIMESTAMPADD",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-107",
+  "function": "TIMESTAMPADD",
+  "sql": "SELECT TIMESTAMPADD(WEEK,1,'2003-01-02');",
+  "expected_rows": [
+   [
+    "2003-01-09"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#TIMESTAMPADD",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-108",
+  "function": "TIMESTAMPADD",
+  "sql": "SELECT TIMESTAMPADD(MONTH, 1, DATE '2024-03-30') AS t1, TIMESTAMPADD(MONTH, 1, DATE '2024-03-31') AS t2;",
+  "expected_rows": [
+   [
+    "2024-04-30",
+    "2024-04-30"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#TIMESTAMPADD",
+  "notes": "manual shows a result table with columns t1, t2"
+ },
+ {
+  "id": "mysql-datetime-109",
+  "function": "TIMESTAMPDIFF",
+  "sql": "SELECT TIMESTAMPDIFF(MONTH,'2003-02-01','2003-05-01');",
+  "expected_rows": [
+   [
+    "3"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#TIMESTAMPDIFF",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-110",
+  "function": "TIMESTAMPDIFF",
+  "sql": "SELECT TIMESTAMPDIFF(YEAR,'2002-05-01','2001-01-01');",
+  "expected_rows": [
+   [
+    "-1"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#TIMESTAMPDIFF",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-111",
+  "function": "TIMESTAMPDIFF",
+  "sql": "SELECT TIMESTAMPDIFF(MINUTE,'2003-02-01','2003-05-01 12:05:55');",
+  "expected_rows": [
+   [
+    "128885"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#TIMESTAMPDIFF",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-112",
+  "function": "TO_DAYS",
+  "sql": "SELECT TO_DAYS(950501);",
+  "expected_rows": [
+   [
+    "728779"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#TO_DAYS",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-113",
+  "function": "TO_DAYS",
+  "sql": "SELECT TO_DAYS('2007-10-07');",
+  "expected_rows": [
+   [
+    "733321"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#TO_DAYS",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-114",
+  "function": "TO_DAYS",
+  "sql": "SELECT TO_DAYS('2008-10-07'), TO_DAYS('08-10-07');",
+  "expected_rows": [
+   [
+    "733687",
+    "733687"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#TO_DAYS",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-115",
+  "function": "TO_DAYS",
+  "sql": "SELECT TO_DAYS('0000-00-00');",
+  "expected_rows": null,
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#TO_DAYS",
+  "notes": "error: manual shows NULL result with warning 1292 Incorrect datetime value: '0000-00-00'"
+ },
+ {
+  "id": "mysql-datetime-116",
+  "function": "TO_DAYS",
+  "sql": "SELECT TO_DAYS('0000-01-01');",
+  "expected_rows": [
+   [
+    "1"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#TO_DAYS",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-117",
+  "function": "TO_SECONDS",
+  "sql": "SELECT TO_SECONDS(950501);",
+  "expected_rows": [
+   [
+    "62966505600"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#TO_SECONDS",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-118",
+  "function": "TO_SECONDS",
+  "sql": "SELECT TO_SECONDS('2009-11-29');",
+  "expected_rows": [
+   [
+    "63426672000"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#TO_SECONDS",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-119",
+  "function": "TO_SECONDS",
+  "sql": "SELECT TO_SECONDS('2009-11-29 13:43:32');",
+  "expected_rows": [
+   [
+    "63426721412"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#TO_SECONDS",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-120",
+  "function": "TO_SECONDS",
+  "sql": "SELECT TO_SECONDS('0000-00-00');",
+  "expected_rows": null,
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#TO_SECONDS",
+  "notes": "error: manual shows NULL result with warning 1292 Incorrect datetime value: '0000-00-00'"
+ },
+ {
+  "id": "mysql-datetime-121",
+  "function": "TO_SECONDS",
+  "sql": "SELECT TO_SECONDS('0000-01-01');",
+  "expected_rows": [
+   [
+    "86400"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#TO_SECONDS",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-122",
+  "function": "UNIX_TIMESTAMP",
+  "sql": "SELECT UNIX_TIMESTAMP('2015-11-13 10:20:19');",
+  "expected_rows": [
+   [
+    "1447431619"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#UNIX_TIMESTAMP",
+  "notes": "depends on session time_zone (manual output assumes its own zone)"
+ },
+ {
+  "id": "mysql-datetime-123",
+  "function": "UNIX_TIMESTAMP",
+  "sql": "SELECT UNIX_TIMESTAMP('2015-11-13 10:20:19.012');",
+  "expected_rows": [
+   [
+    "1447431619.012"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#UNIX_TIMESTAMP",
+  "notes": "depends on session time_zone (manual output assumes its own zone)"
+ },
+ {
+  "id": "mysql-datetime-124",
+  "function": "WEEK",
+  "sql": "SELECT WEEK('2008-02-20');",
+  "expected_rows": [
+   [
+    "7"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#WEEK",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-125",
+  "function": "WEEK",
+  "sql": "SELECT WEEK('2008-02-20',0);",
+  "expected_rows": [
+   [
+    "7"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#WEEK",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-126",
+  "function": "WEEK",
+  "sql": "SELECT WEEK('2008-02-20',1);",
+  "expected_rows": [
+   [
+    "8"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#WEEK",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-127",
+  "function": "WEEK",
+  "sql": "SELECT WEEK('2008-12-31',1);",
+  "expected_rows": [
+   [
+    "53"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#WEEK",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-128",
+  "function": "WEEK",
+  "sql": "SELECT YEAR('2000-01-01'), WEEK('2000-01-01',0);",
+  "expected_rows": [
+   [
+    "2000",
+    "0"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#WEEK",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-129",
+  "function": "WEEK",
+  "sql": "SELECT WEEK('2000-01-01',2);",
+  "expected_rows": [
+   [
+    "52"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#WEEK",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-130",
+  "function": "WEEKDAY",
+  "sql": "SELECT WEEKDAY('2008-02-03 22:23:00');",
+  "expected_rows": [
+   [
+    "6"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#WEEKDAY",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-131",
+  "function": "WEEKDAY",
+  "sql": "SELECT WEEKDAY('2007-11-06');",
+  "expected_rows": [
+   [
+    "1"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#WEEKDAY",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-132",
+  "function": "WEEKOFYEAR",
+  "sql": "SELECT WEEKOFYEAR('2008-02-20');",
+  "expected_rows": [
+   [
+    "8"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#WEEKOFYEAR",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-133",
+  "function": "YEAR",
+  "sql": "SELECT YEAR('1987-01-01');",
+  "expected_rows": [
+   [
+    "1987"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#YEAR",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-134",
+  "function": "YEARWEEK",
+  "sql": "SELECT YEARWEEK('1987-01-01');",
+  "expected_rows": [
+   [
+    "198652"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#YEARWEEK",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-135",
+  "function": "YEARWEEK",
+  "sql": "SELECT YEARWEEK('2000-01-01');",
+  "expected_rows": [
+   [
+    "199952"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#YEARWEEK",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-136",
+  "function": "YEARWEEK",
+  "sql": "SELECT MID(YEARWEEK('2000-01-01'),5,2);",
+  "expected_rows": [
+   [
+    "52"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/date-and-time-functions.html#YEARWEEK",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-137",
+  "function": "+ INTERVAL",
+  "sql": "SELECT '2018-12-31 23:59:59' + INTERVAL 1 SECOND;",
+  "expected_rows": [
+   [
+    "2019-01-01 00:00:00"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/expressions.html#temporal-intervals",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-138",
+  "function": "+ INTERVAL",
+  "sql": "SELECT INTERVAL 1 DAY + '2018-12-31';",
+  "expected_rows": [
+   [
+    "2019-01-01"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/expressions.html#temporal-intervals",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-139",
+  "function": "- INTERVAL",
+  "sql": "SELECT '2025-01-01' - INTERVAL 1 SECOND;",
+  "expected_rows": [
+   [
+    "2024-12-31 23:59:59"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/expressions.html#temporal-intervals",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-140",
+  "function": "DATE_ADD",
+  "sql": "SELECT DATE_ADD('2019-01-01', INTERVAL '6/4' HOUR_MINUTE);",
+  "expected_rows": [
+   [
+    "2019-01-01 06:04:00"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/expressions.html#temporal-intervals",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-141",
+  "function": "DATE_ADD",
+  "sql": "SELECT DATE_ADD('2019-01-01', INTERVAL 6/4 HOUR_MINUTE);",
+  "expected_rows": [
+   [
+    "2019-01-04 12:20:00"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/expressions.html#temporal-intervals",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-142",
+  "function": "CAST",
+  "sql": "SELECT CAST(6/4 AS DECIMAL(3,1));",
+  "expected_rows": [
+   [
+    "1.5"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/expressions.html#temporal-intervals",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-143",
+  "function": "DATE_ADD",
+  "sql": "SELECT DATE_ADD('1970-01-01 12:00:00', INTERVAL CAST(6/4 AS DECIMAL(3,1)) HOUR_MINUTE);",
+  "expected_rows": [
+   [
+    "1970-01-01 13:05:00"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/expressions.html#temporal-intervals",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-144",
+  "function": "DATE_ADD",
+  "sql": "SELECT DATE_ADD('2023-01-01', INTERVAL 1 DAY);",
+  "expected_rows": [
+   [
+    "2023-01-02"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/expressions.html#temporal-intervals",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-145",
+  "function": "DATE_ADD",
+  "sql": "SELECT DATE_ADD('2023-01-01', INTERVAL 1 HOUR);",
+  "expected_rows": [
+   [
+    "2023-01-01 01:00:00"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/expressions.html#temporal-intervals",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-146",
+  "function": "DATE_ADD",
+  "sql": "SELECT DATE_ADD('2019-01-30', INTERVAL 1 MONTH);",
+  "expected_rows": [
+   [
+    "2019-02-28"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/expressions.html#temporal-intervals",
+  "notes": ""
+ },
+ {
+  "id": "mysql-datetime-147",
+  "function": "DATE_ADD",
+  "sql": "SELECT DATE_ADD('2016-07-00', INTERVAL 1 DAY);",
+  "expected_rows": [
+   [
+    "NULL"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/expressions.html#temporal-intervals",
+  "notes": "incomplete date"
+ },
+ {
+  "id": "mysql-datetime-148",
+  "function": "+ INTERVAL",
+  "sql": "SELECT '2005-03-32' + INTERVAL 1 MONTH;",
+  "expected_rows": [
+   [
+    "NULL"
+   ]
+  ],
+  "source": "https://dev.mysql.com/doc/refman/8.4/en/expressions.html#temporal-intervals",
+  "notes": "malformed date"
+ }
+]

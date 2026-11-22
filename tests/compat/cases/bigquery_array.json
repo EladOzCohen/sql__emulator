@@ -1,0 +1,715 @@
+[
+ {
+  "id": "bq-array-001",
+  "function": "ARRAY",
+  "sql": "SELECT ARRAY\n  (SELECT 1 UNION ALL\n   SELECT 2 UNION ALL\n   SELECT 3) AS new_array;",
+  "expected_rows": [
+   [
+    "[1, 2, 3]"
+   ]
+  ],
+  "expected_columns": [
+   "new_array"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#array",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-002",
+  "function": "ARRAY",
+  "sql": "SELECT\n  ARRAY\n    (SELECT AS STRUCT 1, 2, 3\n     UNION ALL SELECT AS STRUCT 4, 5, 6) AS new_array;",
+  "expected_rows": [
+   [
+    "[{1, 2, 3}, {4, 5, 6}]"
+   ]
+  ],
+  "expected_columns": [
+   "new_array"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#array",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-003",
+  "function": "ARRAY",
+  "sql": "SELECT ARRAY\n  (SELECT AS STRUCT [1, 2, 3] UNION ALL\n   SELECT AS STRUCT [4, 5, 6]) AS new_array;",
+  "expected_rows": [
+   [
+    "[{[1, 2, 3]}, {[4, 5, 6]}]"
+   ]
+  ],
+  "expected_columns": [
+   "new_array"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#array",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-004",
+  "function": "ARRAY_CONCAT",
+  "sql": "SELECT ARRAY_CONCAT([1, 2], [3, 4], [5, 6]) as count_to_six;",
+  "expected_rows": [
+   [
+    "[1, 2, 3, 4, 5, 6]"
+   ]
+  ],
+  "expected_columns": [
+   "count_to_six"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#array_concat",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-005",
+  "function": "ARRAY_FIRST",
+  "sql": "SELECT ARRAY_FIRST(['a','b','c','d']) as first_element;",
+  "expected_rows": [
+   [
+    "a"
+   ]
+  ],
+  "expected_columns": [
+   "first_element"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#array_first",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-006",
+  "function": "ARRAY_LAST",
+  "sql": "SELECT ARRAY_LAST(['a','b','c','d']) as last_element;",
+  "expected_rows": [
+   [
+    "d"
+   ]
+  ],
+  "expected_columns": [
+   "last_element"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#array_last",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-007",
+  "function": "ARRAY_LENGTH",
+  "sql": "SELECT\n  ARRAY_LENGTH([\"coffee\", NULL, \"milk\" ]) AS size_a,\n  ARRAY_LENGTH([\"cake\", \"pie\"]) AS size_b;",
+  "expected_rows": [
+   [
+    "3",
+    "2"
+   ]
+  ],
+  "expected_columns": [
+   "size_a",
+   "size_b"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#array_length",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-008",
+  "function": "ARRAY_REVERSE",
+  "sql": "SELECT ARRAY_REVERSE([1, 2, 3]) AS reverse_arr;",
+  "expected_rows": [
+   [
+    "[3, 2, 1]"
+   ]
+  ],
+  "expected_columns": [
+   "reverse_arr"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#array_reverse",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-009",
+  "function": "ARRAY_SLICE",
+  "sql": "SELECT ARRAY_SLICE(['a', 'b', 'c', 'd', 'e'], 1, 3) AS result;",
+  "expected_rows": [
+   [
+    "[b, c, d]"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#array_slice",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-010",
+  "function": "ARRAY_SLICE",
+  "sql": "SELECT ARRAY_SLICE(['a', 'b', 'c', 'd', 'e'], -1, 3) AS result;",
+  "expected_rows": [
+   [
+    "[]"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#array_slice",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-011",
+  "function": "ARRAY_SLICE",
+  "sql": "SELECT ARRAY_SLICE(['a', 'b', 'c', 'd', 'e'], 1, -3) AS result;",
+  "expected_rows": [
+   [
+    "[b, c]"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#array_slice",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-012",
+  "function": "ARRAY_SLICE",
+  "sql": "SELECT ARRAY_SLICE(['a', 'b', 'c', 'd', 'e'], -1, -3) AS result;",
+  "expected_rows": [
+   [
+    "[]"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#array_slice",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-013",
+  "function": "ARRAY_SLICE",
+  "sql": "SELECT ARRAY_SLICE(['a', 'b', 'c', 'd', 'e'], -3, -1) AS result;",
+  "expected_rows": [
+   [
+    "[c, d, e]"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#array_slice",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-014",
+  "function": "ARRAY_SLICE",
+  "sql": "SELECT ARRAY_SLICE(['a', 'b', 'c', 'd', 'e'], 3, 3) AS result;",
+  "expected_rows": [
+   [
+    "[d]"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#array_slice",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-015",
+  "function": "ARRAY_SLICE",
+  "sql": "SELECT ARRAY_SLICE(['a', 'b', 'c', 'd', 'e'], -3, -3) AS result;",
+  "expected_rows": [
+   [
+    "[c]"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#array_slice",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-016",
+  "function": "ARRAY_SLICE",
+  "sql": "SELECT ARRAY_SLICE(['a', 'b', 'c', 'd', 'e'], 1, 30) AS result;",
+  "expected_rows": [
+   [
+    "[b, c, d, e]"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#array_slice",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-017",
+  "function": "ARRAY_SLICE",
+  "sql": "SELECT ARRAY_SLICE(['a', 'b', 'c', 'd', 'e'], 1, -30) AS result;",
+  "expected_rows": [
+   [
+    "[]"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#array_slice",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-018",
+  "function": "ARRAY_SLICE",
+  "sql": "SELECT ARRAY_SLICE(['a', 'b', 'c', 'd', 'e'], -30, 30) AS result;",
+  "expected_rows": [
+   [
+    "[a, b, c, d, e]"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#array_slice",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-019",
+  "function": "ARRAY_SLICE",
+  "sql": "SELECT ARRAY_SLICE(['a', 'b', 'c', 'd', 'e'], -30, -5) AS result;",
+  "expected_rows": [
+   [
+    "[a]"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#array_slice",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-020",
+  "function": "ARRAY_SLICE",
+  "sql": "SELECT ARRAY_SLICE(['a', 'b', 'c', 'd', 'e'], 5, 30) AS result;",
+  "expected_rows": [
+   [
+    "[]"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#array_slice",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-021",
+  "function": "ARRAY_SLICE",
+  "sql": "SELECT ARRAY_SLICE(['a', 'b', 'c', 'd', 'e'], 1, NULL) AS result;",
+  "expected_rows": [
+   [
+    "NULL"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#array_slice",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-022",
+  "function": "ARRAY_TO_STRING",
+  "sql": "SELECT ARRAY_TO_STRING(['coffee', 'tea', 'milk', NULL], '--', 'MISSING') AS text;",
+  "expected_rows": [
+   [
+    "coffee--tea--milk--MISSING"
+   ]
+  ],
+  "expected_columns": [
+   "text"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#array_to_string",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-023",
+  "function": "ARRAY_TO_STRING",
+  "sql": "SELECT ARRAY_TO_STRING(['cake', 'pie', NULL], '--', 'MISSING') AS text;",
+  "expected_rows": [
+   [
+    "cake--pie--MISSING"
+   ]
+  ],
+  "expected_columns": [
+   "text"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#array_to_string",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-024",
+  "function": "ARRAY_TO_STRING",
+  "sql": "SELECT ARRAY_TO_STRING([b'prefix', b'middle', b'suffix', b'\\x00'], b'--') AS data;",
+  "expected_rows": [
+   [
+    "prefix--middle--suffix--\\x00"
+   ]
+  ],
+  "expected_columns": [
+   "data"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#array_to_string",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-025",
+  "function": "GENERATE_ARRAY",
+  "sql": "SELECT GENERATE_ARRAY(1, 5) AS example_array;",
+  "expected_rows": [
+   [
+    "[1, 2, 3, 4, 5]"
+   ]
+  ],
+  "expected_columns": [
+   "example_array"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#generate_array",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-026",
+  "function": "GENERATE_ARRAY",
+  "sql": "SELECT GENERATE_ARRAY(0, 10, 3) AS example_array;",
+  "expected_rows": [
+   [
+    "[0, 3, 6, 9]"
+   ]
+  ],
+  "expected_columns": [
+   "example_array"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#generate_array",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-027",
+  "function": "GENERATE_ARRAY",
+  "sql": "SELECT GENERATE_ARRAY(10, 0, -3) AS example_array;",
+  "expected_rows": [
+   [
+    "[10, 7, 4, 1]"
+   ]
+  ],
+  "expected_columns": [
+   "example_array"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#generate_array",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-028",
+  "function": "GENERATE_ARRAY",
+  "sql": "SELECT GENERATE_ARRAY(4, 4, 10) AS example_array;",
+  "expected_rows": [
+   [
+    "[4]"
+   ]
+  ],
+  "expected_columns": [
+   "example_array"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#generate_array",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-029",
+  "function": "GENERATE_ARRAY",
+  "sql": "SELECT GENERATE_ARRAY(10, 0, 3) AS example_array;",
+  "expected_rows": [
+   [
+    "[]"
+   ]
+  ],
+  "expected_columns": [
+   "example_array"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#generate_array",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-030",
+  "function": "GENERATE_ARRAY",
+  "sql": "SELECT GENERATE_ARRAY(5, NULL, 1) AS example_array;",
+  "expected_rows": [
+   [
+    "NULL"
+   ]
+  ],
+  "expected_columns": [
+   "example_array"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#generate_array",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-031",
+  "function": "GENERATE_ARRAY",
+  "sql": "SELECT GENERATE_ARRAY(start, 5) AS example_array\nFROM UNNEST([3, 4, 5]) AS start;",
+  "expected_rows": [
+   [
+    "[3, 4, 5]"
+   ],
+   [
+    "[4, 5]"
+   ],
+   [
+    "[5]"
+   ]
+  ],
+  "expected_columns": [
+   "example_array"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#generate_array",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-array-032",
+  "function": "GENERATE_DATE_ARRAY",
+  "sql": "SELECT GENERATE_DATE_ARRAY('2016-10-05', '2016-10-08') AS example;",
+  "expected_rows": [
+   [
+    "[2016-10-05, 2016-10-06, 2016-10-07, 2016-10-08]"
+   ]
+  ],
+  "expected_columns": [
+   "example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#generate_date_array",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-033",
+  "function": "GENERATE_DATE_ARRAY",
+  "sql": "SELECT GENERATE_DATE_ARRAY(\n '2016-10-05', '2016-10-09', INTERVAL 2 DAY) AS example;",
+  "expected_rows": [
+   [
+    "[2016-10-05, 2016-10-07, 2016-10-09]"
+   ]
+  ],
+  "expected_columns": [
+   "example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#generate_date_array",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-034",
+  "function": "GENERATE_DATE_ARRAY",
+  "sql": "SELECT GENERATE_DATE_ARRAY('2016-10-05',\n  '2016-10-01', INTERVAL -3 DAY) AS example;",
+  "expected_rows": [
+   [
+    "[2016-10-05, 2016-10-02]"
+   ]
+  ],
+  "expected_columns": [
+   "example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#generate_date_array",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-035",
+  "function": "GENERATE_DATE_ARRAY",
+  "sql": "SELECT GENERATE_DATE_ARRAY('2016-10-05',\n  '2016-10-05', INTERVAL 8 DAY) AS example;",
+  "expected_rows": [
+   [
+    "[2016-10-05]"
+   ]
+  ],
+  "expected_columns": [
+   "example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#generate_date_array",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-036",
+  "function": "GENERATE_DATE_ARRAY",
+  "sql": "SELECT GENERATE_DATE_ARRAY('2016-10-05',\n  '2016-10-01', INTERVAL 1 DAY) AS example;",
+  "expected_rows": [
+   [
+    "[]"
+   ]
+  ],
+  "expected_columns": [
+   "example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#generate_date_array",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-037",
+  "function": "GENERATE_DATE_ARRAY",
+  "sql": "SELECT GENERATE_DATE_ARRAY('2016-10-05', NULL) AS example;",
+  "expected_rows": [
+   [
+    "NULL"
+   ]
+  ],
+  "expected_columns": [
+   "example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#generate_date_array",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-038",
+  "function": "GENERATE_DATE_ARRAY",
+  "sql": "SELECT GENERATE_DATE_ARRAY('2016-01-01',\n  '2016-12-31', INTERVAL 2 MONTH) AS example;",
+  "expected_rows": [
+   [
+    "[2016-01-01, 2016-03-01, 2016-05-01, 2016-07-01, 2016-09-01, 2016-11-01]"
+   ]
+  ],
+  "expected_columns": [
+   "example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#generate_date_array",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-039",
+  "function": "GENERATE_DATE_ARRAY",
+  "sql": "SELECT GENERATE_DATE_ARRAY(date_start, date_end, INTERVAL 1 WEEK) AS date_range\nFROM (\n  SELECT DATE '2016-01-01' AS date_start, DATE '2016-01-31' AS date_end\n  UNION ALL SELECT DATE \"2016-04-01\", DATE \"2016-04-30\"\n  UNION ALL SELECT DATE \"2016-07-01\", DATE \"2016-07-31\"\n  UNION ALL SELECT DATE \"2016-10-01\", DATE \"2016-10-31\"\n) AS items;",
+  "expected_rows": [
+   [
+    "[2016-01-01, 2016-01-08, 2016-01-15, 2016-01-22, 2016-01-29]"
+   ],
+   [
+    "[2016-04-01, 2016-04-08, 2016-04-15, 2016-04-22, 2016-04-29]"
+   ],
+   [
+    "[2016-07-01, 2016-07-08, 2016-07-15, 2016-07-22, 2016-07-29]"
+   ],
+   [
+    "[2016-10-01, 2016-10-08, 2016-10-15, 2016-10-22, 2016-10-29]"
+   ]
+  ],
+  "expected_columns": [
+   "date_range"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#generate_date_array",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-array-040",
+  "function": "GENERATE_TIMESTAMP_ARRAY",
+  "sql": "SELECT GENERATE_TIMESTAMP_ARRAY('2016-10-05 00:00:00', '2016-10-07 00:00:00',\n                                INTERVAL 1 DAY) AS timestamp_array;",
+  "expected_rows": [
+   [
+    "[2016-10-05 00:00:00+00, 2016-10-06 00:00:00+00, 2016-10-07 00:00:00+00]"
+   ]
+  ],
+  "expected_columns": [
+   "timestamp_array"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#generate_timestamp_array",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-041",
+  "function": "GENERATE_TIMESTAMP_ARRAY",
+  "sql": "SELECT GENERATE_TIMESTAMP_ARRAY('2016-10-05 00:00:00', '2016-10-05 00:00:02',\n                                INTERVAL 1 SECOND) AS timestamp_array;",
+  "expected_rows": [
+   [
+    "[2016-10-05 00:00:00+00, 2016-10-05 00:00:01+00, 2016-10-05 00:00:02+00]"
+   ]
+  ],
+  "expected_columns": [
+   "timestamp_array"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#generate_timestamp_array",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-042",
+  "function": "GENERATE_TIMESTAMP_ARRAY",
+  "sql": "SELECT GENERATE_TIMESTAMP_ARRAY('2016-10-06 00:00:00', '2016-10-01 00:00:00',\n                                INTERVAL -2 DAY) AS timestamp_array;",
+  "expected_rows": [
+   [
+    "[2016-10-06 00:00:00+00, 2016-10-04 00:00:00+00, 2016-10-02 00:00:00+00]"
+   ]
+  ],
+  "expected_columns": [
+   "timestamp_array"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#generate_timestamp_array",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-043",
+  "function": "GENERATE_TIMESTAMP_ARRAY",
+  "sql": "SELECT GENERATE_TIMESTAMP_ARRAY('2016-10-05 00:00:00', '2016-10-05 00:00:00',\n                                INTERVAL 1 HOUR) AS timestamp_array;",
+  "expected_rows": [
+   [
+    "[2016-10-05 00:00:00+00]"
+   ]
+  ],
+  "expected_columns": [
+   "timestamp_array"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#generate_timestamp_array",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-044",
+  "function": "GENERATE_TIMESTAMP_ARRAY",
+  "sql": "SELECT GENERATE_TIMESTAMP_ARRAY('2016-10-06 00:00:00', '2016-10-05 00:00:00',\n                                INTERVAL 1 HOUR) AS timestamp_array;",
+  "expected_rows": [
+   [
+    "[]"
+   ]
+  ],
+  "expected_columns": [
+   "timestamp_array"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#generate_timestamp_array",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-045",
+  "function": "GENERATE_TIMESTAMP_ARRAY",
+  "sql": "SELECT GENERATE_TIMESTAMP_ARRAY('2016-10-05 00:00:00', NULL, INTERVAL 1 HOUR)\n  AS timestamp_array;",
+  "expected_rows": [
+   [
+    "NULL"
+   ]
+  ],
+  "expected_columns": [
+   "timestamp_array"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#generate_timestamp_array",
+  "notes": ""
+ },
+ {
+  "id": "bq-array-046",
+  "function": "GENERATE_TIMESTAMP_ARRAY",
+  "sql": "SELECT GENERATE_TIMESTAMP_ARRAY(start_timestamp, end_timestamp, INTERVAL 1 HOUR)\n  AS timestamp_array\nFROM\n  (SELECT\n    TIMESTAMP '2016-10-05 00:00:00' AS start_timestamp,\n    TIMESTAMP '2016-10-05 02:00:00' AS end_timestamp\n   UNION ALL\n   SELECT\n    TIMESTAMP '2016-10-05 12:00:00' AS start_timestamp,\n    TIMESTAMP '2016-10-05 14:00:00' AS end_timestamp\n   UNION ALL\n   SELECT\n    TIMESTAMP '2016-10-05 23:59:00' AS start_timestamp,\n    TIMESTAMP '2016-10-06 01:59:00' AS end_timestamp);",
+  "expected_rows": [
+   [
+    "[2016-10-05 00:00:00+00, 2016-10-05 01:00:00+00, 2016-10-05 02:00:00+00]"
+   ],
+   [
+    "[2016-10-05 12:00:00+00, 2016-10-05 13:00:00+00, 2016-10-05 14:00:00+00]"
+   ],
+   [
+    "[2016-10-05 23:59:00+00, 2016-10-06 00:59:00+00, 2016-10-06 01:59:00+00]"
+   ]
+  ],
+  "expected_columns": [
+   "timestamp_array"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/array_functions#generate_timestamp_array",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ }
+]

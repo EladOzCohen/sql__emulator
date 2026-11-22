@@ -1,0 +1,242 @@
+[
+ {
+  "name": "ADDDATE",
+  "has_example": true
+ },
+ {
+  "name": "ADDTIME",
+  "has_example": true
+ },
+ {
+  "name": "CONVERT_TZ",
+  "has_example": true
+ },
+ {
+  "name": "CURDATE",
+  "has_example": false
+ },
+ {
+  "name": "CURRENT_DATE",
+  "has_example": false
+ },
+ {
+  "name": "CURRENT_TIME",
+  "has_example": false
+ },
+ {
+  "name": "CURRENT_TIMESTAMP",
+  "has_example": false
+ },
+ {
+  "name": "CURTIME",
+  "has_example": false
+ },
+ {
+  "name": "DATE",
+  "has_example": true
+ },
+ {
+  "name": "DATE_ADD",
+  "has_example": true
+ },
+ {
+  "name": "DATE_FORMAT",
+  "has_example": true
+ },
+ {
+  "name": "DATE_SUB",
+  "has_example": true
+ },
+ {
+  "name": "DATEDIFF",
+  "has_example": true
+ },
+ {
+  "name": "DAY",
+  "has_example": false
+ },
+ {
+  "name": "DAYNAME",
+  "has_example": true
+ },
+ {
+  "name": "DAYOFMONTH",
+  "has_example": true
+ },
+ {
+  "name": "DAYOFWEEK",
+  "has_example": true
+ },
+ {
+  "name": "DAYOFYEAR",
+  "has_example": true
+ },
+ {
+  "name": "EXTRACT",
+  "has_example": true
+ },
+ {
+  "name": "FROM_DAYS",
+  "has_example": true
+ },
+ {
+  "name": "FROM_UNIXTIME",
+  "has_example": true
+ },
+ {
+  "name": "GET_FORMAT",
+  "has_example": true
+ },
+ {
+  "name": "HOUR",
+  "has_example": true
+ },
+ {
+  "name": "LAST_DAY",
+  "has_example": true
+ },
+ {
+  "name": "LOCALTIME",
+  "has_example": false
+ },
+ {
+  "name": "LOCALTIMESTAMP",
+  "has_example": false
+ },
+ {
+  "name": "MAKEDATE",
+  "has_example": true
+ },
+ {
+  "name": "MAKETIME",
+  "has_example": true
+ },
+ {
+  "name": "MICROSECOND",
+  "has_example": true
+ },
+ {
+  "name": "MINUTE",
+  "has_example": true
+ },
+ {
+  "name": "MONTH",
+  "has_example": true
+ },
+ {
+  "name": "MONTHNAME",
+  "has_example": true
+ },
+ {
+  "name": "NOW",
+  "has_example": false
+ },
+ {
+  "name": "PERIOD_ADD",
+  "has_example": true
+ },
+ {
+  "name": "PERIOD_DIFF",
+  "has_example": true
+ },
+ {
+  "name": "QUARTER",
+  "has_example": true
+ },
+ {
+  "name": "SEC_TO_TIME",
+  "has_example": true
+ },
+ {
+  "name": "SECOND",
+  "has_example": true
+ },
+ {
+  "name": "STR_TO_DATE",
+  "has_example": true
+ },
+ {
+  "name": "SUBDATE",
+  "has_example": true
+ },
+ {
+  "name": "SUBTIME",
+  "has_example": true
+ },
+ {
+  "name": "SYSDATE",
+  "has_example": false
+ },
+ {
+  "name": "TIME",
+  "has_example": true
+ },
+ {
+  "name": "TIME_FORMAT",
+  "has_example": true
+ },
+ {
+  "name": "TIME_TO_SEC",
+  "has_example": true
+ },
+ {
+  "name": "TIMEDIFF",
+  "has_example": true
+ },
+ {
+  "name": "TIMESTAMP",
+  "has_example": true
+ },
+ {
+  "name": "TIMESTAMPADD",
+  "has_example": true
+ },
+ {
+  "name": "TIMESTAMPDIFF",
+  "has_example": true
+ },
+ {
+  "name": "TO_DAYS",
+  "has_example": true
+ },
+ {
+  "name": "TO_SECONDS",
+  "has_example": true
+ },
+ {
+  "name": "UNIX_TIMESTAMP",
+  "has_example": true
+ },
+ {
+  "name": "UTC_DATE",
+  "has_example": false
+ },
+ {
+  "name": "UTC_TIME",
+  "has_example": false
+ },
+ {
+  "name": "UTC_TIMESTAMP",
+  "has_example": false
+ },
+ {
+  "name": "WEEK",
+  "has_example": true
+ },
+ {
+  "name": "WEEKDAY",
+  "has_example": true
+ },
+ {
+  "name": "WEEKOFYEAR",
+  "has_example": true
+ },
+ {
+  "name": "YEAR",
+  "has_example": true
+ },
+ {
+  "name": "YEARWEEK",
+  "has_example": true
+ }
+]

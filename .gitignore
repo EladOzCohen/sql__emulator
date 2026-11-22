@@ -10,4 +10,3 @@ databases/
 ide_settings.ini
 
 # third-party doc extracts used by the compat suite (kept local; see tests/compat/run_compat.py)
-tests/compat/cases/

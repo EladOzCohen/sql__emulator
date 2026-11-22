@@ -1,0 +1,232 @@
+[
+ {
+  "element": "%A",
+  "meaning": "Full weekday name",
+  "applies_to": "FORMAT_DATE, PARSE_DATE, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%a",
+  "meaning": "Abbreviated weekday name",
+  "applies_to": "FORMAT_DATE, PARSE_DATE, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%B",
+  "meaning": "Full month name",
+  "applies_to": "FORMAT_DATE, PARSE_DATE, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%b",
+  "meaning": "Abbreviated month name",
+  "applies_to": "FORMAT_DATE, PARSE_DATE, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%C",
+  "meaning": "Century as two digits",
+  "applies_to": "FORMAT_DATE, PARSE_DATE, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%c",
+  "meaning": "Date and time representation",
+  "applies_to": "FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%D",
+  "meaning": "Date as %m/%d/%y",
+  "applies_to": "FORMAT_DATE, PARSE_DATE, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%d",
+  "meaning": "Day of month, zero-padded",
+  "applies_to": "FORMAT_DATE, PARSE_DATE, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%e",
+  "meaning": "Day of month, space-padded",
+  "applies_to": "FORMAT_DATE, PARSE_DATE, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%F",
+  "meaning": "Date as %Y-%m-%d",
+  "applies_to": "FORMAT_DATE, PARSE_DATE, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%G",
+  "meaning": "ISO 8601 year with century",
+  "applies_to": "FORMAT_DATE, PARSE_DATE, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%g",
+  "meaning": "ISO 8601 year without century",
+  "applies_to": "FORMAT_DATE, PARSE_DATE, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%H",
+  "meaning": "Hour, 24-hour clock",
+  "applies_to": "FORMAT_TIME, PARSE_TIME, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%h",
+  "meaning": "Abbreviated month name (same as %b)",
+  "applies_to": "FORMAT_DATE, PARSE_DATE, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%I",
+  "meaning": "Hour, 12-hour clock",
+  "applies_to": "FORMAT_TIME, PARSE_TIME, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%J",
+  "meaning": "ISO 8601 day of year (001-371)",
+  "applies_to": "FORMAT_DATE, PARSE_DATE, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%j",
+  "meaning": "Day of year (001-366)",
+  "applies_to": "FORMAT_DATE, PARSE_DATE, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%k",
+  "meaning": "Hour 24-hour clock, space-padded",
+  "applies_to": "FORMAT_TIME, PARSE_TIME, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%l",
+  "meaning": "Hour 12-hour clock, space-padded",
+  "applies_to": "FORMAT_TIME, PARSE_TIME, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%M",
+  "meaning": "Minute (00-59)",
+  "applies_to": "FORMAT_TIME, PARSE_TIME, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%m",
+  "meaning": "Month number (01-12)",
+  "applies_to": "FORMAT_DATE, PARSE_DATE, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%n",
+  "meaning": "Newline character",
+  "applies_to": "FORMAT_DATE, PARSE_DATE, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP, FORMAT_TIME, PARSE_TIME"
+ },
+ {
+  "element": "%P",
+  "meaning": "Lowercase am/pm (formatting only)",
+  "applies_to": "FORMAT_TIME, FORMAT_DATETIME, FORMAT_TIMESTAMP"
+ },
+ {
+  "element": "%p",
+  "meaning": "Uppercase AM/PM indicator",
+  "applies_to": "FORMAT_TIME, PARSE_TIME, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%Q",
+  "meaning": "Quarter number (1-4)",
+  "applies_to": "FORMAT_DATE, PARSE_DATE, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%R",
+  "meaning": "Time as %H:%M",
+  "applies_to": "FORMAT_TIME, PARSE_TIME, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%S",
+  "meaning": "Second (00-60)",
+  "applies_to": "FORMAT_TIME, PARSE_TIME, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%s",
+  "meaning": "Seconds since 1970-01-01 00:00:00",
+  "applies_to": "FORMAT_TIME, PARSE_TIME, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%T",
+  "meaning": "Time as %H:%M:%S",
+  "applies_to": "FORMAT_TIME, PARSE_TIME, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%t",
+  "meaning": "Tab character",
+  "applies_to": "FORMAT_DATE, PARSE_DATE, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP, FORMAT_TIME, PARSE_TIME"
+ },
+ {
+  "element": "%U",
+  "meaning": "Week of year, Sunday-first (00-53)",
+  "applies_to": "FORMAT_DATE, PARSE_DATE, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%u",
+  "meaning": "Weekday number, Monday=1 (1-7)",
+  "applies_to": "FORMAT_DATE, PARSE_DATE, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%V",
+  "meaning": "ISO 8601 week number (01-53)",
+  "applies_to": "FORMAT_DATE, PARSE_DATE, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%W",
+  "meaning": "Week of year, Monday-first (00-53)",
+  "applies_to": "FORMAT_DATE, PARSE_DATE, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%w",
+  "meaning": "Weekday number, Sunday=0 (0-6)",
+  "applies_to": "FORMAT_DATE, PARSE_DATE, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%X",
+  "meaning": "Time as HH:MM:SS",
+  "applies_to": "FORMAT_TIME, PARSE_TIME, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%x",
+  "meaning": "Date as MM/DD/YY",
+  "applies_to": "FORMAT_DATE, PARSE_DATE, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%Y",
+  "meaning": "Year with century",
+  "applies_to": "FORMAT_DATE, PARSE_DATE, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%y",
+  "meaning": "Year without century (00-99)",
+  "applies_to": "FORMAT_DATE, PARSE_DATE, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%Z",
+  "meaning": "Time zone name",
+  "applies_to": "FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%z",
+  "meaning": "UTC offset as +HHMM or -HHMM",
+  "applies_to": "FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%%",
+  "meaning": "Literal percent sign",
+  "applies_to": "FORMAT_DATE, PARSE_DATE, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP, FORMAT_TIME, PARSE_TIME"
+ },
+ {
+  "element": "%Ez",
+  "meaning": "RFC 3339 numeric time zone offset",
+  "applies_to": "FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%E<number>S",
+  "meaning": "Seconds with n fractional digits",
+  "applies_to": "FORMAT_TIME, PARSE_TIME, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%E*S",
+  "meaning": "Seconds with full fractional precision",
+  "applies_to": "FORMAT_TIME, PARSE_TIME, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ },
+ {
+  "element": "%E4Y",
+  "meaning": "Four-digit year with leading zeros",
+  "applies_to": "FORMAT_DATE, PARSE_DATE, FORMAT_DATETIME, PARSE_DATETIME, FORMAT_TIMESTAMP, PARSE_TIMESTAMP"
+ }
+]

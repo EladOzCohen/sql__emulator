@@ -1,0 +1,1008 @@
+[
+  {
+    "id": "mysql-numeric-001",
+    "function": "ABS",
+    "sql": "SELECT ABS(2);",
+    "expected_rows": [
+      [
+        "2"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#ABS",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-002",
+    "function": "ABS",
+    "sql": "SELECT ABS(-32);",
+    "expected_rows": [
+      [
+        "32"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#ABS",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-003",
+    "function": "ACOS",
+    "sql": "SELECT ACOS(1);",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#ACOS",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-004",
+    "function": "ACOS",
+    "sql": "SELECT ACOS(1.0001);",
+    "expected_rows": [
+      [
+        "NULL"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#ACOS",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-005",
+    "function": "ACOS",
+    "sql": "SELECT ACOS(0);",
+    "expected_rows": [
+      [
+        "1.5707963267949"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#ACOS",
+    "notes": "double display precision as shown in manual"
+  },
+  {
+    "id": "mysql-numeric-006",
+    "function": "ASIN",
+    "sql": "SELECT ASIN(0.2);",
+    "expected_rows": [
+      [
+        "0.20135792079033"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#ASIN",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-007",
+    "function": "ASIN",
+    "sql": "SELECT ASIN('foo');",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#ASIN",
+    "notes": "manual shows 1 warning: 1292 Truncated incorrect DOUBLE value: 'foo'"
+  },
+  {
+    "id": "mysql-numeric-008",
+    "function": "ATAN",
+    "sql": "SELECT ATAN(2);",
+    "expected_rows": [
+      [
+        "1.1071487177941"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#ATAN",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-009",
+    "function": "ATAN",
+    "sql": "SELECT ATAN(-2);",
+    "expected_rows": [
+      [
+        "-1.1071487177941"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#ATAN",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-010",
+    "function": "ATAN2",
+    "sql": "SELECT ATAN(-2,2);",
+    "expected_rows": [
+      [
+        "-0.78539816339745"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#ATAN2",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-011",
+    "function": "ATAN2",
+    "sql": "SELECT ATAN2(PI(),0);",
+    "expected_rows": [
+      [
+        "1.5707963267949"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#ATAN2",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-012",
+    "function": "CEILING",
+    "sql": "SELECT CEILING(1.23);",
+    "expected_rows": [
+      [
+        "2"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#CEILING",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-013",
+    "function": "CEILING",
+    "sql": "SELECT CEILING(-1.23);",
+    "expected_rows": [
+      [
+        "-1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#CEILING",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-014",
+    "function": "CONV",
+    "sql": "SELECT CONV('a',16,2);",
+    "expected_rows": [
+      [
+        "1010"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#CONV",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-015",
+    "function": "CONV",
+    "sql": "SELECT CONV('6E',18,8);",
+    "expected_rows": [
+      [
+        "172"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#CONV",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-016",
+    "function": "CONV",
+    "sql": "SELECT CONV(-17,10,-18);",
+    "expected_rows": [
+      [
+        "-H"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#CONV",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-017",
+    "function": "CONV",
+    "sql": "SELECT CONV(10+'10'+'10'+X'0a',10,10);",
+    "expected_rows": [
+      [
+        "40"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#CONV",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-018",
+    "function": "COS",
+    "sql": "SELECT COS(PI());",
+    "expected_rows": [
+      [
+        "-1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#COS",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-019",
+    "function": "COT",
+    "sql": "SELECT COT(12);",
+    "expected_rows": [
+      [
+        "-1.5726734063977"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#COT",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-020",
+    "function": "COT",
+    "sql": "SELECT COT(0);",
+    "expected_rows": null,
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#COT",
+    "notes": "error: manual says 'out-of-range error'"
+  },
+  {
+    "id": "mysql-numeric-021",
+    "function": "CRC32",
+    "sql": "SELECT CRC32('MySQL');",
+    "expected_rows": [
+      [
+        "3259397556"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#CRC32",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-022",
+    "function": "CRC32",
+    "sql": "SELECT CRC32('mysql');",
+    "expected_rows": [
+      [
+        "2501908538"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#CRC32",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-023",
+    "function": "DEGREES",
+    "sql": "SELECT DEGREES(PI());",
+    "expected_rows": [
+      [
+        "180"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#DEGREES",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-024",
+    "function": "DEGREES",
+    "sql": "SELECT DEGREES(PI() / 2);",
+    "expected_rows": [
+      [
+        "90"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#DEGREES",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-025",
+    "function": "EXP",
+    "sql": "SELECT EXP(2);",
+    "expected_rows": [
+      [
+        "7.3890560989307"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#EXP",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-026",
+    "function": "EXP",
+    "sql": "SELECT EXP(-2);",
+    "expected_rows": [
+      [
+        "0.13533528323661"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#EXP",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-027",
+    "function": "EXP",
+    "sql": "SELECT EXP(0);",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#EXP",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-028",
+    "function": "FLOOR",
+    "sql": "SELECT FLOOR(1.23), FLOOR(-1.23);",
+    "expected_rows": [
+      [
+        "1",
+        "-2"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#FLOOR",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-029",
+    "function": "LN",
+    "sql": "SELECT LN(2);",
+    "expected_rows": [
+      [
+        "0.69314718055995"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#LN",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-030",
+    "function": "LN",
+    "sql": "SELECT LN(-2);",
+    "expected_rows": [
+      [
+        "NULL"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#LN",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-031",
+    "function": "LOG",
+    "sql": "SELECT LOG(2);",
+    "expected_rows": [
+      [
+        "0.69314718055995"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#LOG",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-032",
+    "function": "LOG",
+    "sql": "SELECT LOG(-2);",
+    "expected_rows": [
+      [
+        "NULL"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#LOG",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-033",
+    "function": "LOG",
+    "sql": "SELECT LOG(2,65536);",
+    "expected_rows": [
+      [
+        "16"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#LOG",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-034",
+    "function": "LOG",
+    "sql": "SELECT LOG(10,100);",
+    "expected_rows": [
+      [
+        "2"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#LOG",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-035",
+    "function": "LOG",
+    "sql": "SELECT LOG(1,100);",
+    "expected_rows": [
+      [
+        "NULL"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#LOG",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-036",
+    "function": "LOG2",
+    "sql": "SELECT LOG2(65536);",
+    "expected_rows": [
+      [
+        "16"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#LOG2",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-037",
+    "function": "LOG2",
+    "sql": "SELECT LOG2(-100);",
+    "expected_rows": [
+      [
+        "NULL"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#LOG2",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-038",
+    "function": "LOG10",
+    "sql": "SELECT LOG10(2);",
+    "expected_rows": [
+      [
+        "0.30102999566398"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#LOG10",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-039",
+    "function": "LOG10",
+    "sql": "SELECT LOG10(100);",
+    "expected_rows": [
+      [
+        "2"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#LOG10",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-040",
+    "function": "LOG10",
+    "sql": "SELECT LOG10(-100);",
+    "expected_rows": [
+      [
+        "NULL"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#LOG10",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-041",
+    "function": "MOD",
+    "sql": "SELECT MOD(234, 10);",
+    "expected_rows": [
+      [
+        "4"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#MOD",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-042",
+    "function": "%",
+    "sql": "SELECT 253 % 7;",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#MOD",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-043",
+    "function": "MOD",
+    "sql": "SELECT MOD(29,9);",
+    "expected_rows": [
+      [
+        "2"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#MOD",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-044",
+    "function": "MOD",
+    "sql": "SELECT 29 MOD 9;",
+    "expected_rows": [
+      [
+        "2"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#MOD",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-045",
+    "function": "MOD",
+    "sql": "SELECT MOD(34.5,3);",
+    "expected_rows": [
+      [
+        "1.5"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#MOD",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-046",
+    "function": "PI",
+    "sql": "SELECT PI();",
+    "expected_rows": [
+      [
+        "3.141593"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#PI",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-047",
+    "function": "PI",
+    "sql": "SELECT PI()+0.000000000000000000;",
+    "expected_rows": [
+      [
+        "3.141592653589793000"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#PI",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-048",
+    "function": "POW",
+    "sql": "SELECT POW(2,2);",
+    "expected_rows": [
+      [
+        "4"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#POW",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-049",
+    "function": "POW",
+    "sql": "SELECT POW(2,-2);",
+    "expected_rows": [
+      [
+        "0.25"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#POW",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-050",
+    "function": "RADIANS",
+    "sql": "SELECT RADIANS(90);",
+    "expected_rows": [
+      [
+        "1.5707963267949"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#RADIANS",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-051",
+    "function": "ROUND",
+    "sql": "SELECT ROUND(-1.23);",
+    "expected_rows": [
+      [
+        "-1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#ROUND",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-052",
+    "function": "ROUND",
+    "sql": "SELECT ROUND(-1.58);",
+    "expected_rows": [
+      [
+        "-2"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#ROUND",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-053",
+    "function": "ROUND",
+    "sql": "SELECT ROUND(1.58);",
+    "expected_rows": [
+      [
+        "2"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#ROUND",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-054",
+    "function": "ROUND",
+    "sql": "SELECT ROUND(1.298, 1);",
+    "expected_rows": [
+      [
+        "1.3"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#ROUND",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-055",
+    "function": "ROUND",
+    "sql": "SELECT ROUND(1.298, 0);",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#ROUND",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-056",
+    "function": "ROUND",
+    "sql": "SELECT ROUND(23.298, -1);",
+    "expected_rows": [
+      [
+        "20"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#ROUND",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-057",
+    "function": "ROUND",
+    "sql": "SELECT ROUND(.12345678901234567890123456789012345, 35);",
+    "expected_rows": [
+      [
+        "0.123456789012345678901234567890"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#ROUND",
+    "notes": "DECIMAL scale capped at 30"
+  },
+  {
+    "id": "mysql-numeric-058",
+    "function": "ROUND",
+    "sql": "SELECT ROUND(150.000,2), ROUND(150,2);",
+    "expected_rows": [
+      [
+        "150.00",
+        "150"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#ROUND",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-059",
+    "function": "ROUND",
+    "sql": "SELECT ROUND(2.5), ROUND(25E-1);",
+    "expected_rows": [
+      [
+        "3",
+        "2"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#ROUND",
+    "notes": "exact-value (DECIMAL) rounds half away from zero; approximate (DOUBLE) rounds half to even"
+  },
+  {
+    "id": "mysql-numeric-060",
+    "function": "SIGN",
+    "sql": "SELECT SIGN(-32);",
+    "expected_rows": [
+      [
+        "-1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#SIGN",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-061",
+    "function": "SIGN",
+    "sql": "SELECT SIGN(0);",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#SIGN",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-062",
+    "function": "SIGN",
+    "sql": "SELECT SIGN(234);",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#SIGN",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-063",
+    "function": "SIN",
+    "sql": "SELECT SIN(PI());",
+    "expected_rows": [
+      [
+        "1.2246063538224e-16"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#SIN",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-064",
+    "function": "SIN",
+    "sql": "SELECT ROUND(SIN(PI()));",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#SIN",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-065",
+    "function": "SQRT",
+    "sql": "SELECT SQRT(4);",
+    "expected_rows": [
+      [
+        "2"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#SQRT",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-066",
+    "function": "SQRT",
+    "sql": "SELECT SQRT(20);",
+    "expected_rows": [
+      [
+        "4.4721359549996"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#SQRT",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-067",
+    "function": "SQRT",
+    "sql": "SELECT SQRT(-16);",
+    "expected_rows": [
+      [
+        "NULL"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#SQRT",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-068",
+    "function": "TAN",
+    "sql": "SELECT TAN(PI());",
+    "expected_rows": [
+      [
+        "-1.2246063538224e-16"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#TAN",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-069",
+    "function": "TAN",
+    "sql": "SELECT TAN(PI()+1);",
+    "expected_rows": [
+      [
+        "1.5574077246549"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#TAN",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-070",
+    "function": "TRUNCATE",
+    "sql": "SELECT TRUNCATE(1.223,1);",
+    "expected_rows": [
+      [
+        "1.2"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#TRUNCATE",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-071",
+    "function": "TRUNCATE",
+    "sql": "SELECT TRUNCATE(1.999,1);",
+    "expected_rows": [
+      [
+        "1.9"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#TRUNCATE",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-072",
+    "function": "TRUNCATE",
+    "sql": "SELECT TRUNCATE(1.999,0);",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#TRUNCATE",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-073",
+    "function": "TRUNCATE",
+    "sql": "SELECT TRUNCATE(-1.999,1);",
+    "expected_rows": [
+      [
+        "-1.9"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#TRUNCATE",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-074",
+    "function": "TRUNCATE",
+    "sql": "SELECT TRUNCATE(122,-2);",
+    "expected_rows": [
+      [
+        "100"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#TRUNCATE",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-075",
+    "function": "TRUNCATE",
+    "sql": "SELECT TRUNCATE(10.28*100,0);",
+    "expected_rows": [
+      [
+        "1028"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/mathematical-functions.html#TRUNCATE",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-076",
+    "function": "+",
+    "sql": "SELECT 3+5;",
+    "expected_rows": [
+      [
+        "8"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/arithmetic-functions.html#+",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-077",
+    "function": "-",
+    "sql": "SELECT 3-5;",
+    "expected_rows": [
+      [
+        "-2"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/arithmetic-functions.html#-",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-078",
+    "function": "- (unary)",
+    "sql": "SELECT - 2;",
+    "expected_rows": [
+      [
+        "-2"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/arithmetic-functions.html#Unary minus",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-079",
+    "function": "*",
+    "sql": "SELECT 3*5;",
+    "expected_rows": [
+      [
+        "15"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/arithmetic-functions.html#*",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-080",
+    "function": "*",
+    "sql": "SELECT 18014398509481984*18014398509481984.0;",
+    "expected_rows": [
+      [
+        "324518553658426726783156020576256.0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/arithmetic-functions.html#*",
+    "notes": "DECIMAL multiplication"
+  },
+  {
+    "id": "mysql-numeric-081",
+    "function": "*",
+    "sql": "SELECT 18014398509481984*18014398509481984;",
+    "expected_rows": null,
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/arithmetic-functions.html#*",
+    "notes": "error: BIGINT overflow, manual says 'out-of-range error'"
+  },
+  {
+    "id": "mysql-numeric-082",
+    "function": "/",
+    "sql": "SELECT 3/5;",
+    "expected_rows": [
+      [
+        "0.60"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/arithmetic-functions.html#/",
+    "notes": ""
+  },
+  {
+    "id": "mysql-numeric-083",
+    "function": "/",
+    "sql": "SELECT 102/(1-1);",
+    "expected_rows": [
+      [
+        "NULL"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/arithmetic-functions.html#/",
+    "notes": "division by zero yields NULL (default sql_mode)"
+  },
+  {
+    "id": "mysql-numeric-084",
+    "function": "DIV",
+    "sql": "SELECT 5 DIV 2, -5 DIV 2, 5 DIV -2, -5 DIV -2;",
+    "expected_rows": [
+      [
+        "2",
+        "-2",
+        "-2",
+        "2"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/arithmetic-functions.html#DIV",
+    "notes": ""
+  }
+]

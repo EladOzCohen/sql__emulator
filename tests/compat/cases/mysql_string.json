@@ -1,0 +1,1881 @@
+[
+  {
+    "id": "mysql-string-001",
+    "function": "ASCII",
+    "sql": "SELECT ASCII('2');",
+    "expected_rows": [
+      [
+        "50"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#ASCII",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-002",
+    "function": "ASCII",
+    "sql": "SELECT ASCII(2);",
+    "expected_rows": [
+      [
+        "50"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#ASCII",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-003",
+    "function": "ASCII",
+    "sql": "SELECT ASCII('dx');",
+    "expected_rows": [
+      [
+        "100"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#ASCII",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-004",
+    "function": "BIN",
+    "sql": "SELECT BIN(12);",
+    "expected_rows": [
+      [
+        "1100"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#BIN",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-005",
+    "function": "BIT_LENGTH",
+    "sql": "SELECT BIT_LENGTH('text');",
+    "expected_rows": [
+      [
+        "32"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#BIT_LENGTH",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-006",
+    "function": "CHAR",
+    "sql": "SELECT CHAR(77,121,83,81,'76');",
+    "expected_rows": [
+      [
+        "0x4D7953514C"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#CHAR",
+    "notes": "manual shows a binary-string result rendered as hex (mysql client binary-as-hex); ambiguous for non-MySQL clients: the value is the bytes 'MySQL'"
+  },
+  {
+    "id": "mysql-string-007",
+    "function": "CHAR",
+    "sql": "SELECT CHAR(77,77.3,'77.3');",
+    "expected_rows": [
+      [
+        "0x4D4D4D"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#CHAR",
+    "notes": "manual shows binary result rendered as hex; value is bytes 'MMM'"
+  },
+  {
+    "id": "mysql-string-008",
+    "function": "CHAR",
+    "sql": "SELECT CHAR(77,121,83,81,'76' USING utf8mb4);",
+    "expected_rows": [
+      [
+        "MySQL"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#CHAR",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-009",
+    "function": "CHAR",
+    "sql": "SELECT CHAR(77,77.3,'77.3' USING utf8mb4);",
+    "expected_rows": [
+      [
+        "MMM"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#CHAR",
+    "notes": "manual shows 1 warning: 1292 Truncated incorrect INTEGER value: '77.3'"
+  },
+  {
+    "id": "mysql-string-010",
+    "function": "CHAR",
+    "sql": "SELECT HEX(CHAR(1,0)), HEX(CHAR(256));",
+    "expected_rows": [
+      [
+        "0100",
+        "0100"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#CHAR",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-011",
+    "function": "CHAR",
+    "sql": "SELECT HEX(CHAR(1,0,0)), HEX(CHAR(256*256));",
+    "expected_rows": [
+      [
+        "010000",
+        "010000"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#CHAR",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-012",
+    "function": "CONCAT",
+    "sql": "SELECT CONCAT('My', 'S', 'QL');",
+    "expected_rows": [
+      [
+        "MySQL"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#CONCAT",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-013",
+    "function": "CONCAT",
+    "sql": "SELECT CONCAT('My', NULL, 'QL');",
+    "expected_rows": [
+      [
+        "NULL"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#CONCAT",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-014",
+    "function": "CONCAT",
+    "sql": "SELECT CONCAT(14.3);",
+    "expected_rows": [
+      [
+        "14.3"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#CONCAT",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-015",
+    "function": "CONCAT",
+    "sql": "SELECT 'My' 'S' 'QL';",
+    "expected_rows": [
+      [
+        "MySQL"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#CONCAT",
+    "notes": "adjacent string literals are concatenated (documented under CONCAT)"
+  },
+  {
+    "id": "mysql-string-016",
+    "function": "CONCAT_WS",
+    "sql": "SELECT CONCAT_WS(',', 'First name', 'Second name', 'Last Name');",
+    "expected_rows": [
+      [
+        "First name,Second name,Last Name"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#CONCAT_WS",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-017",
+    "function": "CONCAT_WS",
+    "sql": "SELECT CONCAT_WS(',', 'First name', NULL, 'Last Name');",
+    "expected_rows": [
+      [
+        "First name,Last Name"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#CONCAT_WS",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-018",
+    "function": "ELT",
+    "sql": "SELECT ELT(1, 'Aa', 'Bb', 'Cc', 'Dd');",
+    "expected_rows": [
+      [
+        "Aa"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#ELT",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-019",
+    "function": "ELT",
+    "sql": "SELECT ELT(4, 'Aa', 'Bb', 'Cc', 'Dd');",
+    "expected_rows": [
+      [
+        "Dd"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#ELT",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-020",
+    "function": "EXPORT_SET",
+    "sql": "SELECT EXPORT_SET(5,'Y','N',',',4);",
+    "expected_rows": [
+      [
+        "Y,N,Y,N"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#EXPORT_SET",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-021",
+    "function": "EXPORT_SET",
+    "sql": "SELECT EXPORT_SET(6,'1','0',',',10);",
+    "expected_rows": [
+      [
+        "0,1,1,0,0,0,0,0,0,0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#EXPORT_SET",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-022",
+    "function": "FIELD",
+    "sql": "SELECT FIELD('Bb', 'Aa', 'Bb', 'Cc', 'Dd', 'Ff');",
+    "expected_rows": [
+      [
+        "2"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#FIELD",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-023",
+    "function": "FIELD",
+    "sql": "SELECT FIELD('Gg', 'Aa', 'Bb', 'Cc', 'Dd', 'Ff');",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#FIELD",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-024",
+    "function": "FIND_IN_SET",
+    "sql": "SELECT FIND_IN_SET('b','a,b,c,d');",
+    "expected_rows": [
+      [
+        "2"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#FIND_IN_SET",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-025",
+    "function": "FORMAT",
+    "sql": "SELECT FORMAT(12332.123456, 4);",
+    "expected_rows": [
+      [
+        "12,332.1235"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#FORMAT",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-026",
+    "function": "FORMAT",
+    "sql": "SELECT FORMAT(12332.1,4);",
+    "expected_rows": [
+      [
+        "12,332.1000"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#FORMAT",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-027",
+    "function": "FORMAT",
+    "sql": "SELECT FORMAT(12332.2,0);",
+    "expected_rows": [
+      [
+        "12,332"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#FORMAT",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-028",
+    "function": "FORMAT",
+    "sql": "SELECT FORMAT(12332.2,2,'de_DE');",
+    "expected_rows": [
+      [
+        "12.332,20"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#FORMAT",
+    "notes": "locale-specific"
+  },
+  {
+    "id": "mysql-string-029",
+    "function": "FROM_BASE64",
+    "sql": "SELECT TO_BASE64('abc'), FROM_BASE64(TO_BASE64('abc'));",
+    "expected_rows": [
+      [
+        "JWJj",
+        "abc"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#TO_BASE64",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-030",
+    "function": "HEX",
+    "sql": "SELECT X'616263', HEX('abc'), UNHEX(HEX('abc'));",
+    "expected_rows": [
+      [
+        "abc",
+        "616263",
+        "abc"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#HEX",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-031",
+    "function": "HEX",
+    "sql": "SELECT HEX(255), CONV(HEX(255),16,10);",
+    "expected_rows": [
+      [
+        "FF",
+        "255"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#HEX",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-032",
+    "function": "INSERT",
+    "sql": "SELECT INSERT('Quadratic', 3, 4, 'What');",
+    "expected_rows": [
+      [
+        "QuWhattic"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#INSERT",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-033",
+    "function": "INSERT",
+    "sql": "SELECT INSERT('Quadratic', -1, 4, 'What');",
+    "expected_rows": [
+      [
+        "Quadratic"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#INSERT",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-034",
+    "function": "INSERT",
+    "sql": "SELECT INSERT('Quadratic', 3, 100, 'What');",
+    "expected_rows": [
+      [
+        "QuWhat"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#INSERT",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-035",
+    "function": "INSTR",
+    "sql": "SELECT INSTR('foobarbar', 'bar');",
+    "expected_rows": [
+      [
+        "4"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#INSTR",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-036",
+    "function": "INSTR",
+    "sql": "SELECT INSTR('xbar', 'foobar');",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#INSTR",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-037",
+    "function": "LEFT",
+    "sql": "SELECT LEFT('foobarbar', 5);",
+    "expected_rows": [
+      [
+        "fooba"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#LEFT",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-038",
+    "function": "LENGTH",
+    "sql": "SELECT LENGTH('text');",
+    "expected_rows": [
+      [
+        "4"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#LENGTH",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-039",
+    "function": "LOCATE",
+    "sql": "SELECT LOCATE('bar', 'foobarbar');",
+    "expected_rows": [
+      [
+        "4"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#LOCATE",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-040",
+    "function": "LOCATE",
+    "sql": "SELECT LOCATE('xbar', 'foobar');",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#LOCATE",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-041",
+    "function": "LOCATE",
+    "sql": "SELECT LOCATE('bar', 'foobarbar', 5);",
+    "expected_rows": [
+      [
+        "7"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#LOCATE",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-042",
+    "function": "LOWER",
+    "sql": "SELECT LOWER('QUADRATICALLY');",
+    "expected_rows": [
+      [
+        "quadratically"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#LOWER",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-043",
+    "function": "LPAD",
+    "sql": "SELECT LPAD('hi',4,'??');",
+    "expected_rows": [
+      [
+        "??hi"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#LPAD",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-044",
+    "function": "LPAD",
+    "sql": "SELECT LPAD('hi',1,'??');",
+    "expected_rows": [
+      [
+        "h"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#LPAD",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-045",
+    "function": "LTRIM",
+    "sql": "SELECT LTRIM('  barbar');",
+    "expected_rows": [
+      [
+        "barbar"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#LTRIM",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-046",
+    "function": "MAKE_SET",
+    "sql": "SELECT MAKE_SET(1,'a','b','c');",
+    "expected_rows": [
+      [
+        "a"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#MAKE_SET",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-047",
+    "function": "MAKE_SET",
+    "sql": "SELECT MAKE_SET(1 | 4,'hello','nice','world');",
+    "expected_rows": [
+      [
+        "hello,world"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#MAKE_SET",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-048",
+    "function": "MAKE_SET",
+    "sql": "SELECT MAKE_SET(1 | 4,'hello','nice',NULL,'world');",
+    "expected_rows": [
+      [
+        "hello"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#MAKE_SET",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-049",
+    "function": "MAKE_SET",
+    "sql": "SELECT MAKE_SET(0,'a','b','c');",
+    "expected_rows": [
+      [
+        ""
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#MAKE_SET",
+    "notes": "empty string result"
+  },
+  {
+    "id": "mysql-string-050",
+    "function": "OCT",
+    "sql": "SELECT OCT(12);",
+    "expected_rows": [
+      [
+        "14"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#OCT",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-051",
+    "function": "ORD",
+    "sql": "SELECT ORD('2');",
+    "expected_rows": [
+      [
+        "50"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#ORD",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-052",
+    "function": "QUOTE",
+    "sql": "SELECT QUOTE('Don\\'t!');",
+    "expected_rows": [
+      [
+        "'Don\\'t!'"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#QUOTE",
+    "notes": "AMBIGUOUS: manual shows -> 'Don\\'t!'. The surrounding single quotes are part of QUOTE()'s own output (kept here), not the manual's string-delimiter convention"
+  },
+  {
+    "id": "mysql-string-053",
+    "function": "QUOTE",
+    "sql": "SELECT QUOTE(NULL);",
+    "expected_rows": [
+      [
+        "NULL"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#QUOTE",
+    "notes": "QUOTE(NULL) returns the 4-char text NULL without quotes per the manual (SQL NULL value vs text 'NULL' not distinguishable in manual)"
+  },
+  {
+    "id": "mysql-string-054",
+    "function": "REPEAT",
+    "sql": "SELECT REPEAT('MySQL', 3);",
+    "expected_rows": [
+      [
+        "MySQLMySQLMySQL"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#REPEAT",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-055",
+    "function": "REPLACE",
+    "sql": "SELECT REPLACE('www.mysql.com', 'w', 'Ww');",
+    "expected_rows": [
+      [
+        "WwWwWw.mysql.com"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#REPLACE",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-056",
+    "function": "REVERSE",
+    "sql": "SELECT REVERSE('abc');",
+    "expected_rows": [
+      [
+        "cba"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#REVERSE",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-057",
+    "function": "RIGHT",
+    "sql": "SELECT RIGHT('foobarbar', 4);",
+    "expected_rows": [
+      [
+        "rbar"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#RIGHT",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-058",
+    "function": "RPAD",
+    "sql": "SELECT RPAD('hi',5,'?');",
+    "expected_rows": [
+      [
+        "hi???"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#RPAD",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-059",
+    "function": "RPAD",
+    "sql": "SELECT RPAD('hi',1,'?');",
+    "expected_rows": [
+      [
+        "h"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#RPAD",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-060",
+    "function": "RTRIM",
+    "sql": "SELECT RTRIM('barbar   ');",
+    "expected_rows": [
+      [
+        "barbar"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#RTRIM",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-061",
+    "function": "SOUNDEX",
+    "sql": "SELECT SOUNDEX('Hello');",
+    "expected_rows": [
+      [
+        "H400"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#SOUNDEX",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-062",
+    "function": "SOUNDEX",
+    "sql": "SELECT SOUNDEX('Quadratically');",
+    "expected_rows": [
+      [
+        "Q36324"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#SOUNDEX",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-063",
+    "function": "SPACE",
+    "sql": "SELECT SPACE(6);",
+    "expected_rows": [
+      [
+        "      "
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#SPACE",
+    "notes": "6 spaces"
+  },
+  {
+    "id": "mysql-string-064",
+    "function": "SUBSTRING",
+    "sql": "SELECT SUBSTRING('Quadratically',5);",
+    "expected_rows": [
+      [
+        "ratically"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#SUBSTRING",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-065",
+    "function": "SUBSTRING",
+    "sql": "SELECT SUBSTRING('foobarbar' FROM 4);",
+    "expected_rows": [
+      [
+        "barbar"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#SUBSTRING",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-066",
+    "function": "SUBSTRING",
+    "sql": "SELECT SUBSTRING('Quadratically',5,6);",
+    "expected_rows": [
+      [
+        "ratica"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#SUBSTRING",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-067",
+    "function": "SUBSTRING",
+    "sql": "SELECT SUBSTRING('Sakila', -3);",
+    "expected_rows": [
+      [
+        "ila"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#SUBSTRING",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-068",
+    "function": "SUBSTRING",
+    "sql": "SELECT SUBSTRING('Sakila', -5, 3);",
+    "expected_rows": [
+      [
+        "aki"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#SUBSTRING",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-069",
+    "function": "SUBSTRING",
+    "sql": "SELECT SUBSTRING('Sakila' FROM -4 FOR 2);",
+    "expected_rows": [
+      [
+        "ki"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#SUBSTRING",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-070",
+    "function": "SUBSTRING_INDEX",
+    "sql": "SELECT SUBSTRING_INDEX('www.mysql.com', '.', 2);",
+    "expected_rows": [
+      [
+        "www.mysql"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#SUBSTRING_INDEX",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-071",
+    "function": "SUBSTRING_INDEX",
+    "sql": "SELECT SUBSTRING_INDEX('www.mysql.com', '.', -2);",
+    "expected_rows": [
+      [
+        "mysql.com"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#SUBSTRING_INDEX",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-072",
+    "function": "TO_BASE64",
+    "sql": "SELECT TO_BASE64('abc'), FROM_BASE64(TO_BASE64('abc'));",
+    "expected_rows": [
+      [
+        "JWJj",
+        "abc"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#TO_BASE64",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-073",
+    "function": "TRIM",
+    "sql": "SELECT TRIM('  bar   ');",
+    "expected_rows": [
+      [
+        "bar"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#TRIM",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-074",
+    "function": "TRIM",
+    "sql": "SELECT TRIM(LEADING 'x' FROM 'xxxbarxxx');",
+    "expected_rows": [
+      [
+        "barxxx"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#TRIM",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-075",
+    "function": "TRIM",
+    "sql": "SELECT TRIM(BOTH 'x' FROM 'xxxbarxxx');",
+    "expected_rows": [
+      [
+        "bar"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#TRIM",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-076",
+    "function": "TRIM",
+    "sql": "SELECT TRIM(TRAILING 'xyz' FROM 'barxxyz');",
+    "expected_rows": [
+      [
+        "barx"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#TRIM",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-077",
+    "function": "UNHEX",
+    "sql": "SELECT UNHEX('4D7953514C');",
+    "expected_rows": [
+      [
+        "MySQL"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#UNHEX",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-078",
+    "function": "UNHEX",
+    "sql": "SELECT X'4D7953514C';",
+    "expected_rows": [
+      [
+        "MySQL"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#UNHEX",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-079",
+    "function": "UNHEX",
+    "sql": "SELECT UNHEX(HEX('string'));",
+    "expected_rows": [
+      [
+        "string"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#UNHEX",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-080",
+    "function": "UNHEX",
+    "sql": "SELECT HEX(UNHEX('1267'));",
+    "expected_rows": [
+      [
+        "1267"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#UNHEX",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-081",
+    "function": "UNHEX",
+    "sql": "SELECT UNHEX('GG');",
+    "expected_rows": [
+      [
+        "NULL"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#UNHEX",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-082",
+    "function": "UNHEX",
+    "sql": "SELECT UNHEX(NULL);",
+    "expected_rows": [
+      [
+        "NULL"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#UNHEX",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-083",
+    "function": "UPPER",
+    "sql": "SELECT UPPER('Hej');",
+    "expected_rows": [
+      [
+        "HEJ"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#UPPER",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-084",
+    "function": "WEIGHT_STRING",
+    "sql": "SELECT HEX(WEIGHT_STRING('ab' AS BINARY(4)));",
+    "expected_rows": [
+      [
+        "61620000"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#WEIGHT_STRING",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-085",
+    "function": "LIKE",
+    "sql": "SELECT 'ä' LIKE 'ae' COLLATE latin1_german2_ci;",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-comparison-functions.html#LIKE",
+    "notes": "needs latin1_german2_ci collation support"
+  },
+  {
+    "id": "mysql-string-086",
+    "function": "=",
+    "sql": "SELECT 'ä' = 'ae' COLLATE latin1_german2_ci;",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-comparison-functions.html#LIKE",
+    "notes": "needs latin1_german2_ci collation support"
+  },
+  {
+    "id": "mysql-string-087",
+    "function": "LIKE",
+    "sql": "SELECT 'David!' LIKE 'David_';",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-comparison-functions.html#LIKE",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-088",
+    "function": "LIKE",
+    "sql": "SELECT 'David!' LIKE '%D%v%';",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-comparison-functions.html#LIKE",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-089",
+    "function": "LIKE",
+    "sql": "SELECT 'David!' LIKE 'David\\_';",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-comparison-functions.html#LIKE",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-090",
+    "function": "LIKE",
+    "sql": "SELECT 'David_' LIKE 'David\\_';",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-comparison-functions.html#LIKE",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-091",
+    "function": "LIKE",
+    "sql": "SELECT 'abc' LIKE 'ABC';",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-comparison-functions.html#LIKE",
+    "notes": "case-insensitive under default collation"
+  },
+  {
+    "id": "mysql-string-092",
+    "function": "LIKE",
+    "sql": "SELECT 'abc' LIKE _utf8mb4 'ABC' COLLATE utf8mb4_0900_as_cs;",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-comparison-functions.html#LIKE",
+    "notes": "needs collation support"
+  },
+  {
+    "id": "mysql-string-093",
+    "function": "LIKE",
+    "sql": "SELECT 'abc' LIKE _utf8mb4 'ABC' COLLATE utf8mb4_bin;",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-comparison-functions.html#LIKE",
+    "notes": "needs collation support"
+  },
+  {
+    "id": "mysql-string-094",
+    "function": "LIKE",
+    "sql": "SELECT 'abc' LIKE BINARY 'ABC';",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-comparison-functions.html#LIKE",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-095",
+    "function": "LIKE",
+    "sql": "SELECT 10 LIKE '1%';",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-comparison-functions.html#LIKE",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-096",
+    "function": "ESCAPE",
+    "sql": "SELECT 'David_' LIKE 'David|_' ESCAPE '|';",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-comparison-functions.html#ESCAPE",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-097",
+    "function": "STRCMP",
+    "sql": "SELECT STRCMP('text', 'text2');",
+    "expected_rows": [
+      [
+        "-1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-comparison-functions.html#STRCMP",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-098",
+    "function": "STRCMP",
+    "sql": "SELECT STRCMP('text2', 'text');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-comparison-functions.html#STRCMP",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-099",
+    "function": "STRCMP",
+    "sql": "SELECT STRCMP('text', 'text');",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/string-comparison-functions.html#STRCMP",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-100",
+    "function": "REGEXP",
+    "sql": "SELECT 'Michael!' REGEXP '.*';",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#REGEXP",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-101",
+    "function": "REGEXP",
+    "sql": "SELECT 'new*\\n*line' REGEXP 'new\\\\*.\\\\*line';",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#REGEXP",
+    "notes": "backslash escapes inside SQL string literals (\\n is newline)"
+  },
+  {
+    "id": "mysql-string-102",
+    "function": "REGEXP",
+    "sql": "SELECT 'a' REGEXP '^[a-d]';",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#REGEXP",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-103",
+    "function": "REGEXP_INSTR",
+    "sql": "SELECT REGEXP_INSTR('dog cat dog', 'dog');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#REGEXP_INSTR",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-104",
+    "function": "REGEXP_INSTR",
+    "sql": "SELECT REGEXP_INSTR('dog cat dog', 'dog', 2);",
+    "expected_rows": [
+      [
+        "9"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#REGEXP_INSTR",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-105",
+    "function": "REGEXP_INSTR",
+    "sql": "SELECT REGEXP_INSTR('aa aaa aaaa', 'a{2}');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#REGEXP_INSTR",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-106",
+    "function": "REGEXP_INSTR",
+    "sql": "SELECT REGEXP_INSTR('aa aaa aaaa', 'a{4}');",
+    "expected_rows": [
+      [
+        "8"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#REGEXP_INSTR",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-107",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('CamelCase', 'CAMELCASE');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#REGEXP_LIKE",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-108",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('CamelCase', 'CAMELCASE' COLLATE utf8mb4_0900_as_cs);",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#REGEXP_LIKE",
+    "notes": "needs collation support"
+  },
+  {
+    "id": "mysql-string-109",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('Michael!', '.*');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#REGEXP_LIKE",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-110",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('new*\\n*line', 'new\\\\*.\\\\*line');",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#REGEXP_LIKE",
+    "notes": "backslash escapes inside SQL string literals"
+  },
+  {
+    "id": "mysql-string-111",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('a', '^[a-d]');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#REGEXP_LIKE",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-112",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('abc', 'ABC');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#REGEXP_LIKE",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-113",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('abc', 'ABC', 'c');",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#REGEXP_LIKE",
+    "notes": "match_type 'c' = case-sensitive"
+  },
+  {
+    "id": "mysql-string-114",
+    "function": "REGEXP_REPLACE",
+    "sql": "SELECT REGEXP_REPLACE('a b c', 'b', 'X');",
+    "expected_rows": [
+      [
+        "a X c"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#REGEXP_REPLACE",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-115",
+    "function": "REGEXP_REPLACE",
+    "sql": "SELECT REGEXP_REPLACE('abc def ghi', '[a-z]+', 'X', 1, 3);",
+    "expected_rows": [
+      [
+        "abc def X"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#REGEXP_REPLACE",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-116",
+    "function": "REGEXP_SUBSTR",
+    "sql": "SELECT REGEXP_SUBSTR('abc def ghi', '[a-z]+');",
+    "expected_rows": [
+      [
+        "abc"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#REGEXP_SUBSTR",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-117",
+    "function": "REGEXP_SUBSTR",
+    "sql": "SELECT REGEXP_SUBSTR('abc def ghi', '[a-z]+', 1, 3);",
+    "expected_rows": [
+      [
+        "ghi"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#REGEXP_SUBSTR",
+    "notes": ""
+  },
+  {
+    "id": "mysql-string-118",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('fo\\nfo', '^fo$');",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section; backslash escapes inside SQL string literals"
+  },
+  {
+    "id": "mysql-string-119",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('fofo', '^fo');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section"
+  },
+  {
+    "id": "mysql-string-120",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('fo\\no', '^fo\\no$');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section; backslash escapes inside SQL string literals"
+  },
+  {
+    "id": "mysql-string-121",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('fo\\no', '^fo$');",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section; backslash escapes inside SQL string literals"
+  },
+  {
+    "id": "mysql-string-122",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('fofo', '^f.*$');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section"
+  },
+  {
+    "id": "mysql-string-123",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('fo\\r\\nfo', '^f.*$');",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section; backslash escapes inside SQL string literals"
+  },
+  {
+    "id": "mysql-string-124",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('fo\\r\\nfo', '^f.*$', 'm');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section; backslash escapes inside SQL string literals"
+  },
+  {
+    "id": "mysql-string-125",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('fo\\r\\nfo', '(?m)^f.*$');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section; backslash escapes inside SQL string literals"
+  },
+  {
+    "id": "mysql-string-126",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('Ban', '^Ba*n');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section"
+  },
+  {
+    "id": "mysql-string-127",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('Baaan', '^Ba*n');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section"
+  },
+  {
+    "id": "mysql-string-128",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('Bn', '^Ba*n');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section"
+  },
+  {
+    "id": "mysql-string-129",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('Ban', '^Ba+n');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section"
+  },
+  {
+    "id": "mysql-string-130",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('Bn', '^Ba+n');",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section"
+  },
+  {
+    "id": "mysql-string-131",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('Bn', '^Ba?n');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section"
+  },
+  {
+    "id": "mysql-string-132",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('Ban', '^Ba?n');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section"
+  },
+  {
+    "id": "mysql-string-133",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('Baan', '^Ba?n');",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section"
+  },
+  {
+    "id": "mysql-string-134",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('pi', 'pi|apa');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section"
+  },
+  {
+    "id": "mysql-string-135",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('axe', 'pi|apa');",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section"
+  },
+  {
+    "id": "mysql-string-136",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('apa', 'pi|apa');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section"
+  },
+  {
+    "id": "mysql-string-137",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('apa', '^(pi|apa)$');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section"
+  },
+  {
+    "id": "mysql-string-138",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('pi', '^(pi|apa)$');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section"
+  },
+  {
+    "id": "mysql-string-139",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('pix', '^(pi|apa)$');",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section"
+  },
+  {
+    "id": "mysql-string-140",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('pi', '^(pi)*$');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section"
+  },
+  {
+    "id": "mysql-string-141",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('pip', '^(pi)*$');",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section"
+  },
+  {
+    "id": "mysql-string-142",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('pipi', '^(pi)*$');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section"
+  },
+  {
+    "id": "mysql-string-143",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('abcde', 'a[bcd]{2}e');",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section"
+  },
+  {
+    "id": "mysql-string-144",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('abcde', 'a[bcd]{3}e');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section"
+  },
+  {
+    "id": "mysql-string-145",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('abcde', 'a[bcd]{1,10}e');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section"
+  },
+  {
+    "id": "mysql-string-146",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('aXbc', '[a-dXYZ]');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section"
+  },
+  {
+    "id": "mysql-string-147",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('aXbc', '^[a-dXYZ]$');",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section"
+  },
+  {
+    "id": "mysql-string-148",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('aXbc', '^[a-dXYZ]+$');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section"
+  },
+  {
+    "id": "mysql-string-149",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('aXbc', '^[^a-dXYZ]+$');",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section"
+  },
+  {
+    "id": "mysql-string-150",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('gheis', '^[^a-dXYZ]+$');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section"
+  },
+  {
+    "id": "mysql-string-151",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('gheisa', '^[^a-dXYZ]+$');",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section"
+  },
+  {
+    "id": "mysql-string-152",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('justalnums', '[[:alnum:]]+');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section"
+  },
+  {
+    "id": "mysql-string-153",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('!!', '[[:alnum:]]+');",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section"
+  },
+  {
+    "id": "mysql-string-154",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('1+2', '1+2');",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section"
+  },
+  {
+    "id": "mysql-string-155",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('1+2', '1\\+2');",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section; backslash escapes inside SQL string literals"
+  },
+  {
+    "id": "mysql-string-156",
+    "function": "REGEXP_LIKE",
+    "sql": "SELECT REGEXP_LIKE('1+2', '1\\\\+2');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/regexp.html#Regular Expression Syntax",
+    "notes": "regex syntax section; backslash escapes inside SQL string literals"
+  }
+]

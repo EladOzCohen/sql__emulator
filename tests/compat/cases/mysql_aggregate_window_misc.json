@@ -1,0 +1,1337 @@
+[
+  {
+    "id": "mysql-aggwin-001",
+    "function": "JSON_ARRAYAGG",
+    "sql": "WITH t3 AS (SELECT 2 AS o_id, 'color' AS attribute, 'red' AS value UNION ALL SELECT 2, 'fabric', 'silk' UNION ALL SELECT 3, 'color', 'green' UNION ALL SELECT 3, 'shape', 'square') SELECT o_id, JSON_ARRAYAGG(attribute) AS attributes FROM t3 GROUP BY o_id;",
+    "expected_rows": [
+      [
+        "2",
+        "[\"color\", \"fabric\"]"
+      ],
+      [
+        "3",
+        "[\"color\", \"shape\"]"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/aggregate-functions.html#JSON_ARRAYAGG",
+    "notes": "t3 CTE reconstructed from the manual's shown table (o_id, attribute, value); row/array element order as shown by manual, not guaranteed by MySQL"
+  },
+  {
+    "id": "mysql-aggwin-002",
+    "function": "JSON_OBJECTAGG",
+    "sql": "WITH t3 AS (SELECT 2 AS o_id, 'color' AS attribute, 'red' AS value UNION ALL SELECT 2, 'fabric', 'silk' UNION ALL SELECT 3, 'color', 'green' UNION ALL SELECT 3, 'shape', 'square') SELECT o_id, JSON_OBJECTAGG(attribute, value) FROM t3 GROUP BY o_id;",
+    "expected_rows": [
+      [
+        "2",
+        "{\"color\": \"red\", \"fabric\": \"silk\"}"
+      ],
+      [
+        "3",
+        "{\"color\": \"green\", \"shape\": \"square\"}"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/aggregate-functions.html#JSON_OBJECTAGG",
+    "notes": "t3 CTE reconstructed from the manual's shown table; row order as shown by manual"
+  },
+  {
+    "id": "mysql-aggwin-003",
+    "function": "CUME_DIST",
+    "sql": "WITH numbers AS (SELECT 1 AS val UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 3 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 4 UNION ALL SELECT 5) SELECT val, ROW_NUMBER() OVER w AS 'row_number', CUME_DIST() OVER w AS 'cume_dist', PERCENT_RANK() OVER w AS 'percent_rank' FROM numbers WINDOW w AS (ORDER BY val);",
+    "expected_rows": [
+      [
+        "1",
+        "1",
+        "0.2222222222222222",
+        "0"
+      ],
+      [
+        "1",
+        "2",
+        "0.2222222222222222",
+        "0"
+      ],
+      [
+        "2",
+        "3",
+        "0.3333333333333333",
+        "0.25"
+      ],
+      [
+        "3",
+        "4",
+        "0.6666666666666666",
+        "0.375"
+      ],
+      [
+        "3",
+        "5",
+        "0.6666666666666666",
+        "0.375"
+      ],
+      [
+        "3",
+        "6",
+        "0.6666666666666666",
+        "0.375"
+      ],
+      [
+        "4",
+        "7",
+        "0.8888888888888888",
+        "0.75"
+      ],
+      [
+        "4",
+        "8",
+        "0.8888888888888888",
+        "0.75"
+      ],
+      [
+        "5",
+        "9",
+        "1",
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/window-function-descriptions.html#CUME_DIST",
+    "notes": "numbers CTE reconstructed from the val column of the manual's output (manual does not define the table); rows shown in window order, outer query has no ORDER BY; also covers PERCENT_RANK and ROW_NUMBER"
+  },
+  {
+    "id": "mysql-aggwin-004",
+    "function": "FIRST_VALUE",
+    "sql": "WITH observations AS (SELECT '07:00:00' AS time, 'st113' AS subject, 10 AS val UNION ALL SELECT '07:15:00','st113',9 UNION ALL SELECT '07:30:00','st113',25 UNION ALL SELECT '07:45:00','st113',20 UNION ALL SELECT '07:00:00','xh458',0 UNION ALL SELECT '07:15:00','xh458',10 UNION ALL SELECT '07:30:00','xh458',5 UNION ALL SELECT '07:45:00','xh458',30 UNION ALL SELECT '08:00:00','xh458',25) SELECT time, subject, val, FIRST_VALUE(val) OVER w AS 'first', LAST_VALUE(val) OVER w AS 'last', NTH_VALUE(val, 2) OVER w AS 'second', NTH_VALUE(val, 4) OVER w AS 'fourth' FROM observations WINDOW w AS (PARTITION BY subject ORDER BY time ROWS UNBOUNDED PRECEDING);",
+    "expected_rows": [
+      [
+        "07:00:00",
+        "st113",
+        "10",
+        "10",
+        "10",
+        "NULL",
+        "NULL"
+      ],
+      [
+        "07:15:00",
+        "st113",
+        "9",
+        "10",
+        "9",
+        "9",
+        "NULL"
+      ],
+      [
+        "07:30:00",
+        "st113",
+        "25",
+        "10",
+        "25",
+        "9",
+        "NULL"
+      ],
+      [
+        "07:45:00",
+        "st113",
+        "20",
+        "10",
+        "20",
+        "9",
+        "20"
+      ],
+      [
+        "07:00:00",
+        "xh458",
+        "0",
+        "0",
+        "0",
+        "NULL",
+        "NULL"
+      ],
+      [
+        "07:15:00",
+        "xh458",
+        "10",
+        "0",
+        "10",
+        "10",
+        "NULL"
+      ],
+      [
+        "07:30:00",
+        "xh458",
+        "5",
+        "0",
+        "5",
+        "10",
+        "NULL"
+      ],
+      [
+        "07:45:00",
+        "xh458",
+        "30",
+        "0",
+        "30",
+        "10",
+        "30"
+      ],
+      [
+        "08:00:00",
+        "xh458",
+        "25",
+        "0",
+        "25",
+        "10",
+        "30"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/window-function-descriptions.html#FIRST_VALUE",
+    "notes": "observations CTE reconstructed from the manual's output (times as strings; manual does not define the table); also covers LAST_VALUE and NTH_VALUE; rows shown in partition/window order"
+  },
+  {
+    "id": "mysql-aggwin-005",
+    "function": "LAG",
+    "sql": "WITH series AS (SELECT '12:00:00' AS t, 100 AS val UNION ALL SELECT '13:00:00',125 UNION ALL SELECT '14:00:00',132 UNION ALL SELECT '15:00:00',145 UNION ALL SELECT '16:00:00',140 UNION ALL SELECT '17:00:00',150 UNION ALL SELECT '18:00:00',200) SELECT t, val, LAG(val) OVER w AS 'lag', LEAD(val) OVER w AS 'lead', val - LAG(val) OVER w AS 'lag diff', val - LEAD(val) OVER w AS 'lead diff' FROM series WINDOW w AS (ORDER BY t);",
+    "expected_rows": [
+      [
+        "12:00:00",
+        "100",
+        "NULL",
+        "125",
+        "NULL",
+        "-25"
+      ],
+      [
+        "13:00:00",
+        "125",
+        "100",
+        "132",
+        "25",
+        "-7"
+      ],
+      [
+        "14:00:00",
+        "132",
+        "125",
+        "145",
+        "7",
+        "-13"
+      ],
+      [
+        "15:00:00",
+        "145",
+        "132",
+        "140",
+        "13",
+        "5"
+      ],
+      [
+        "16:00:00",
+        "140",
+        "145",
+        "150",
+        "-5",
+        "-10"
+      ],
+      [
+        "17:00:00",
+        "150",
+        "140",
+        "200",
+        "10",
+        "-50"
+      ],
+      [
+        "18:00:00",
+        "200",
+        "150",
+        "NULL",
+        "50",
+        "NULL"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/window-function-descriptions.html#LAG",
+    "notes": "series CTE reconstructed from the manual's output (manual does not define the table); also covers LEAD"
+  },
+  {
+    "id": "mysql-aggwin-006",
+    "function": "LAG",
+    "sql": "WITH fib AS (SELECT 1 AS n UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 5 UNION ALL SELECT 8) SELECT n, LAG(n, 1, 0) OVER w AS 'lag', LEAD(n, 1, 0) OVER w AS 'lead', n + LAG(n, 1, 0) OVER w AS 'next_n', n + LEAD(n, 1, 0) OVER w AS 'next_next_n' FROM fib WINDOW w AS (ORDER BY n);",
+    "expected_rows": [
+      [
+        "1",
+        "0",
+        "1",
+        "1",
+        "2"
+      ],
+      [
+        "1",
+        "1",
+        "2",
+        "2",
+        "3"
+      ],
+      [
+        "2",
+        "1",
+        "3",
+        "3",
+        "5"
+      ],
+      [
+        "3",
+        "2",
+        "5",
+        "5",
+        "8"
+      ],
+      [
+        "5",
+        "3",
+        "8",
+        "8",
+        "13"
+      ],
+      [
+        "8",
+        "5",
+        "0",
+        "13",
+        "8"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/window-function-descriptions.html#LAG",
+    "notes": "fib CTE reconstructed from the manual's 'SELECT n FROM fib ORDER BY n' output; LAG/LEAD with default value argument"
+  },
+  {
+    "id": "mysql-aggwin-007",
+    "function": "NTILE",
+    "sql": "WITH numbers AS (SELECT 1 AS val UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 3 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 4 UNION ALL SELECT 5) SELECT val, ROW_NUMBER() OVER w AS 'row_number', NTILE(2) OVER w AS 'ntile2', NTILE(4) OVER w AS 'ntile4' FROM numbers WINDOW w AS (ORDER BY val);",
+    "expected_rows": [
+      [
+        "1",
+        "1",
+        "1",
+        "1"
+      ],
+      [
+        "1",
+        "2",
+        "1",
+        "1"
+      ],
+      [
+        "2",
+        "3",
+        "1",
+        "1"
+      ],
+      [
+        "3",
+        "4",
+        "1",
+        "2"
+      ],
+      [
+        "3",
+        "5",
+        "1",
+        "2"
+      ],
+      [
+        "3",
+        "6",
+        "2",
+        "3"
+      ],
+      [
+        "4",
+        "7",
+        "2",
+        "3"
+      ],
+      [
+        "4",
+        "8",
+        "2",
+        "4"
+      ],
+      [
+        "5",
+        "9",
+        "2",
+        "4"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/window-function-descriptions.html#NTILE",
+    "notes": "numbers CTE reconstructed from the val column of the manual's output (manual does not define the table); rows shown in window order, outer query has no ORDER BY; tied rows (val=3) get different tiles, so row_number/ntile for ties depends on tie-break order"
+  },
+  {
+    "id": "mysql-aggwin-008",
+    "function": "RANK",
+    "sql": "WITH numbers AS (SELECT 1 AS val UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 3 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 4 UNION ALL SELECT 5) SELECT val, ROW_NUMBER() OVER w AS 'row_number', RANK() OVER w AS 'rank', DENSE_RANK() OVER w AS 'dense_rank' FROM numbers WINDOW w AS (ORDER BY val);",
+    "expected_rows": [
+      [
+        "1",
+        "1",
+        "1",
+        "1"
+      ],
+      [
+        "1",
+        "2",
+        "1",
+        "1"
+      ],
+      [
+        "2",
+        "3",
+        "3",
+        "2"
+      ],
+      [
+        "3",
+        "4",
+        "4",
+        "3"
+      ],
+      [
+        "3",
+        "5",
+        "4",
+        "3"
+      ],
+      [
+        "3",
+        "6",
+        "4",
+        "3"
+      ],
+      [
+        "4",
+        "7",
+        "7",
+        "4"
+      ],
+      [
+        "4",
+        "8",
+        "7",
+        "4"
+      ],
+      [
+        "5",
+        "9",
+        "9",
+        "5"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/window-function-descriptions.html#RANK",
+    "notes": "numbers CTE reconstructed from the val column of the manual's output (manual does not define the table); rows shown in window order, outer query has no ORDER BY; also covers DENSE_RANK and ROW_NUMBER"
+  },
+  {
+    "id": "mysql-aggwin-009",
+    "function": "IS",
+    "sql": "SELECT 10 IS TRUE;",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/logical-operators.html#IS",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-010",
+    "function": "IS",
+    "sql": "SELECT -10 IS TRUE;",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/logical-operators.html#IS",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-011",
+    "function": "IS NOT NULL",
+    "sql": "SELECT 'string' IS NOT NULL;",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/logical-operators.html#IS NOT NULL",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-012",
+    "function": "NOT",
+    "sql": "SELECT NOT 10;",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/logical-operators.html#NOT",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-013",
+    "function": "NOT",
+    "sql": "SELECT NOT 0;",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/logical-operators.html#NOT",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-014",
+    "function": "NOT",
+    "sql": "SELECT NOT NULL;",
+    "expected_rows": [
+      [
+        "NULL"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/logical-operators.html#NOT",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-015",
+    "function": "NOT (!)",
+    "sql": "SELECT ! (1+1);",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/logical-operators.html#NOT",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-016",
+    "function": "NOT (!)",
+    "sql": "SELECT ! 1+1;",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/logical-operators.html#NOT",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-017",
+    "function": "AND",
+    "sql": "SELECT 1 AND 1;",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/logical-operators.html#AND",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-018",
+    "function": "AND",
+    "sql": "SELECT 1 AND 0;",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/logical-operators.html#AND",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-019",
+    "function": "AND",
+    "sql": "SELECT 1 AND NULL;",
+    "expected_rows": [
+      [
+        "NULL"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/logical-operators.html#AND",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-020",
+    "function": "AND",
+    "sql": "SELECT 0 AND NULL;",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/logical-operators.html#AND",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-021",
+    "function": "AND",
+    "sql": "SELECT NULL AND 0;",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/logical-operators.html#AND",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-022",
+    "function": "OR",
+    "sql": "SELECT 1 OR 1;",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/logical-operators.html#OR",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-023",
+    "function": "OR",
+    "sql": "SELECT 1 OR 0;",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/logical-operators.html#OR",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-024",
+    "function": "OR",
+    "sql": "SELECT 0 OR 0;",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/logical-operators.html#OR",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-025",
+    "function": "OR",
+    "sql": "SELECT 0 OR NULL;",
+    "expected_rows": [
+      [
+        "NULL"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/logical-operators.html#OR",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-026",
+    "function": "OR",
+    "sql": "SELECT 1 OR NULL;",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/logical-operators.html#OR",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-027",
+    "function": "XOR",
+    "sql": "SELECT 1 XOR 1;",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/logical-operators.html#XOR",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-028",
+    "function": "XOR",
+    "sql": "SELECT 1 XOR 0;",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/logical-operators.html#XOR",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-029",
+    "function": "XOR",
+    "sql": "SELECT 1 XOR NULL;",
+    "expected_rows": [
+      [
+        "NULL"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/logical-operators.html#XOR",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-030",
+    "function": "XOR",
+    "sql": "SELECT 1 XOR 1 XOR 1;",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/logical-operators.html#XOR",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-031",
+    "function": "INET_ATON",
+    "sql": "SELECT INET_ATON('10.0.5.9');",
+    "expected_rows": [
+      [
+        "167773449"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/miscellaneous-functions.html#INET_ATON",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-032",
+    "function": "INET_NTOA",
+    "sql": "SELECT INET_NTOA(167773449);",
+    "expected_rows": [
+      [
+        "10.0.5.9"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/miscellaneous-functions.html#INET_NTOA",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-033",
+    "function": "INET6_ATON",
+    "sql": "SELECT HEX(INET6_ATON('fdfe::5a55:caff:fefa:9089'));",
+    "expected_rows": [
+      [
+        "FDFE0000000000005A55CAFFFEFA9089"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/miscellaneous-functions.html#INET6_ATON",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-034",
+    "function": "INET6_ATON",
+    "sql": "SELECT HEX(INET6_ATON('10.0.5.9'));",
+    "expected_rows": [
+      [
+        "0A000509"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/miscellaneous-functions.html#INET6_ATON",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-035",
+    "function": "INET6_ATON",
+    "sql": "SELECT HEX(INET6_ATON(INET_NTOA(167773449)));",
+    "expected_rows": [
+      [
+        "0A000509"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/miscellaneous-functions.html#INET6_ATON",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-036",
+    "function": "INET6_NTOA",
+    "sql": "SELECT INET6_NTOA(INET6_ATON('fdfe::5a55:caff:fefa:9089'));",
+    "expected_rows": [
+      [
+        "fdfe::5a55:caff:fefa:9089"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/miscellaneous-functions.html#INET6_NTOA",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-037",
+    "function": "INET6_NTOA",
+    "sql": "SELECT INET6_NTOA(INET6_ATON('10.0.5.9'));",
+    "expected_rows": [
+      [
+        "10.0.5.9"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/miscellaneous-functions.html#INET6_NTOA",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-038",
+    "function": "INET6_NTOA",
+    "sql": "SELECT INET6_NTOA(UNHEX('FDFE0000000000005A55CAFFFEFA9089'));",
+    "expected_rows": [
+      [
+        "fdfe::5a55:caff:fefa:9089"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/miscellaneous-functions.html#INET6_NTOA",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-039",
+    "function": "INET6_NTOA",
+    "sql": "SELECT INET6_NTOA(UNHEX('0A000509'));",
+    "expected_rows": [
+      [
+        "10.0.5.9"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/miscellaneous-functions.html#INET6_NTOA",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-040",
+    "function": "IS_IPV4",
+    "sql": "SELECT IS_IPV4('10.0.5.9'), IS_IPV4('10.0.5.256');",
+    "expected_rows": [
+      [
+        "1",
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/miscellaneous-functions.html#IS_IPV4",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-041",
+    "function": "IS_IPV4_COMPAT",
+    "sql": "SELECT IS_IPV4_COMPAT(INET6_ATON('::10.0.5.9'));",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/miscellaneous-functions.html#IS_IPV4_COMPAT",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-042",
+    "function": "IS_IPV4_COMPAT",
+    "sql": "SELECT IS_IPV4_COMPAT(INET6_ATON('::ffff:10.0.5.9'));",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/miscellaneous-functions.html#IS_IPV4_COMPAT",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-043",
+    "function": "INET6_ATON",
+    "sql": "SELECT HEX(INET6_ATON('198.51.100.1'));",
+    "expected_rows": [
+      [
+        "C6336401"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/miscellaneous-functions.html#IS_IPV4_COMPAT",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-044",
+    "function": "IS_IPV4_COMPAT",
+    "sql": "SELECT IS_IPV4_COMPAT(INET6_ATON('::198.51.100.1')), IS_IPV4_COMPAT(INET6_ATON('::c0a8:0001')), IS_IPV4_COMPAT(INET6_ATON('::c0a8:1'));",
+    "expected_rows": [
+      [
+        "1",
+        "1",
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/miscellaneous-functions.html#IS_IPV4_COMPAT",
+    "notes": "manual splits statement across lines"
+  },
+  {
+    "id": "mysql-aggwin-045",
+    "function": "IS_IPV4_MAPPED",
+    "sql": "SELECT IS_IPV4_MAPPED(INET6_ATON('::10.0.5.9'));",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/miscellaneous-functions.html#IS_IPV4_MAPPED",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-046",
+    "function": "IS_IPV4_MAPPED",
+    "sql": "SELECT IS_IPV4_MAPPED(INET6_ATON('::ffff:10.0.5.9'));",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/miscellaneous-functions.html#IS_IPV4_MAPPED",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-047",
+    "function": "IS_IPV4_MAPPED",
+    "sql": "SELECT IS_IPV4_MAPPED(INET6_ATON('::ffff:198.51.100.1')), IS_IPV4_MAPPED(INET6_ATON('::ffff:c0a8:0001')), IS_IPV4_MAPPED(INET6_ATON('::ffff:c0a8:1'));",
+    "expected_rows": [
+      [
+        "1",
+        "1",
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/miscellaneous-functions.html#IS_IPV4_MAPPED",
+    "notes": "manual splits statement across lines"
+  },
+  {
+    "id": "mysql-aggwin-048",
+    "function": "IS_IPV6",
+    "sql": "SELECT IS_IPV6('10.0.5.9'), IS_IPV6('::1');",
+    "expected_rows": [
+      [
+        "0",
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/miscellaneous-functions.html#IS_IPV6",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-049",
+    "function": "IS_UUID",
+    "sql": "SELECT IS_UUID('6ccd780c-baba-1026-9564-5b8c656024db');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/miscellaneous-functions.html#IS_UUID",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-050",
+    "function": "IS_UUID",
+    "sql": "SELECT IS_UUID('6CCD780C-BABA-1026-9564-5B8C656024DB');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/miscellaneous-functions.html#IS_UUID",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-051",
+    "function": "IS_UUID",
+    "sql": "SELECT IS_UUID('6ccd780cbaba102695645b8c656024db');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/miscellaneous-functions.html#IS_UUID",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-052",
+    "function": "IS_UUID",
+    "sql": "SELECT IS_UUID('{6ccd780c-baba-1026-9564-5b8c656024db}');",
+    "expected_rows": [
+      [
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/miscellaneous-functions.html#IS_UUID",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-053",
+    "function": "IS_UUID",
+    "sql": "SELECT IS_UUID('6ccd780c-baba-1026-9564-5b8c6560');",
+    "expected_rows": [
+      [
+        "0"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/miscellaneous-functions.html#IS_UUID",
+    "notes": ""
+  },
+  {
+    "id": "mysql-aggwin-054",
+    "function": "NAME_CONST",
+    "sql": "SELECT NAME_CONST('myname', 14);",
+    "expected_rows": [
+      [
+        "14"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/miscellaneous-functions.html#NAME_CONST",
+    "notes": "result column is named myname"
+  },
+  {
+    "id": "mysql-aggwin-055",
+    "function": "GROUPING",
+    "sql": "WITH t1 AS (SELECT 'ball' AS name, 'small' AS size, 10 AS quantity UNION ALL SELECT 'ball','large',20 UNION ALL SELECT 'ball',NULL,5 UNION ALL SELECT 'hoop','small',15 UNION ALL SELECT 'hoop','large',5 UNION ALL SELECT 'hoop',NULL,3) SELECT name, size, SUM(quantity) AS quantity FROM t1 GROUP BY name, size WITH ROLLUP;",
+    "expected_rows": [
+      [
+        "ball",
+        "NULL",
+        "5"
+      ],
+      [
+        "ball",
+        "large",
+        "20"
+      ],
+      [
+        "ball",
+        "small",
+        "10"
+      ],
+      [
+        "ball",
+        "NULL",
+        "35"
+      ],
+      [
+        "hoop",
+        "NULL",
+        "3"
+      ],
+      [
+        "hoop",
+        "large",
+        "5"
+      ],
+      [
+        "hoop",
+        "small",
+        "15"
+      ],
+      [
+        "hoop",
+        "NULL",
+        "23"
+      ],
+      [
+        "NULL",
+        "NULL",
+        "58"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/miscellaneous-functions.html#GROUPING",
+    "notes": "t1 CTE reconstructed from the manual's 'SELECT * FROM t1' output; WITH ROLLUP row order (NULL sorts first within group, super-aggregate row after group) as shown by manual"
+  },
+  {
+    "id": "mysql-aggwin-056",
+    "function": "GROUPING",
+    "sql": "WITH t1 AS (SELECT 'ball' AS name, 'small' AS size, 10 AS quantity UNION ALL SELECT 'ball','large',20 UNION ALL SELECT 'ball',NULL,5 UNION ALL SELECT 'hoop','small',15 UNION ALL SELECT 'hoop','large',5 UNION ALL SELECT 'hoop',NULL,3) SELECT name, size, SUM(quantity) AS quantity, GROUPING(name) AS grp_name, GROUPING(size) AS grp_size FROM t1 GROUP BY name, size WITH ROLLUP;",
+    "expected_rows": [
+      [
+        "ball",
+        "NULL",
+        "5",
+        "0",
+        "0"
+      ],
+      [
+        "ball",
+        "large",
+        "20",
+        "0",
+        "0"
+      ],
+      [
+        "ball",
+        "small",
+        "10",
+        "0",
+        "0"
+      ],
+      [
+        "ball",
+        "NULL",
+        "35",
+        "0",
+        "1"
+      ],
+      [
+        "hoop",
+        "NULL",
+        "3",
+        "0",
+        "0"
+      ],
+      [
+        "hoop",
+        "large",
+        "5",
+        "0",
+        "0"
+      ],
+      [
+        "hoop",
+        "small",
+        "15",
+        "0",
+        "0"
+      ],
+      [
+        "hoop",
+        "NULL",
+        "23",
+        "0",
+        "1"
+      ],
+      [
+        "NULL",
+        "NULL",
+        "58",
+        "1",
+        "1"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/miscellaneous-functions.html#GROUPING",
+    "notes": "t1 CTE reconstructed from the manual's 'SELECT * FROM t1' output; WITH ROLLUP row order (NULL sorts first within group, super-aggregate row after group) as shown by manual"
+  },
+  {
+    "id": "mysql-aggwin-057",
+    "function": "GROUPING",
+    "sql": "WITH t1 AS (SELECT 'ball' AS name, 'small' AS size, 10 AS quantity UNION ALL SELECT 'ball','large',20 UNION ALL SELECT 'ball',NULL,5 UNION ALL SELECT 'hoop','small',15 UNION ALL SELECT 'hoop','large',5 UNION ALL SELECT 'hoop',NULL,3) SELECT IF(GROUPING(name) = 1, 'All items', name) AS name, IF(GROUPING(size) = 1, 'All sizes', size) AS size, SUM(quantity) AS quantity FROM t1 GROUP BY name, size WITH ROLLUP;",
+    "expected_rows": [
+      [
+        "ball",
+        "NULL",
+        "5"
+      ],
+      [
+        "ball",
+        "large",
+        "20"
+      ],
+      [
+        "ball",
+        "small",
+        "10"
+      ],
+      [
+        "ball",
+        "All sizes",
+        "35"
+      ],
+      [
+        "hoop",
+        "NULL",
+        "3"
+      ],
+      [
+        "hoop",
+        "large",
+        "5"
+      ],
+      [
+        "hoop",
+        "small",
+        "15"
+      ],
+      [
+        "hoop",
+        "All sizes",
+        "23"
+      ],
+      [
+        "All items",
+        "All sizes",
+        "58"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/miscellaneous-functions.html#GROUPING",
+    "notes": "t1 CTE reconstructed from the manual's 'SELECT * FROM t1' output; WITH ROLLUP row order (NULL sorts first within group, super-aggregate row after group) as shown by manual"
+  },
+  {
+    "id": "mysql-aggwin-058",
+    "function": "GROUPING",
+    "sql": "WITH t1 AS (SELECT 'ball' AS name, 'small' AS size, 10 AS quantity UNION ALL SELECT 'ball','large',20 UNION ALL SELECT 'ball',NULL,5 UNION ALL SELECT 'hoop','small',15 UNION ALL SELECT 'hoop','large',5 UNION ALL SELECT 'hoop',NULL,3) SELECT name, size, SUM(quantity) AS quantity FROM t1 GROUP BY name, size WITH ROLLUP HAVING GROUPING(name) = 1 OR GROUPING(size) = 1;",
+    "expected_rows": [
+      [
+        "ball",
+        "NULL",
+        "35"
+      ],
+      [
+        "hoop",
+        "NULL",
+        "23"
+      ],
+      [
+        "NULL",
+        "NULL",
+        "58"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/miscellaneous-functions.html#GROUPING",
+    "notes": "t1 CTE reconstructed from the manual's 'SELECT * FROM t1' output; WITH ROLLUP row order (NULL sorts first within group, super-aggregate row after group) as shown by manual"
+  },
+  {
+    "id": "mysql-aggwin-059",
+    "function": "GROUPING",
+    "sql": "WITH t1 AS (SELECT 'ball' AS name, 'small' AS size, 10 AS quantity UNION ALL SELECT 'ball','large',20 UNION ALL SELECT 'ball',NULL,5 UNION ALL SELECT 'hoop','small',15 UNION ALL SELECT 'hoop','large',5 UNION ALL SELECT 'hoop',NULL,3) SELECT name, size, SUM(quantity) AS quantity, GROUPING(name) AS grp_name, GROUPING(size) AS grp_size, GROUPING(name, size) AS grp_all FROM t1 GROUP BY name, size WITH ROLLUP;",
+    "expected_rows": [
+      [
+        "ball",
+        "NULL",
+        "5",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "ball",
+        "large",
+        "20",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "ball",
+        "small",
+        "10",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "ball",
+        "NULL",
+        "35",
+        "0",
+        "1",
+        "1"
+      ],
+      [
+        "hoop",
+        "NULL",
+        "3",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "hoop",
+        "large",
+        "5",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "hoop",
+        "small",
+        "15",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "hoop",
+        "NULL",
+        "23",
+        "0",
+        "1",
+        "1"
+      ],
+      [
+        "NULL",
+        "NULL",
+        "58",
+        "1",
+        "1",
+        "3"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/miscellaneous-functions.html#GROUPING",
+    "notes": "t1 CTE reconstructed from the manual's 'SELECT * FROM t1' output; WITH ROLLUP row order (NULL sorts first within group, super-aggregate row after group) as shown by manual"
+  },
+  {
+    "id": "mysql-aggwin-060",
+    "function": "GROUPING",
+    "sql": "WITH t1 AS (SELECT 'ball' AS name, 'small' AS size, 10 AS quantity UNION ALL SELECT 'ball','large',20 UNION ALL SELECT 'ball',NULL,5 UNION ALL SELECT 'hoop','small',15 UNION ALL SELECT 'hoop','large',5 UNION ALL SELECT 'hoop',NULL,3) SELECT name, size, SUM(quantity) AS quantity FROM t1 GROUP BY name, size WITH ROLLUP HAVING GROUPING(name, size) <> 0;",
+    "expected_rows": [
+      [
+        "ball",
+        "NULL",
+        "35"
+      ],
+      [
+        "hoop",
+        "NULL",
+        "23"
+      ],
+      [
+        "NULL",
+        "NULL",
+        "58"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/miscellaneous-functions.html#GROUPING",
+    "notes": "t1 CTE reconstructed from the manual's 'SELECT * FROM t1' output; WITH ROLLUP row order (NULL sorts first within group, super-aggregate row after group) as shown by manual"
+  },
+  {
+    "id": "mysql-aggwin-061",
+    "function": "GROUPING",
+    "sql": "WITH t1 AS (SELECT 'ball' AS name, 'small' AS size, 10 AS quantity UNION ALL SELECT 'ball','large',20 UNION ALL SELECT 'ball',NULL,5 UNION ALL SELECT 'hoop','small',15 UNION ALL SELECT 'hoop','large',5 UNION ALL SELECT 'hoop',NULL,3) SELECT name, size, SUM(quantity) AS quantity FROM t1 GROUP BY name, size;",
+    "expected_rows": [
+      [
+        "ball",
+        "small",
+        "10"
+      ],
+      [
+        "ball",
+        "large",
+        "20"
+      ],
+      [
+        "ball",
+        "NULL",
+        "5"
+      ],
+      [
+        "hoop",
+        "small",
+        "15"
+      ],
+      [
+        "hoop",
+        "large",
+        "5"
+      ],
+      [
+        "hoop",
+        "NULL",
+        "3"
+      ]
+    ],
+    "source": "https://dev.mysql.com/doc/refman/8.4/en/miscellaneous-functions.html#GROUPING",
+    "notes": "t1 CTE reconstructed from manual; plain GROUP BY (no ORDER BY), row order as shown by manual and not guaranteed"
+  }
+]

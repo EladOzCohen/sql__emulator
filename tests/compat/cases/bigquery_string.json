@@ -1,0 +1,2813 @@
+[
+ {
+  "id": "bq-string-001",
+  "function": "ASCII",
+  "sql": "SELECT ASCII('abcd') as A, ASCII('a') as B, ASCII('') as C, ASCII(NULL) as D;",
+  "expected_rows": [
+   [
+    "97",
+    "97",
+    "0",
+    "NULL"
+   ]
+  ],
+  "expected_columns": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#ascii",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-002",
+  "function": "BYTE_LENGTH",
+  "sql": "SELECT BYTE_LENGTH('абвгд') AS string_example;",
+  "expected_rows": [
+   [
+    "10"
+   ]
+  ],
+  "expected_columns": [
+   "string_example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#byte_length",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-003",
+  "function": "BYTE_LENGTH",
+  "sql": "SELECT BYTE_LENGTH(b'абвгд') AS bytes_example;",
+  "expected_rows": [
+   [
+    "10"
+   ]
+  ],
+  "expected_columns": [
+   "bytes_example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#byte_length",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-004",
+  "function": "CHAR_LENGTH",
+  "sql": "SELECT CHAR_LENGTH('абвгд') AS char_length;",
+  "expected_rows": [
+   [
+    "5"
+   ]
+  ],
+  "expected_columns": [
+   "char_length"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#char_length",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-005",
+  "function": "CHARACTER_LENGTH",
+  "sql": "SELECT\n  'абвгд' AS characters,\n  CHARACTER_LENGTH('абвгд') AS char_length_example;",
+  "expected_rows": [
+   [
+    "абвгд",
+    "5"
+   ]
+  ],
+  "expected_columns": [
+   "characters",
+   "char_length_example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#character_length",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-006",
+  "function": "CHR",
+  "sql": "SELECT CHR(65) AS A, CHR(255) AS B, CHR(513) AS C, CHR(1024)  AS D;",
+  "expected_rows": [
+   [
+    "A",
+    "ÿ",
+    "ȁ",
+    "Ѐ"
+   ]
+  ],
+  "expected_columns": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#chr",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-007",
+  "function": "CHR",
+  "sql": "SELECT CHR(97) AS A, CHR(0xF9B5) AS B, CHR(0) AS C, CHR(NULL) AS D;",
+  "expected_rows": [
+   [
+    "a",
+    "例",
+    "",
+    "NULL"
+   ]
+  ],
+  "expected_columns": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#chr",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-008",
+  "function": "CODE_POINTS_TO_BYTES",
+  "sql": "SELECT CODE_POINTS_TO_BYTES([65, 98, 67, 100]) AS bytes;",
+  "expected_rows": [
+   [
+    "QWJDZA=="
+   ]
+  ],
+  "expected_columns": [
+   "bytes"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#code_points_to_bytes",
+  "notes": "BYTES result is shown by the docs as a base64 string."
+ },
+ {
+  "id": "bq-string-009",
+  "function": "CODE_POINTS_TO_BYTES",
+  "sql": "SELECT CODE_POINTS_TO_BYTES(ARRAY_AGG(\n  (SELECT\n      CASE\n        WHEN chr BETWEEN b'a' and b'z'\n          THEN TO_CODE_POINTS(b'a')[offset(0)] +\n            MOD(code+13-TO_CODE_POINTS(b'a')[offset(0)],26)\n        WHEN chr BETWEEN b'A' and b'Z'\n          THEN TO_CODE_POINTS(b'A')[offset(0)] +\n            MOD(code+13-TO_CODE_POINTS(b'A')[offset(0)],26)\n        ELSE code\n      END\n   FROM\n     (SELECT code, CODE_POINTS_TO_BYTES([code]) chr)\n  ) ORDER BY OFFSET)) AS encoded_string\nFROM UNNEST(TO_CODE_POINTS(b'Test String!')) code WITH OFFSET;",
+  "expected_rows": [
+   [
+    "R3JmZyBGZ2V2YXQh"
+   ]
+  ],
+  "expected_columns": [
+   "encoded_string"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#code_points_to_bytes",
+  "notes": "BYTES result is shown by the docs as a base64 string."
+ },
+ {
+  "id": "bq-string-010",
+  "function": "CODE_POINTS_TO_STRING",
+  "sql": "SELECT CODE_POINTS_TO_STRING([65, 255, 513, 1024]) AS string;",
+  "expected_rows": [
+   [
+    "AÿȁЀ"
+   ]
+  ],
+  "expected_columns": [
+   "string"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#code_points_to_string",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-011",
+  "function": "CODE_POINTS_TO_STRING",
+  "sql": "SELECT CODE_POINTS_TO_STRING([97, 0, 0xF9B5]) AS string;",
+  "expected_rows": [
+   [
+    "a例"
+   ]
+  ],
+  "expected_columns": [
+   "string"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#code_points_to_string",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-012",
+  "function": "CODE_POINTS_TO_STRING",
+  "sql": "SELECT CODE_POINTS_TO_STRING([65, 255, NULL, 1024]) AS string;",
+  "expected_rows": [
+   [
+    "NULL"
+   ]
+  ],
+  "expected_columns": [
+   "string"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#code_points_to_string",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-013",
+  "function": "CODE_POINTS_TO_STRING",
+  "sql": "WITH Words AS (\n  SELECT word\n  FROM UNNEST(['foo', 'bar', 'baz', 'giraffe', 'llama']) AS word\n)\nSELECT\n  CODE_POINTS_TO_STRING([code_point]) AS letter,\n  COUNT(*) AS letter_count\nFROM Words,\n  UNNEST(TO_CODE_POINTS(word)) AS code_point\nGROUP BY 1\nORDER BY 2 DESC;",
+  "expected_rows": [
+   [
+    "a",
+    "5"
+   ],
+   [
+    "f",
+    "3"
+   ],
+   [
+    "r",
+    "2"
+   ],
+   [
+    "b",
+    "2"
+   ],
+   [
+    "l",
+    "2"
+   ],
+   [
+    "o",
+    "2"
+   ],
+   [
+    "g",
+    "1"
+   ],
+   [
+    "z",
+    "1"
+   ],
+   [
+    "e",
+    "1"
+   ],
+   [
+    "m",
+    "1"
+   ],
+   [
+    "i",
+    "1"
+   ]
+  ],
+  "expected_columns": [
+   "letter",
+   "letter_count"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#code_points_to_string",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-014",
+  "function": "COLLATE",
+  "sql": "WITH Words AS (\n  SELECT\n    COLLATE('a', 'und:ci') AS char1,\n    COLLATE('Z', 'und:ci') AS char2\n)\nSELECT ( Words.char1 < Words.char2 ) AS a_less_than_Z\nFROM Words;",
+  "expected_rows": [
+   [
+    "TRUE"
+   ]
+  ],
+  "expected_columns": [
+   "a_less_than_Z"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#collate",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-015",
+  "function": "COLLATE",
+  "sql": "WITH Words AS (\n  SELECT\n    'a' AS char1,\n    'Z' AS char2\n)\nSELECT ( Words.char1 < Words.char2 ) AS a_less_than_Z\nFROM Words;",
+  "expected_rows": [
+   [
+    "FALSE"
+   ]
+  ],
+  "expected_columns": [
+   "a_less_than_Z"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#collate",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-016",
+  "function": "CONCAT",
+  "sql": "SELECT CONCAT('T.P.', ' ', 'Bar') as author;",
+  "expected_rows": [
+   [
+    "T.P. Bar"
+   ]
+  ],
+  "expected_columns": [
+   "author"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#concat",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-017",
+  "function": "CONCAT",
+  "sql": "SELECT CONCAT('Summer', ' ', 1923) as release_date;",
+  "expected_rows": [
+   [
+    "Summer 1923"
+   ]
+  ],
+  "expected_columns": [
+   "release_date"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#concat",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-018",
+  "function": "CONCAT",
+  "sql": "With Employees AS\n  (SELECT\n    'John' AS first_name,\n    'Doe' AS last_name\n  UNION ALL\n  SELECT\n    'Jane' AS first_name,\n    'Smith' AS last_name\n  UNION ALL\n  SELECT\n    'Joe' AS first_name,\n    'Jackson' AS last_name)\n\nSELECT\n  CONCAT(first_name, ' ', last_name)\n  AS full_name\nFROM Employees;",
+  "expected_rows": [
+   [
+    "John Doe"
+   ],
+   [
+    "Jane Smith"
+   ],
+   [
+    "Joe Jackson"
+   ]
+  ],
+  "expected_columns": [
+   "full_name"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#concat",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-string-019",
+  "function": "CONTAINS_SUBSTR",
+  "sql": "SELECT CONTAINS_SUBSTR('the blue house', 'Blue house') AS result;",
+  "expected_rows": [
+   [
+    "true"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#contains_substr",
+  "notes": "Docs print booleans in lowercase (true/false/null) for CONTAINS_SUBSTR."
+ },
+ {
+  "id": "bq-string-020",
+  "function": "CONTAINS_SUBSTR",
+  "sql": "SELECT CONTAINS_SUBSTR('the blue house', CONCAT('Blue ', 'house')) AS result;",
+  "expected_rows": [
+   [
+    "true"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#contains_substr",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-021",
+  "function": "CONTAINS_SUBSTR",
+  "sql": "SELECT CONTAINS_SUBSTR('the red house', 'blue') AS result;",
+  "expected_rows": [
+   [
+    "false"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#contains_substr",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-022",
+  "function": "CONTAINS_SUBSTR",
+  "sql": "SELECT '\\u2168 day' AS a, 'IX' AS b, CONTAINS_SUBSTR('\\u2168', 'IX') AS result;",
+  "expected_rows": [
+   [
+    "Ⅸ day",
+    "IX",
+    "true"
+   ]
+  ],
+  "expected_columns": [
+   "a",
+   "b",
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#contains_substr",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-023",
+  "function": "CONTAINS_SUBSTR",
+  "sql": "SELECT CONTAINS_SUBSTR((23, 35, 41), '35') AS result;",
+  "expected_rows": [
+   [
+    "true"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#contains_substr",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-024",
+  "function": "CONTAINS_SUBSTR",
+  "sql": "SELECT CONTAINS_SUBSTR(('abc', ['def', 'ghi', 'jkl'], 'mno'), 'jk') AS result;",
+  "expected_rows": [
+   [
+    "true"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#contains_substr",
+  "notes": "Alias added to match the column name shown in the docs result."
+ },
+ {
+  "id": "bq-string-025",
+  "function": "CONTAINS_SUBSTR",
+  "sql": "SELECT CONTAINS_SUBSTR((23, NULL, 41), '41') AS result;",
+  "expected_rows": [
+   [
+    "true"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#contains_substr",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-026",
+  "function": "CONTAINS_SUBSTR",
+  "sql": "SELECT CONTAINS_SUBSTR((23, NULL, 41), '35') AS result;",
+  "expected_rows": [
+   [
+    "null"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#contains_substr",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-027",
+  "function": "CONTAINS_SUBSTR",
+  "sql": "SELECT CONTAINS_SUBSTR(JSON '{\"lunch\":\"soup\"}',\"lunch\") AS result;",
+  "expected_rows": [
+   [
+    "FALSE"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#contains_substr",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-028",
+  "function": "CONTAINS_SUBSTR",
+  "sql": "SELECT CONTAINS_SUBSTR(JSON '{\"lunch\":\"soup\"}',\n                       \"lunch\",\n                       json_scope=>\"JSON_VALUES\") AS result;",
+  "expected_rows": [
+   [
+    "FALSE"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#contains_substr",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-029",
+  "function": "CONTAINS_SUBSTR",
+  "sql": "SELECT CONTAINS_SUBSTR(JSON '{\"lunch\":\"soup\"}',\n                       \"lunch\",\n                       json_scope=>\"JSON_KEYS_AND_VALUES\") AS result;",
+  "expected_rows": [
+   [
+    "TRUE"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#contains_substr",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-030",
+  "function": "CONTAINS_SUBSTR",
+  "sql": "SELECT CONTAINS_SUBSTR(JSON '{\"lunch\":\"soup\"}',\n                       \"lunch\",\n                       json_scope=>\"JSON_KEYS\") AS result;",
+  "expected_rows": [
+   [
+    "TRUE"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#contains_substr",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-031",
+  "function": "EDIT_DISTANCE",
+  "sql": "SELECT EDIT_DISTANCE('a', 'b') AS results;",
+  "expected_rows": [
+   [
+    "1"
+   ]
+  ],
+  "expected_columns": [
+   "results"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#edit_distance",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-032",
+  "function": "EDIT_DISTANCE",
+  "sql": "SELECT EDIT_DISTANCE('aa', 'b') AS results;",
+  "expected_rows": [
+   [
+    "2"
+   ]
+  ],
+  "expected_columns": [
+   "results"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#edit_distance",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-033",
+  "function": "EDIT_DISTANCE",
+  "sql": "SELECT EDIT_DISTANCE('aa', 'ba') AS results;",
+  "expected_rows": [
+   [
+    "1"
+   ]
+  ],
+  "expected_columns": [
+   "results"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#edit_distance",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-034",
+  "function": "EDIT_DISTANCE",
+  "sql": "SELECT EDIT_DISTANCE('abcdefg', 'a', max_distance => 2) AS results;",
+  "expected_rows": [
+   [
+    "2"
+   ]
+  ],
+  "expected_columns": [
+   "results"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#edit_distance",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-035",
+  "function": "ENDS_WITH",
+  "sql": "SELECT ENDS_WITH('apple', 'e') as example;",
+  "expected_rows": [
+   [
+    "True"
+   ]
+  ],
+  "expected_columns": [
+   "example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#ends_with",
+  "notes": "Docs print the boolean as 'True'."
+ },
+ {
+  "id": "bq-string-036",
+  "function": "FROM_BASE32",
+  "sql": "SELECT FROM_BASE32('MFRGGZDF74======') AS byte_data;",
+  "expected_rows": [
+   [
+    "YWJjZGX/"
+   ]
+  ],
+  "expected_columns": [
+   "byte_data"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#from_base32",
+  "notes": "BYTES result is shown by the docs as a base64 string."
+ },
+ {
+  "id": "bq-string-037",
+  "function": "FROM_BASE64",
+  "sql": "SELECT FROM_BASE64('/+A=') AS byte_data;",
+  "expected_rows": [
+   [
+    "/+A="
+   ]
+  ],
+  "expected_columns": [
+   "byte_data"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#from_base64",
+  "notes": "BYTES result is shown by the docs as a base64 string."
+ },
+ {
+  "id": "bq-string-038",
+  "function": "FROM_BASE64",
+  "sql": "SELECT FROM_BASE64(REPLACE(REPLACE('_-A=', '-', '+'), '_', '/')) AS binary;",
+  "expected_rows": [
+   [
+    "/+A="
+   ]
+  ],
+  "expected_columns": [
+   "binary"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#from_base64",
+  "notes": "BYTES result is shown by the docs as a base64 string."
+ },
+ {
+  "id": "bq-string-039",
+  "function": "FROM_HEX",
+  "sql": "WITH Input AS (\n  SELECT '00010203aaeeefff' AS hex_str UNION ALL\n  SELECT '0AF' UNION ALL\n  SELECT '666f6f626172'\n)\nSELECT hex_str, FROM_HEX(hex_str) AS bytes_str\nFROM Input;",
+  "expected_rows": [
+   [
+    "0AF",
+    "AK8="
+   ],
+   [
+    "00010203aaeeefff",
+    "AAECA6ru7/8="
+   ],
+   [
+    "666f6f626172",
+    "Zm9vYmFy"
+   ]
+  ],
+  "expected_columns": [
+   "hex_str",
+   "bytes_str"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#from_hex",
+  "notes": "BYTES result is shown by the docs as a base64 string. Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-string-040",
+  "function": "INITCAP",
+  "sql": "SELECT\n  'Hello World-everyone!' AS value,\n  INITCAP('Hello World-everyone!') AS initcap_value;",
+  "expected_rows": [
+   [
+    "Hello World-everyone!",
+    "Hello World-Everyone!"
+   ]
+  ],
+  "expected_columns": [
+   "value",
+   "initcap_value"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#initcap",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-041",
+  "function": "INITCAP",
+  "sql": "SELECT\n  'Apples1oranges2pears' as value,\n  '12' AS delimiters,\n  INITCAP('Apples1oranges2pears' , '12') AS initcap_value;",
+  "expected_rows": [
+   [
+    "Apples1oranges2pears",
+    "12",
+    "Apples1Oranges2Pears"
+   ]
+  ],
+  "expected_columns": [
+   "value",
+   "delimiters",
+   "initcap_value"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#initcap",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-042",
+  "function": "INSTR",
+  "sql": "SELECT\n  'banana' AS value, 'an' AS subvalue, 1 AS position, 1 AS occurrence,\n  INSTR('banana', 'an', 1, 1) AS instr;",
+  "expected_rows": [
+   [
+    "banana",
+    "an",
+    "1",
+    "1",
+    "2"
+   ]
+  ],
+  "expected_columns": [
+   "value",
+   "subvalue",
+   "position",
+   "occurrence",
+   "instr"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#instr",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-043",
+  "function": "INSTR",
+  "sql": "SELECT\n  'banana' AS value, 'an' AS subvalue, 1 AS position, 2 AS occurrence,\n  INSTR('banana', 'an', 1, 2) AS instr;",
+  "expected_rows": [
+   [
+    "banana",
+    "an",
+    "1",
+    "2",
+    "4"
+   ]
+  ],
+  "expected_columns": [
+   "value",
+   "subvalue",
+   "position",
+   "occurrence",
+   "instr"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#instr",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-044",
+  "function": "INSTR",
+  "sql": "SELECT\n  'banana' AS value, 'an' AS subvalue, 1 AS position, 3 AS occurrence,\n  INSTR('banana', 'an', 1, 3) AS instr;",
+  "expected_rows": [
+   [
+    "banana",
+    "an",
+    "1",
+    "3",
+    "0"
+   ]
+  ],
+  "expected_columns": [
+   "value",
+   "subvalue",
+   "position",
+   "occurrence",
+   "instr"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#instr",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-045",
+  "function": "INSTR",
+  "sql": "SELECT\n  'banana' AS value, 'an' AS subvalue, 3 AS position, 1 AS occurrence,\n  INSTR('banana', 'an', 3, 1) AS instr;",
+  "expected_rows": [
+   [
+    "banana",
+    "an",
+    "3",
+    "1",
+    "4"
+   ]
+  ],
+  "expected_columns": [
+   "value",
+   "subvalue",
+   "position",
+   "occurrence",
+   "instr"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#instr",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-046",
+  "function": "INSTR",
+  "sql": "SELECT\n  'banana' AS value, 'an' AS subvalue, -1 AS position, 1 AS occurrence,\n  INSTR('banana', 'an', -1, 1) AS instr;",
+  "expected_rows": [
+   [
+    "banana",
+    "an",
+    "-1",
+    "1",
+    "4"
+   ]
+  ],
+  "expected_columns": [
+   "value",
+   "subvalue",
+   "position",
+   "occurrence",
+   "instr"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#instr",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-047",
+  "function": "INSTR",
+  "sql": "SELECT\n  'banana' AS value, 'an' AS subvalue, -3 AS position, 1 AS occurrence,\n  INSTR('banana', 'an', -3, 1) AS instr;",
+  "expected_rows": [
+   [
+    "banana",
+    "an",
+    "-3",
+    "1",
+    "4"
+   ]
+  ],
+  "expected_columns": [
+   "value",
+   "subvalue",
+   "position",
+   "occurrence",
+   "instr"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#instr",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-048",
+  "function": "INSTR",
+  "sql": "SELECT\n  'banana' AS value, 'ann' AS subvalue, 1 AS position, 1 AS occurrence,\n  INSTR('banana', 'ann', 1, 1) AS instr;",
+  "expected_rows": [
+   [
+    "banana",
+    "ann",
+    "1",
+    "1",
+    "0"
+   ]
+  ],
+  "expected_columns": [
+   "value",
+   "subvalue",
+   "position",
+   "occurrence",
+   "instr"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#instr",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-049",
+  "function": "INSTR",
+  "sql": "SELECT\n  'helloooo' AS value, 'oo' AS subvalue, 1 AS position, 1 AS occurrence,\n  INSTR('helloooo', 'oo', 1, 1) AS instr;",
+  "expected_rows": [
+   [
+    "helloooo",
+    "oo",
+    "1",
+    "1",
+    "5"
+   ]
+  ],
+  "expected_columns": [
+   "value",
+   "subvalue",
+   "position",
+   "occurrence",
+   "instr"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#instr",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-050",
+  "function": "INSTR",
+  "sql": "SELECT\n  'helloooo' AS value, 'oo' AS subvalue, 1 AS position, 2 AS occurrence,\n  INSTR('helloooo', 'oo', 1, 2) AS instr;",
+  "expected_rows": [
+   [
+    "helloooo",
+    "oo",
+    "1",
+    "2",
+    "6"
+   ]
+  ],
+  "expected_columns": [
+   "value",
+   "subvalue",
+   "position",
+   "occurrence",
+   "instr"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#instr",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-051",
+  "function": "LEFT",
+  "sql": "SELECT LEFT('banana', 3) AS results;",
+  "expected_rows": [
+   [
+    "ban"
+   ]
+  ],
+  "expected_columns": [
+   "results"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#left",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-052",
+  "function": "LEFT",
+  "sql": "SELECT LEFT(b'\\xab\\xcd\\xef\\xaa\\xbb', 3) AS results;",
+  "expected_rows": [
+   [
+    "q83v"
+   ]
+  ],
+  "expected_columns": [
+   "results"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#left",
+  "notes": "BYTES result is shown by the docs as a base64 string."
+ },
+ {
+  "id": "bq-string-053",
+  "function": "LENGTH",
+  "sql": "SELECT\n  LENGTH('абвгд') AS string_example,\n  LENGTH(CAST('абвгд' AS BYTES)) AS bytes_example;",
+  "expected_rows": [
+   [
+    "5",
+    "10"
+   ]
+  ],
+  "expected_columns": [
+   "string_example",
+   "bytes_example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#length",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-054",
+  "function": "LOWER",
+  "sql": "SELECT\n  LOWER('FOO BAR BAZ') AS example;",
+  "expected_rows": [
+   [
+    "foo bar baz"
+   ]
+  ],
+  "expected_columns": [
+   "example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#lower",
+  "notes": "Docs query reads from an undefined table `items`; the FROM clause was removed so the SQL is self-contained."
+ },
+ {
+  "id": "bq-string-055",
+  "function": "LPAD",
+  "sql": "SELECT FORMAT('%T', LPAD('c', 5)) AS results;",
+  "expected_rows": [
+   [
+    "\"    c\""
+   ]
+  ],
+  "expected_columns": [
+   "results"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#lpad",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-056",
+  "function": "LPAD",
+  "sql": "SELECT LPAD('b', 5, 'a') AS results;",
+  "expected_rows": [
+   [
+    "aaaab"
+   ]
+  ],
+  "expected_columns": [
+   "results"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#lpad",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-057",
+  "function": "LPAD",
+  "sql": "SELECT LPAD('abc', 10, 'ghd') AS results;",
+  "expected_rows": [
+   [
+    "ghdghdgabc"
+   ]
+  ],
+  "expected_columns": [
+   "results"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#lpad",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-058",
+  "function": "LPAD",
+  "sql": "SELECT LPAD('abc', 2, 'd') AS results;",
+  "expected_rows": [
+   [
+    "ab"
+   ]
+  ],
+  "expected_columns": [
+   "results"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#lpad",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-059",
+  "function": "LPAD",
+  "sql": "SELECT FORMAT('%T', LPAD(b'abc', 10, b'ghd')) AS results;",
+  "expected_rows": [
+   [
+    "b\"ghdghdgabc\""
+   ]
+  ],
+  "expected_columns": [
+   "results"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#lpad",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-060",
+  "function": "LTRIM",
+  "sql": "SELECT CONCAT('#', LTRIM('   apple   '), '#') AS example;",
+  "expected_rows": [
+   [
+    "#apple   #"
+   ]
+  ],
+  "expected_columns": [
+   "example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#ltrim",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-061",
+  "function": "LTRIM",
+  "sql": "SELECT LTRIM('***apple***', '*') AS example;",
+  "expected_rows": [
+   [
+    "apple***"
+   ]
+  ],
+  "expected_columns": [
+   "example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#ltrim",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-062",
+  "function": "LTRIM",
+  "sql": "SELECT LTRIM('xxxapplexxx', 'xyz') AS example;",
+  "expected_rows": [
+   [
+    "applexxx"
+   ]
+  ],
+  "expected_columns": [
+   "example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#ltrim",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-063",
+  "function": "NORMALIZE",
+  "sql": "SELECT\n  NORMALIZE('\\u00ea') as a,\n  NORMALIZE('\\u0065\\u0302') as b,\n  NORMALIZE('\\u00ea') = NORMALIZE('\\u0065\\u0302') as normalized;",
+  "expected_rows": [
+   [
+    "ê",
+    "ê",
+    "TRUE"
+   ]
+  ],
+  "expected_columns": [
+   "a",
+   "b",
+   "normalized"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#normalize",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-064",
+  "function": "NORMALIZE",
+  "sql": "SELECT NORMALIZE('Raha\\u2004Mahan', NFKC) AS normalized_name;",
+  "expected_rows": [
+   [
+    "Raha Mahan"
+   ]
+  ],
+  "expected_columns": [
+   "normalized_name"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#normalize",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-065",
+  "function": "NORMALIZE",
+  "sql": "SELECT NORMALIZE('Raha\\u2005Mahan', NFKC) AS normalized_name;",
+  "expected_rows": [
+   [
+    "Raha Mahan"
+   ]
+  ],
+  "expected_columns": [
+   "normalized_name"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#normalize",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-066",
+  "function": "NORMALIZE",
+  "sql": "SELECT NORMALIZE('Raha\\u2006Mahan', NFKC) AS normalized_name;",
+  "expected_rows": [
+   [
+    "Raha Mahan"
+   ]
+  ],
+  "expected_columns": [
+   "normalized_name"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#normalize",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-067",
+  "function": "NORMALIZE",
+  "sql": "SELECT NORMALIZE('Raha Mahan', NFKC) AS normalized_name;",
+  "expected_rows": [
+   [
+    "Raha Mahan"
+   ]
+  ],
+  "expected_columns": [
+   "normalized_name"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#normalize",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-068",
+  "function": "NORMALIZE_AND_CASEFOLD",
+  "sql": "SELECT\n  NORMALIZE('The red barn') = NORMALIZE('The Red Barn') AS normalized,\n  NORMALIZE_AND_CASEFOLD('The red barn')\n    = NORMALIZE_AND_CASEFOLD('The Red Barn') AS normalized_with_case_folding;",
+  "expected_rows": [
+   [
+    "FALSE",
+    "TRUE"
+   ]
+  ],
+  "expected_columns": [
+   "normalized",
+   "normalized_with_case_folding"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#normalize_and_casefold",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-069",
+  "function": "NORMALIZE_AND_CASEFOLD",
+  "sql": "SELECT\n  '\\u2168' AS a,\n  'IX' AS b,\n  NORMALIZE_AND_CASEFOLD('\\u2168', NFD)=NORMALIZE_AND_CASEFOLD('IX', NFD) AS nfd,\n  NORMALIZE_AND_CASEFOLD('\\u2168', NFC)=NORMALIZE_AND_CASEFOLD('IX', NFC) AS nfc,\n  NORMALIZE_AND_CASEFOLD('\\u2168', NFKD)=NORMALIZE_AND_CASEFOLD('IX', NFKD) AS nfkd,\n  NORMALIZE_AND_CASEFOLD('\\u2168', NFKC)=NORMALIZE_AND_CASEFOLD('IX', NFKC) AS nfkc;",
+  "expected_rows": [
+   [
+    "Ⅸ",
+    "IX",
+    "false",
+    "false",
+    "true",
+    "true"
+   ]
+  ],
+  "expected_columns": [
+   "a",
+   "b",
+   "nfd",
+   "nfc",
+   "nfkd",
+   "nfkc"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#normalize_and_casefold",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-070",
+  "function": "NORMALIZE_AND_CASEFOLD",
+  "sql": "SELECT\n  '\\u0041\\u030A' AS a,\n  '\\u00C5' AS b,\n  NORMALIZE_AND_CASEFOLD('\\u0041\\u030A', NFD)=NORMALIZE_AND_CASEFOLD('\\u00C5', NFD) AS nfd,\n  NORMALIZE_AND_CASEFOLD('\\u0041\\u030A', NFC)=NORMALIZE_AND_CASEFOLD('\\u00C5', NFC) AS nfc,\n  NORMALIZE_AND_CASEFOLD('\\u0041\\u030A', NFKD)=NORMALIZE_AND_CASEFOLD('\\u00C5', NFKD) AS nkfd,\n  NORMALIZE_AND_CASEFOLD('\\u0041\\u030A', NFKC)=NORMALIZE_AND_CASEFOLD('\\u00C5', NFKC) AS nkfc;",
+  "expected_rows": [
+   [
+    "Å",
+    "Å",
+    "true",
+    "true",
+    "true",
+    "true"
+   ]
+  ],
+  "expected_columns": [
+   "a",
+   "b",
+   "nfd",
+   "nfc",
+   "nkfd",
+   "nkfc"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#normalize_and_casefold",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-071",
+  "function": "REGEXP_CONTAINS",
+  "sql": "SELECT\n  'foo@example.com' AS email,\n  REGEXP_CONTAINS('foo@example.com', r'@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+') AS is_valid;",
+  "expected_rows": [
+   [
+    "foo@example.com",
+    "TRUE"
+   ]
+  ],
+  "expected_columns": [
+   "email",
+   "is_valid"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_contains",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-072",
+  "function": "REGEXP_CONTAINS",
+  "sql": "SELECT\n  'www.example.net' AS email,\n  REGEXP_CONTAINS('www.example.net', r'@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+') AS is_valid;",
+  "expected_rows": [
+   [
+    "www.example.net",
+    "FALSE"
+   ]
+  ],
+  "expected_columns": [
+   "email",
+   "is_valid"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_contains",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-073",
+  "function": "REGEXP_CONTAINS",
+  "sql": "SELECT\n  'a@foo.com' AS email,\n  REGEXP_CONTAINS('a@foo.com', r'^([\\w.+-]+@foo\\.com|[\\w.+-]+@bar\\.org)$') AS valid_email_address,\n  REGEXP_CONTAINS('a@foo.com', r'^[\\w.+-]+@foo\\.com|[\\w.+-]+@bar\\.org$') AS without_parentheses;",
+  "expected_rows": [
+   [
+    "a@foo.com",
+    "true",
+    "true"
+   ]
+  ],
+  "expected_columns": [
+   "email",
+   "valid_email_address",
+   "without_parentheses"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_contains",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-074",
+  "function": "REGEXP_CONTAINS",
+  "sql": "SELECT\n  'a@foo.computer' AS email,\n  REGEXP_CONTAINS('a@foo.computer', r'^([\\w.+-]+@foo\\.com|[\\w.+-]+@bar\\.org)$') AS valid_email_address,\n  REGEXP_CONTAINS('a@foo.computer', r'^[\\w.+-]+@foo\\.com|[\\w.+-]+@bar\\.org$') AS without_parentheses;",
+  "expected_rows": [
+   [
+    "a@foo.computer",
+    "false",
+    "true"
+   ]
+  ],
+  "expected_columns": [
+   "email",
+   "valid_email_address",
+   "without_parentheses"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_contains",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-075",
+  "function": "REGEXP_CONTAINS",
+  "sql": "SELECT\n  'b@bar.org' AS email,\n  REGEXP_CONTAINS('b@bar.org', r'^([\\w.+-]+@foo\\.com|[\\w.+-]+@bar\\.org)$') AS valid_email_address,\n  REGEXP_CONTAINS('b@bar.org', r'^[\\w.+-]+@foo\\.com|[\\w.+-]+@bar\\.org$') AS without_parentheses;",
+  "expected_rows": [
+   [
+    "b@bar.org",
+    "true",
+    "true"
+   ]
+  ],
+  "expected_columns": [
+   "email",
+   "valid_email_address",
+   "without_parentheses"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_contains",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-076",
+  "function": "REGEXP_CONTAINS",
+  "sql": "SELECT\n  '!b@bar.org' AS email,\n  REGEXP_CONTAINS('!b@bar.org', r'^([\\w.+-]+@foo\\.com|[\\w.+-]+@bar\\.org)$') AS valid_email_address,\n  REGEXP_CONTAINS('!b@bar.org', r'^[\\w.+-]+@foo\\.com|[\\w.+-]+@bar\\.org$') AS without_parentheses;",
+  "expected_rows": [
+   [
+    "!b@bar.org",
+    "false",
+    "true"
+   ]
+  ],
+  "expected_columns": [
+   "email",
+   "valid_email_address",
+   "without_parentheses"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_contains",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-077",
+  "function": "REGEXP_CONTAINS",
+  "sql": "SELECT\n  'c@buz.net' AS email,\n  REGEXP_CONTAINS('c@buz.net', r'^([\\w.+-]+@foo\\.com|[\\w.+-]+@bar\\.org)$') AS valid_email_address,\n  REGEXP_CONTAINS('c@buz.net', r'^[\\w.+-]+@foo\\.com|[\\w.+-]+@bar\\.org$') AS without_parentheses;",
+  "expected_rows": [
+   [
+    "c@buz.net",
+    "false",
+    "false"
+   ]
+  ],
+  "expected_columns": [
+   "email",
+   "valid_email_address",
+   "without_parentheses"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_contains",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-078",
+  "function": "REGEXP_EXTRACT",
+  "sql": "SELECT REGEXP_EXTRACT('foo@example.com', r'^[a-zA-Z0-9_.+-]+') AS user_name;",
+  "expected_rows": [
+   [
+    "foo"
+   ]
+  ],
+  "expected_columns": [
+   "user_name"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_extract",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-079",
+  "function": "REGEXP_EXTRACT",
+  "sql": "SELECT REGEXP_EXTRACT('foo@example.com', r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.([a-zA-Z0-9-.]+$)') AS top_level_domain;",
+  "expected_rows": [
+   [
+    "com"
+   ]
+  ],
+  "expected_columns": [
+   "top_level_domain"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_extract",
+  "notes": "Alias added to match the column name shown in the docs result."
+ },
+ {
+  "id": "bq-string-080",
+  "function": "REGEXP_EXTRACT",
+  "sql": "SELECT\n  REGEXP_EXTRACT('ab', '.b') AS result_a,\n  REGEXP_EXTRACT('ab', '(.)b') AS result_b,\n  REGEXP_EXTRACT('xyztb', '(.)+b') AS result_c,\n  REGEXP_EXTRACT('ab', '(z)?b') AS result_d;",
+  "expected_rows": [
+   [
+    "ab",
+    "a",
+    "t",
+    "NULL"
+   ]
+  ],
+  "expected_columns": [
+   "result_a",
+   "result_b",
+   "result_c",
+   "result_d"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_extract",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-081",
+  "function": "REGEXP_EXTRACT",
+  "sql": "WITH example AS\n(SELECT 'Hello Helloo and Hellooo' AS value, 'H?ello+' AS regex, 1 as position,\n1 AS occurrence UNION ALL\nSELECT 'Hello Helloo and Hellooo', 'H?ello+', 1, 2 UNION ALL\nSELECT 'Hello Helloo and Hellooo', 'H?ello+', 1, 3 UNION ALL\nSELECT 'Hello Helloo and Hellooo', 'H?ello+', 1, 4 UNION ALL\nSELECT 'Hello Helloo and Hellooo', 'H?ello+', 2, 1 UNION ALL\nSELECT 'Hello Helloo and Hellooo', 'H?ello+', 3, 1 UNION ALL\nSELECT 'Hello Helloo and Hellooo', 'H?ello+', 3, 2 UNION ALL\nSELECT 'Hello Helloo and Hellooo', 'H?ello+', 3, 3 UNION ALL\nSELECT 'Hello Helloo and Hellooo', 'H?ello+', 20, 1 UNION ALL\nSELECT 'cats&dogs&rabbits' ,'\\\\w+&', 1, 2 UNION ALL\nSELECT 'cats&dogs&rabbits', '\\\\w+&', 2, 3\n)\nSELECT value, regex, position, occurrence, REGEXP_EXTRACT(value, regex,\nposition, occurrence) AS regexp_value FROM example;",
+  "expected_rows": [
+   [
+    "Hello Helloo and Hellooo",
+    "H?ello+",
+    "1",
+    "1",
+    "Hello"
+   ],
+   [
+    "Hello Helloo and Hellooo",
+    "H?ello+",
+    "1",
+    "2",
+    "Helloo"
+   ],
+   [
+    "Hello Helloo and Hellooo",
+    "H?ello+",
+    "1",
+    "3",
+    "Hellooo"
+   ],
+   [
+    "Hello Helloo and Hellooo",
+    "H?ello+",
+    "1",
+    "4",
+    "NULL"
+   ],
+   [
+    "Hello Helloo and Hellooo",
+    "H?ello+",
+    "2",
+    "1",
+    "ello"
+   ],
+   [
+    "Hello Helloo and Hellooo",
+    "H?ello+",
+    "3",
+    "1",
+    "Helloo"
+   ],
+   [
+    "Hello Helloo and Hellooo",
+    "H?ello+",
+    "3",
+    "2",
+    "Hellooo"
+   ],
+   [
+    "Hello Helloo and Hellooo",
+    "H?ello+",
+    "3",
+    "3",
+    "NULL"
+   ],
+   [
+    "Hello Helloo and Hellooo",
+    "H?ello+",
+    "20",
+    "1",
+    "NULL"
+   ],
+   [
+    "cats&dogs&rabbits",
+    "\\w+&",
+    "1",
+    "2",
+    "dogs&"
+   ],
+   [
+    "cats&dogs&rabbits",
+    "\\w+&",
+    "2",
+    "3",
+    "NULL"
+   ]
+  ],
+  "expected_columns": [
+   "value",
+   "regex",
+   "position",
+   "occurrence",
+   "regexp_value"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_extract",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-string-082",
+  "function": "REGEXP_EXTRACT_GROUPS",
+  "sql": "SELECT REGEXP_EXTRACT_GROUPS('abc123xyz', r'([a-z]+)([0-9]+)([a-z]+)') AS result;",
+  "expected_rows": [
+   [
+    "{abc, 123, xyz}"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_extract_groups",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-083",
+  "function": "REGEXP_EXTRACT_GROUPS",
+  "sql": "SELECT REGEXP_EXTRACT_GROUPS('2025-09-10', r'(?<year>\\d{4})-(?<month>\\d{2})-(?<day>\\d{2})') AS result;",
+  "expected_rows": [
+   [
+    "{2025 year, 09 month, 10 day}"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_extract_groups",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-084",
+  "function": "REGEXP_EXTRACT_GROUPS",
+  "sql": "SELECT REGEXP_EXTRACT_GROUPS('PROD-WIDGET-1234', r'(?<env>\\w+)-(?<product>\\w+)-(?<id>\\d+)').*;",
+  "expected_rows": [
+   [
+    "PROD",
+    "WIDGET",
+    "1234"
+   ]
+  ],
+  "expected_columns": [
+   "env",
+   "product",
+   "id"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_extract_groups",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-085",
+  "function": "REGEXP_EXTRACT_GROUPS",
+  "sql": "SELECT REGEXP_EXTRACT_GROUPS('id:123', r'(?<key>[a-z]+):([0-9]+)') AS result;",
+  "expected_rows": [
+   [
+    "{id key, 123}"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_extract_groups",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-086",
+  "function": "REGEXP_EXTRACT_GROUPS",
+  "sql": "SELECT REGEXP_EXTRACT_GROUPS('abc', r'(\\d+)') AS result;",
+  "expected_rows": [
+   [
+    "NULL"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_extract_groups",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-087",
+  "function": "REGEXP_EXTRACT_GROUPS",
+  "sql": "WITH inputs AS (\n  SELECT 'id:123:extra' AS t UNION ALL\n  SELECT 'id:123:' AS t UNION ALL\n  SELECT 'id:123' AS t\n)\nSELECT\n  t,\n  REGEXP_EXTRACT_GROUPS(t, r'(?<key>\\w+):(?<val>\\w+)(?::(?<opt>\\w*))?') AS result\nFROM inputs;",
+  "expected_rows": [
+   [
+    "id:123:extra",
+    "{id key, 123 val, extra opt}"
+   ],
+   [
+    "id:123:",
+    "{id key, 123 val,  opt}"
+   ],
+   [
+    "id:123",
+    "{id key, 123 val, NULL opt}"
+   ]
+  ],
+  "expected_columns": [
+   "t",
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_extract_groups",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-string-088",
+  "function": "REGEXP_EXTRACT_GROUPS",
+  "sql": "SELECT REGEXP_EXTRACT_GROUPS('a=b=c', r'(\\w+)=((\\w+)=\\w+)') AS result;",
+  "expected_rows": [
+   [
+    "{a, b=c, b}"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_extract_groups",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-089",
+  "function": "REGEXP_EXTRACT_GROUPS",
+  "sql": "WITH inputs AS (\n  SELECT 'config_id=123' AS t UNION ALL\n  SELECT 'option_name=ABC' AS t\n)\nSELECT\n  t,\n  REGEXP_EXTRACT_GROUPS(t, r'config_id=(?<id>\\d+)|option_name=(?<name>\\w+)') AS result\nFROM inputs;",
+  "expected_rows": [
+   [
+    "config_id=123",
+    "{123 id, NULL name}"
+   ],
+   [
+    "option_name=ABC",
+    "{NULL id, ABC name}"
+   ]
+  ],
+  "expected_columns": [
+   "t",
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_extract_groups",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-string-090",
+  "function": "REGEXP_EXTRACT_GROUPS",
+  "sql": "SELECT REGEXP_EXTRACT_GROUPS('val=0x1a', r'val=(?<val__INT64>0x[0-9a-fA-F]+)') AS result;",
+  "expected_rows": [
+   [
+    "{26 val}"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_extract_groups",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-091",
+  "function": "REGEXP_EXTRACT_GROUPS",
+  "sql": "FROM UNNEST(['02:30:10', '01:02:03']) AS time_str\n|> EXTEND REGEXP_EXTRACT_GROUPS(time_str, r'(?<h__INT64>\\d{2}):(?<m__INT64>\\d{2}):(?<s__INT64>\\d{2})').*\n|> SELECT time_str, h * 3600 + m * 60 + s AS total_seconds;",
+  "expected_rows": [
+   [
+    "02:30:10",
+    "9010"
+   ],
+   [
+    "01:02:03",
+    "3723"
+   ]
+  ],
+  "expected_columns": [
+   "time_str",
+   "total_seconds"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_extract_groups",
+  "notes": "GoogleSQL pipe query syntax (FROM ... |> ...), not a plain SELECT statement. Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-string-092",
+  "function": "REGEXP_EXTRACT_GROUPS",
+  "sql": "SELECT REGEXP_EXTRACT_GROUPS('2025-09-10', r'(?<year__INT64>\\d{4})-(?<month__INT64>\\d{2})-(?<day__INT64>\\d{2})').*;",
+  "expected_rows": [
+   [
+    "2025",
+    "9",
+    "10"
+   ]
+  ],
+  "expected_columns": [
+   "year",
+   "month",
+   "day"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_extract_groups",
+  "notes": "Result column names come from the struct field names expanded by .* (year__INT64 -> year)."
+ },
+ {
+  "id": "bq-string-093",
+  "function": "REGEXP_EXTRACT_GROUPS",
+  "sql": "SELECT REGEXP_EXTRACT_GROUPS('ID: ', r'ID: (?<item_id__INT64>\\d+)?') AS result;",
+  "expected_rows": [
+   [
+    "{NULL item_id}"
+   ]
+  ],
+  "expected_columns": [
+   "result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_extract_groups",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-094",
+  "function": "REGEXP_EXTRACT_ALL",
+  "sql": "SELECT REGEXP_EXTRACT_ALL('Try `func(x)` or `func(y)`', '`(.+?)`') AS example;",
+  "expected_rows": [
+   [
+    "[func(x), func(y)]"
+   ]
+  ],
+  "expected_columns": [
+   "example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_extract_all",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-095",
+  "function": "REGEXP_EXTRACT_ALL",
+  "sql": "SELECT REGEXP_EXTRACT_ALL('123456', r'\\d(\\d)\\d') AS example;",
+  "expected_rows": [
+   [
+    "['2', '5']"
+   ]
+  ],
+  "expected_columns": [
+   "example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_extract_all",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-096",
+  "function": "REGEXP_INSTR",
+  "sql": "SELECT\n  REGEXP_INSTR('ab@cd-ef',  '@[^-]*') AS instr_a,\n  REGEXP_INSTR('ab@d-ef',   '@[^-]*') AS instr_b,\n  REGEXP_INSTR('abc@cd-ef', '@[^-]*') AS instr_c,\n  REGEXP_INSTR('abc-ef',    '@[^-]*') AS instr_d;",
+  "expected_rows": [
+   [
+    "3",
+    "3",
+    "4",
+    "0"
+   ]
+  ],
+  "expected_columns": [
+   "instr_a",
+   "instr_b",
+   "instr_c",
+   "instr_d"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_instr",
+  "notes": "Docs SQL has a trailing comma after the last column; removed."
+ },
+ {
+  "id": "bq-string-097",
+  "function": "REGEXP_INSTR",
+  "sql": "SELECT\n  REGEXP_INSTR('a@cd-ef b@cd-ef', '@[^-]*', 1) AS instr_a,\n  REGEXP_INSTR('a@cd-ef b@cd-ef', '@[^-]*', 2) AS instr_b,\n  REGEXP_INSTR('a@cd-ef b@cd-ef', '@[^-]*', 3) AS instr_c,\n  REGEXP_INSTR('a@cd-ef b@cd-ef', '@[^-]*', 4) AS instr_d;",
+  "expected_rows": [
+   [
+    "2",
+    "2",
+    "10",
+    "10"
+   ]
+  ],
+  "expected_columns": [
+   "instr_a",
+   "instr_b",
+   "instr_c",
+   "instr_d"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_instr",
+  "notes": "Docs SQL has a trailing comma after the last column; removed."
+ },
+ {
+  "id": "bq-string-098",
+  "function": "REGEXP_INSTR",
+  "sql": "SELECT\n  REGEXP_INSTR('a@cd-ef b@cd-ef c@cd-ef', '@[^-]*', 1, 1) AS instr_a,\n  REGEXP_INSTR('a@cd-ef b@cd-ef c@cd-ef', '@[^-]*', 1, 2) AS instr_b,\n  REGEXP_INSTR('a@cd-ef b@cd-ef c@cd-ef', '@[^-]*', 1, 3) AS instr_c;",
+  "expected_rows": [
+   [
+    "2",
+    "10",
+    "18"
+   ]
+  ],
+  "expected_columns": [
+   "instr_a",
+   "instr_b",
+   "instr_c"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_instr",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-099",
+  "function": "REGEXP_INSTR",
+  "sql": "SELECT\n  REGEXP_INSTR('a@cd-ef', '@[^-]*', 1, 1, 0) AS instr_a,\n  REGEXP_INSTR('a@cd-ef', '@[^-]*', 1, 1, 1) AS instr_b;",
+  "expected_rows": [
+   [
+    "2",
+    "5"
+   ]
+  ],
+  "expected_columns": [
+   "instr_a",
+   "instr_b"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_instr",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-100",
+  "function": "REGEXP_REPLACE",
+  "sql": "SELECT REGEXP_REPLACE('Jane Doe', r'^([\\p{L}\\x27-]+)\\s+([\\p{L}\\x27-]+)$', r'\\2, \\1') AS formatted_name;",
+  "expected_rows": [
+   [
+    "Doe, Jane"
+   ]
+  ],
+  "expected_columns": [
+   "formatted_name"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_replace",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-101",
+  "function": "REGEXP_SUBSTR",
+  "sql": "WITH example AS\n(SELECT 'Hello World Helloo' AS value, 'H?ello+' AS regex, 1 AS position, 1 AS\noccurrence\n)\nSELECT value, regex, position, occurrence, REGEXP_SUBSTR(value, regex,\nposition, occurrence) AS regexp_value FROM example;",
+  "expected_rows": [
+   [
+    "Hello World Helloo",
+    "H?ello+",
+    "1",
+    "1",
+    "Hello"
+   ]
+  ],
+  "expected_columns": [
+   "value",
+   "regex",
+   "position",
+   "occurrence",
+   "regexp_value"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_substr",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-102",
+  "function": "REPEAT",
+  "sql": "SELECT REPEAT('abc', 3) AS results;",
+  "expected_rows": [
+   [
+    "abcabcabc"
+   ]
+  ],
+  "expected_columns": [
+   "results"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#repeat",
+  "notes": "Docs result table border is irregular; value taken as shown."
+ },
+ {
+  "id": "bq-string-103",
+  "function": "REPEAT",
+  "sql": "SELECT REPEAT('abc', NULL) AS results;",
+  "expected_rows": [
+   [
+    "NULL"
+   ]
+  ],
+  "expected_columns": [
+   "results"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#repeat",
+  "notes": "Docs result table border is irregular; value taken as shown."
+ },
+ {
+  "id": "bq-string-104",
+  "function": "REPEAT",
+  "sql": "SELECT REPEAT(NULL, 3) AS results;",
+  "expected_rows": [
+   [
+    "NULL"
+   ]
+  ],
+  "expected_columns": [
+   "results"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#repeat",
+  "notes": "Docs result table border is irregular; value taken as shown."
+ },
+ {
+  "id": "bq-string-105",
+  "function": "REPLACE",
+  "sql": "WITH desserts AS\n  (SELECT 'apple pie' as dessert\n  UNION ALL\n  SELECT 'blackberry pie' as dessert\n  UNION ALL\n  SELECT 'cherry pie' as dessert)\n\nSELECT\n  REPLACE (dessert, 'pie', 'cobbler') as example\nFROM desserts;",
+  "expected_rows": [
+   [
+    "apple cobbler"
+   ],
+   [
+    "blackberry cobbler"
+   ],
+   [
+    "cherry cobbler"
+   ]
+  ],
+  "expected_columns": [
+   "example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#replace",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-string-106",
+  "function": "REVERSE",
+  "sql": "SELECT REVERSE('abc') AS results;",
+  "expected_rows": [
+   [
+    "cba"
+   ]
+  ],
+  "expected_columns": [
+   "results"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#reverse",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-107",
+  "function": "REVERSE",
+  "sql": "SELECT FORMAT('%T', REVERSE(b'1a3')) AS results;",
+  "expected_rows": [
+   [
+    "b\"3a1\""
+   ]
+  ],
+  "expected_columns": [
+   "results"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#reverse",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-108",
+  "function": "RIGHT",
+  "sql": "SELECT 'apple' AS example, RIGHT('apple', 3) AS right_example;",
+  "expected_rows": [
+   [
+    "apple",
+    "ple"
+   ]
+  ],
+  "expected_columns": [
+   "example",
+   "right_example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#right",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-109",
+  "function": "RIGHT",
+  "sql": "SELECT b'apple' AS example, RIGHT(b'apple', 3) AS right_example;",
+  "expected_rows": [
+   [
+    "YXBwbGU=",
+    "cGxl"
+   ]
+  ],
+  "expected_columns": [
+   "example",
+   "right_example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#right",
+  "notes": "BYTES result is shown by the docs as a base64 string."
+ },
+ {
+  "id": "bq-string-110",
+  "function": "RPAD",
+  "sql": "SELECT FORMAT('%T', RPAD('c', 5)) AS results;",
+  "expected_rows": [
+   [
+    "\"c    \""
+   ]
+  ],
+  "expected_columns": [
+   "results"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#rpad",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-111",
+  "function": "RPAD",
+  "sql": "SELECT RPAD('b', 5, 'a') AS results;",
+  "expected_rows": [
+   [
+    "baaaa"
+   ]
+  ],
+  "expected_columns": [
+   "results"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#rpad",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-112",
+  "function": "RPAD",
+  "sql": "SELECT RPAD('abc', 10, 'ghd') AS results;",
+  "expected_rows": [
+   [
+    "abcghdghdg"
+   ]
+  ],
+  "expected_columns": [
+   "results"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#rpad",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-113",
+  "function": "RPAD",
+  "sql": "SELECT RPAD('abc', 2, 'd') AS results;",
+  "expected_rows": [
+   [
+    "ab"
+   ]
+  ],
+  "expected_columns": [
+   "results"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#rpad",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-114",
+  "function": "RPAD",
+  "sql": "SELECT FORMAT('%T', RPAD(b'abc', 10, b'ghd')) AS results;",
+  "expected_rows": [
+   [
+    "b\"abcghdghdg\""
+   ]
+  ],
+  "expected_columns": [
+   "results"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#rpad",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-115",
+  "function": "RTRIM",
+  "sql": "SELECT RTRIM('***apple***', '*') AS example;",
+  "expected_rows": [
+   [
+    "***apple"
+   ]
+  ],
+  "expected_columns": [
+   "example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#rtrim",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-116",
+  "function": "RTRIM",
+  "sql": "SELECT RTRIM('applexxz', 'xyz') AS example;",
+  "expected_rows": [
+   [
+    "apple"
+   ]
+  ],
+  "expected_columns": [
+   "example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#rtrim",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-117",
+  "function": "SOUNDEX",
+  "sql": "SELECT 'Ashcraft' AS value, SOUNDEX('Ashcraft') AS soundex;",
+  "expected_rows": [
+   [
+    "Ashcraft",
+    "A261"
+   ]
+  ],
+  "expected_columns": [
+   "value",
+   "soundex"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#soundex",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-118",
+  "function": "SPLIT",
+  "sql": "WITH letters AS\n  (SELECT '' as letter_group\n  UNION ALL\n  SELECT 'a' as letter_group\n  UNION ALL\n  SELECT 'b c d' as letter_group)\n\nSELECT SPLIT(letter_group, ' ') as example\nFROM letters;",
+  "expected_rows": [
+   [
+    "[]"
+   ],
+   [
+    "[a]"
+   ],
+   [
+    "[b, c, d]"
+   ]
+  ],
+  "expected_columns": [
+   "example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#split",
+  "notes": "Row order not guaranteed by the SQL (no top-level ORDER BY); compare unordered."
+ },
+ {
+  "id": "bq-string-119",
+  "function": "STARTS_WITH",
+  "sql": "SELECT STARTS_WITH('bar', 'b') AS example;",
+  "expected_rows": [
+   [
+    "True"
+   ]
+  ],
+  "expected_columns": [
+   "example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#starts_with",
+  "notes": "Docs print the boolean as 'True'."
+ },
+ {
+  "id": "bq-string-120",
+  "function": "STRPOS",
+  "sql": "SELECT STRPOS('foo@example.com', '@') AS example;",
+  "expected_rows": [
+   [
+    "4"
+   ]
+  ],
+  "expected_columns": [
+   "example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#strpos",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-121",
+  "function": "SUBSTR",
+  "sql": "SELECT SUBSTR('apple', 2) AS example;",
+  "expected_rows": [
+   [
+    "pple"
+   ]
+  ],
+  "expected_columns": [
+   "example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#substr",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-122",
+  "function": "SUBSTR",
+  "sql": "SELECT SUBSTR('apple', 2, 2) AS example;",
+  "expected_rows": [
+   [
+    "pp"
+   ]
+  ],
+  "expected_columns": [
+   "example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#substr",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-123",
+  "function": "SUBSTR",
+  "sql": "SELECT SUBSTR('apple', -2) AS example;",
+  "expected_rows": [
+   [
+    "le"
+   ]
+  ],
+  "expected_columns": [
+   "example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#substr",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-124",
+  "function": "SUBSTR",
+  "sql": "SELECT SUBSTR('apple', 1, 123) AS example;",
+  "expected_rows": [
+   [
+    "apple"
+   ]
+  ],
+  "expected_columns": [
+   "example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#substr",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-125",
+  "function": "SUBSTR",
+  "sql": "SELECT SUBSTR('apple', 123) AS example;",
+  "expected_rows": [
+   [
+    ""
+   ]
+  ],
+  "expected_columns": [
+   "example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#substr",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-126",
+  "function": "SUBSTR",
+  "sql": "SELECT SUBSTR('apple', 123, 5) AS example;",
+  "expected_rows": [
+   [
+    ""
+   ]
+  ],
+  "expected_columns": [
+   "example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#substr",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-127",
+  "function": "TO_BASE32",
+  "sql": "SELECT TO_BASE32(b'abcde\\xFF') AS base32_string;",
+  "expected_rows": [
+   [
+    "MFRGGZDF74======"
+   ]
+  ],
+  "expected_columns": [
+   "base32_string"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#to_base32",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-128",
+  "function": "TO_BASE64",
+  "sql": "SELECT TO_BASE64(b'\\377\\340') AS base64_string;",
+  "expected_rows": [
+   [
+    "/+A="
+   ]
+  ],
+  "expected_columns": [
+   "base64_string"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#to_base64",
+  "notes": "BYTES result is shown by the docs as a base64 string."
+ },
+ {
+  "id": "bq-string-129",
+  "function": "TO_BASE64",
+  "sql": "SELECT REPLACE(REPLACE(TO_BASE64(b'\\377\\340'), '+', '-'), '/', '_') as websafe_base64;",
+  "expected_rows": [
+   [
+    "_-A="
+   ]
+  ],
+  "expected_columns": [
+   "websafe_base64"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#to_base64",
+  "notes": "BYTES result is shown by the docs as a base64 string."
+ },
+ {
+  "id": "bq-string-130",
+  "function": "TO_CODE_POINTS",
+  "sql": "SELECT\n  'foo' AS word,\n  TO_CODE_POINTS('foo') AS code_points;",
+  "expected_rows": [
+   [
+    "foo",
+    "[102, 111, 111]"
+   ]
+  ],
+  "expected_columns": [
+   "word",
+   "code_points"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#to_code_points",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-131",
+  "function": "TO_CODE_POINTS",
+  "sql": "SELECT\n  'bar' AS word,\n  TO_CODE_POINTS('bar') AS code_points;",
+  "expected_rows": [
+   [
+    "bar",
+    "[98, 97, 114]"
+   ]
+  ],
+  "expected_columns": [
+   "word",
+   "code_points"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#to_code_points",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-132",
+  "function": "TO_CODE_POINTS",
+  "sql": "SELECT\n  'baz' AS word,\n  TO_CODE_POINTS('baz') AS code_points;",
+  "expected_rows": [
+   [
+    "baz",
+    "[98, 97, 122]"
+   ]
+  ],
+  "expected_columns": [
+   "word",
+   "code_points"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#to_code_points",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-133",
+  "function": "TO_CODE_POINTS",
+  "sql": "SELECT\n  'giraffe' AS word,\n  TO_CODE_POINTS('giraffe') AS code_points;",
+  "expected_rows": [
+   [
+    "giraffe",
+    "[103, 105, 114, 97, 102, 102, 101]"
+   ]
+  ],
+  "expected_columns": [
+   "word",
+   "code_points"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#to_code_points",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-134",
+  "function": "TO_CODE_POINTS",
+  "sql": "SELECT\n  'llama' AS word,\n  TO_CODE_POINTS('llama') AS code_points;",
+  "expected_rows": [
+   [
+    "llama",
+    "[108, 108, 97, 109, 97]"
+   ]
+  ],
+  "expected_columns": [
+   "word",
+   "code_points"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#to_code_points",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-135",
+  "function": "TO_CODE_POINTS",
+  "sql": "SELECT\n  b'\\x66\\x6f\\x6f' AS bytes_value,\n  TO_CODE_POINTS(b'\\x66\\x6f\\x6f') AS bytes_value_as_integer;",
+  "expected_rows": [
+   [
+    "foo",
+    "[102, 111, 111]"
+   ]
+  ],
+  "expected_columns": [
+   "bytes_value",
+   "bytes_value_as_integer"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#to_code_points",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-136",
+  "function": "TO_CODE_POINTS",
+  "sql": "SELECT\n  b'\\x00\\x01\\x10\\xff' AS bytes_value,\n  TO_CODE_POINTS(b'\\x00\\x01\\x10\\xff') AS bytes_value_as_integer;",
+  "expected_rows": [
+   [
+    "\\x00\\x01\\x10\\xff",
+    "[0, 1, 16, 255]"
+   ]
+  ],
+  "expected_columns": [
+   "bytes_value",
+   "bytes_value_as_integer"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#to_code_points",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-137",
+  "function": "TO_CODE_POINTS",
+  "sql": "SELECT TO_CODE_POINTS(b'Ā') AS b_result, TO_CODE_POINTS('Ā') AS s_result;",
+  "expected_rows": [
+   [
+    "[196, 128]",
+    "[256]"
+   ]
+  ],
+  "expected_columns": [
+   "b_result",
+   "s_result"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#to_code_points",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-138",
+  "function": "TO_HEX",
+  "sql": "SELECT\n  b'\\x00\\x01\\x02\\x03\\xAA\\xEE\\xEF\\xFF' AS byte_string,\n  TO_HEX(b'\\x00\\x01\\x02\\x03\\xAA\\xEE\\xEF\\xFF') AS hex_string;",
+  "expected_rows": [
+   [
+    "\\x00\\x01\\x02\\x03\\xaa\\xee\\xef\\xff",
+    "00010203aaeeefff"
+   ]
+  ],
+  "expected_columns": [
+   "byte_string",
+   "hex_string"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#to_hex",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-139",
+  "function": "TRANSLATE",
+  "sql": "SELECT TRANSLATE('This is a cookie', 'sco', 'zku') AS translate;",
+  "expected_rows": [
+   [
+    "Thiz iz a kuukie"
+   ]
+  ],
+  "expected_columns": [
+   "translate"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#translate",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-140",
+  "function": "TRIM",
+  "sql": "SELECT CONCAT('#', TRIM( '   apple   '), '#') AS example;",
+  "expected_rows": [
+   [
+    "#apple#"
+   ]
+  ],
+  "expected_columns": [
+   "example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#trim",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-141",
+  "function": "TRIM",
+  "sql": "SELECT TRIM('***apple***', '*') AS example;",
+  "expected_rows": [
+   [
+    "apple"
+   ]
+  ],
+  "expected_columns": [
+   "example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#trim",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-142",
+  "function": "TRIM",
+  "sql": "SELECT TRIM('xzxapplexxy', 'xyz') as example;",
+  "expected_rows": [
+   [
+    "apple"
+   ]
+  ],
+  "expected_columns": [
+   "example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#trim",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-143",
+  "function": "TRIM",
+  "sql": "SELECT\n  TRIM('abaW̊', 'Y̊') AS a,\n  TRIM('W̊aba', 'Y̊') AS b,\n  TRIM('abaŪ̊', 'Y̊') AS c,\n  TRIM('Ū̊aba', 'Y̊') AS d;",
+  "expected_rows": [
+   [
+    "abaW",
+    "W̊aba",
+    "abaŪ",
+    "Ūaba"
+   ]
+  ],
+  "expected_columns": [
+   "a",
+   "b",
+   "c",
+   "d"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#trim",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-144",
+  "function": "TRIM",
+  "sql": "SELECT b'apple', TRIM(b'apple', b'na\\xab') AS example;",
+  "expected_rows": [
+   [
+    "YXBwbGU=",
+    "cHBsZQ=="
+   ]
+  ],
+  "expected_columns": [
+   "item",
+   "example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#trim",
+  "notes": "BYTES result is shown by the docs as a base64 string. AMBIGUOUS: docs result column(s) ['item'] do not appear in the SQL (docs inconsistency)."
+ },
+ {
+  "id": "bq-string-145",
+  "function": "UNICODE",
+  "sql": "SELECT UNICODE('âbcd') as A, UNICODE('â') as B, UNICODE('') as C, UNICODE(NULL) as D;",
+  "expected_rows": [
+   [
+    "226",
+    "226",
+    "0",
+    "NULL"
+   ]
+  ],
+  "expected_columns": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#unicode",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-146",
+  "function": "UPPER",
+  "sql": "SELECT UPPER('foo') AS example;",
+  "expected_rows": [
+   [
+    "FOO"
+   ]
+  ],
+  "expected_columns": [
+   "example"
+  ],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#upper",
+  "notes": ""
+ },
+ {
+  "id": "bq-string-147",
+  "function": "CONTAINS_SUBSTR",
+  "sql": "SELECT CONTAINS_SUBSTR('hello', NULL) AS result;",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#contains_substr",
+  "notes": "error: Docs: throws an error.",
+  "error": true
+ },
+ {
+  "id": "bq-string-148",
+  "function": "REGEXP_EXTRACT_GROUPS",
+  "sql": "SELECT REGEXP_EXTRACT_GROUPS('ID: ABC', r'ID: (?<item_id__INT64>\\w+)');",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_extract_groups",
+  "notes": "error: Docs: Error: Bad INT64 value.",
+  "error": true
+ },
+ {
+  "id": "bq-string-149",
+  "function": "REGEXP_EXTRACT_GROUPS",
+  "sql": "SELECT REGEXP_EXTRACT_GROUPS('ID: ', r'ID: (?<item_id__INT64>\\d*)');",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#regexp_extract_groups",
+  "notes": "error: Docs: Error: Bad INT64 value.",
+  "error": true
+ },
+ {
+  "id": "bq-string-150",
+  "function": "SAFE_CONVERT_BYTES_TO_STRING",
+  "sql": "SELECT SAFE_CONVERT_BYTES_TO_STRING(b'\\xc2') as safe_convert;",
+  "expected_rows": [
+   [
+    "�"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#safe_convert_bytes_to_string",
+  "notes": "Result given in docs prose only: returns the Unicode replacement character."
+ },
+ {
+  "id": "bq-string-151",
+  "function": "FORMAT",
+  "sql": "SELECT FORMAT('%d', 10);",
+  "expected_rows": [
+   [
+    "10"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#format",
+  "notes": "Docs: Simple integer. Result given without column header."
+ },
+ {
+  "id": "bq-string-152",
+  "function": "FORMAT",
+  "sql": "SELECT FORMAT('|%10d|', 11);",
+  "expected_rows": [
+   [
+    "|           11|"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#format",
+  "notes": "Docs: Integer with left blank padding. Result given without column header."
+ },
+ {
+  "id": "bq-string-153",
+  "function": "FORMAT",
+  "sql": "SELECT FORMAT('+%010d+', 12);",
+  "expected_rows": [
+   [
+    "+0000000012+"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#format",
+  "notes": "Docs: Integer with left zero padding. Result given without column header."
+ },
+ {
+  "id": "bq-string-154",
+  "function": "FORMAT",
+  "sql": "SELECT FORMAT(\"%'d\", 123456789);",
+  "expected_rows": [
+   [
+    "123,456,789"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#format",
+  "notes": "Docs: Integer with commas. Result given without column header."
+ },
+ {
+  "id": "bq-string-155",
+  "function": "FORMAT",
+  "sql": "SELECT FORMAT('-%s-', 'abcd efg');",
+  "expected_rows": [
+   [
+    "-abcd efg-"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#format",
+  "notes": "Docs: STRING. Result given without column header."
+ },
+ {
+  "id": "bq-string-156",
+  "function": "FORMAT",
+  "sql": "SELECT FORMAT('%f %E', 1.1, 2.2);",
+  "expected_rows": [
+   [
+    "1.100000 2.200000E+00"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#format",
+  "notes": "Docs: FLOAT64. Result given without column header."
+ },
+ {
+  "id": "bq-string-157",
+  "function": "FORMAT",
+  "sql": "SELECT FORMAT('%t', date '2015-09-01');",
+  "expected_rows": [
+   [
+    "2015-09-01"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#format",
+  "notes": "Docs: DATE. Result given without column header."
+ },
+ {
+  "id": "bq-string-158",
+  "function": "FORMAT",
+  "sql": "SELECT FORMAT('%t', timestamp '2015-09-01 12:34:56 America/Los_Angeles');",
+  "expected_rows": [
+   [
+    "2015-09-01 19:34:56+00"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#format",
+  "notes": "Docs: TIMESTAMP (docs use non-breaking hyphens in the result; normalised to ASCII hyphens). Result given without column header."
+ },
+ {
+  "id": "bq-string-159",
+  "function": "FORMAT",
+  "sql": "SELECT FORMAT('date: %s!', FORMAT_DATE('%B %d, %Y', date '2015-01-02'));",
+  "expected_rows": [
+   [
+    "date: January 02, 2015!"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#format",
+  "notes": "Docs: From the prose after the examples table. Result given without column header."
+ },
+ {
+  "id": "bq-string-160",
+  "function": "FORMAT",
+  "sql": "SELECT FORMAT(\"%'d\", 12345678);",
+  "expected_rows": [
+   [
+    "12,345,678"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#format",
+  "notes": "Docs: From the flags table (grouping flag). Result given without column header."
+ },
+ {
+  "id": "bq-string-161",
+  "function": "FORMAT",
+  "sql": "SELECT FORMAT(\"%'x\", 12345678);",
+  "expected_rows": [
+   [
+    "bc:614e"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#format",
+  "notes": "Docs: From the flags table (grouping flag). Result given without column header."
+ },
+ {
+  "id": "bq-string-162",
+  "function": "FORMAT",
+  "sql": "SELECT FORMAT(\"%'o\", 55555);",
+  "expected_rows": [
+   [
+    "15,4403"
+   ]
+  ],
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#format",
+  "notes": "Docs: From the flags table (grouping flag). Result given without column header."
+ },
+ {
+  "id": "bq-string-163",
+  "function": "FORMAT",
+  "sql": "SELECT FORMAT('%s', 1);",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#format",
+  "notes": "error: Docs: invalid format string for argument type produces an error.",
+  "error": true
+ },
+ {
+  "id": "bq-string-164",
+  "function": "FORMAT",
+  "sql": "SELECT FORMAT('%');",
+  "expected_rows": null,
+  "expected_columns": [],
+  "source": "https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#format",
+  "notes": "error: Docs: invalid format string produces an error.",
+  "error": true
+ }
+]
