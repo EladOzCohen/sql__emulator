@@ -247,8 +247,8 @@ now carry `session` settings, `translate`, `register` (Python UDFs) and `prelude
 translated SQL ("ran as (DuckDB)"); IDE button "⇄ SQL" shows it without running.
 
 QA: `python tests/compat/run_compat.py --dialect mysql|bigquery [--file X] [-v]`
-runs examples taken from the official manuals (`tests/compat/cases/*.json`, kept
-local and git-ignored: third-party text) and `tests/compat/audit_functions.py`
+runs examples taken from the official manuals (`tests/compat/cases/*.json`)
+and `tests/compat/audit_functions.py`
 lists documented functions that do not exist. Principled skips live in
 `tests/compat/known_skips*.json` (each needs a reason).
 
