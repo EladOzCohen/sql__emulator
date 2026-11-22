@@ -1,0 +1,21 @@
+{
+  "mysql-numeric-017": "implicit text->number in arithmetic ('10'+10): not supported; operator macros that did it broke SUM(x)+1 and window operands",
+  "mysql-ctrl-062": "implicit text->number in arithmetic (1+'1'): same limitation",
+  "mysql-numeric-046": "the manual shows the mysql client's 6-digit display of PI(); the value is 3.141592653589793",
+  "mysql-numeric-059": "ROUND of a DECIMAL literal is treated as DOUBLE (half-to-even): ROUND(2.5) gives 2, MySQL gives 3 for exact values",
+  "mysql-ctrl-010": "IFNULL with mixed number/text arguments: DuckDB unifies the types, MySQL returns the text",
+  "mysql-ctrl-016": "MySQL compares text with numbers as DOUBLE ('0.01' = 0 is false); DuckDB casts the text to the other type",
+  "mysql-ctrl-031": "BETWEEN with text bounds converts as MySQL does; DuckDB raises a conversion error",
+  "mysql-ctrl-041": "IN with mixed text/number lists: MySQL converts to DOUBLE; DuckDB raises a conversion error",
+  "mysql-ctrl-056": "PAD SPACE comparison ('a' = 'a ' is true under the manual's utf8mb4_general_ci); 8.4's default collation does not pad",
+  "mysql-ctrl-058": "_binary introducer (case-sensitive byte comparison) is not supported",
+  "mysql-ctrl-059": "CAST(... AS YEAR) type does not exist in DuckDB",
+  "mysql-ctrl-060": "CAST(... AS YEAR) type does not exist in DuckDB",
+  "mysql-ctrl-061": "CAST(... AS YEAR) type does not exist in DuckDB",
+  "mysql-ctrl-067": "CAST(... AS UNSIGNED) wrap-around semantics (1-2 = 18446744073709551615) are not supported",
+  "mysql-ctrl-068": "CAST(... AS UNSIGNED) wrap-around semantics are not supported",
+  "mysql-ctrl-069": "CAST(... AS UNSIGNED) wrap-around semantics are not supported",
+  "mysql-aggwin-001": "JSON_ARRAYAGG element order is unspecified in MySQL without ORDER BY; the manual shows one possible order",
+  "mysql-aggwin-002": "JSON_OBJECTAGG key order is unspecified in MySQL; the manual shows one possible order",
+  "mysql-aggwin-061": "WITH ROLLUP row order differs from the manual's display; the same rows are returned"
+}

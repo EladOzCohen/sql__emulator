@@ -201,12 +201,17 @@ PRELUDE: list[str] = [
     # (chained single-typed macros: a bare NULL must not match several typed overloads)
     _m("_mn_nv", "(x VARCHAR) AS _mn_num(x)", "(x) AS x"),
     _m("_mn_nb", "(x BOOLEAN) AS CAST(x AS INTEGER)", "(x) AS x"),
-    _m("_mn_nx", "(x BLOB) AS _mn_blobint(x)", "(x) AS x"),
+    # (BLOB -> integer overload removed: a typed BLOB overload makes DuckDB fail to bind
+    #  aggregate / window arguments, e.g. SUM(n) / COUNT(*))
+    _m("_mn_nx", "(x) AS x"),
     _m("_mn_n", "(x) AS _mn_nx(_mn_nb(_mn_nv(x)))"),
 ]
 
 # + - *  (the original DuckDB operator stays reachable as system.main."+")
-for _op in ("+", "-", "*"):
+# DISABLED: macros named + - * % break any operand that is an aggregate or window
+# call (SUM(x) + 1, n + LAG(n) OVER w fail with "INTEGER -> BLOB"). Known gap: MySQL
+# converts text to numbers in arithmetic ('10' + 5 = 15); DuckDB rejects it.
+for _op in ():
     _sig = [f'(a, b) AS system.main."{_op}"(_mn_n(a), _mn_n(b))']
     if _op in "+-":
         _sig.insert(0, f'(a) AS system.main."{_op}"(_mn_n(a))')
@@ -214,7 +219,6 @@ for _op in ("+", "-", "*"):
 
 _EXACT = r"^(DECIMAL\(|U?(TINYINT|SMALLINT|INTEGER|BIGINT|HUGEINT)$)"
 PRELUDE += [
-    _m('"%"', '(a, b) AS system.main."%"(_mn_n(a), _mn_n(b))'),
     # exact division: integer / integer -> DECIMAL(38,4); any other exact operands (DECIMAL
     # involved) -> the same digits as MySQL (dividend scale + 4) but as a DOUBLE;
     # DOUBLE (or anything else) -> DuckDB's division (x/0 is NULL, see ieee_floating_point_ops)
