@@ -78,15 +78,18 @@ _MYSQL = Dialect(
     register=_mysql.register,
     prelude=_mysql.prelude(),
     cheatsheet=(
-        "MySQL-flavored (runs on DuckDB). Provided via the prelude:\n"
-        "  DATE_FORMAT(d,'%Y-%m')   STR_TO_DATE(s,'%Y-%m-%d')   IFNULL(x,y)\n"
+        "MySQL (runs on DuckDB; your query is translated: the 'SQL' button shows it)\n"
+        "Works as in MySQL: backticks, LIMIT a, b, case-insensitive text comparison and LIKE,\n"
+        "  <=>, &&, ||, FROM DUAL, INSERT IGNORE, REPLACE INTO, GROUP_CONCAT(... SEPARATOR),\n"
+        "  INTERVAL arithmetic (DATE_ADD/SUB, x + INTERVAL 1 DAY; DATE stays DATE),\n"
+        "  DATE_FORMAT / STR_TO_DATE with MySQL specifiers (%i %p %W %U ...), WEEK modes 0-7,\n"
+        "  string / math / control functions from the manual, window functions,\n"
+        "  SHOW TABLES / SHOW DATABASES / DESCRIBE t / SHOW CREATE TABLE / SELECT DATABASE().\n"
         "\n"
-        "Differences to keep in mind:\n"
-        "  `col` backticks      ->  \"col\" double quotes\n"
-        "  LIMIT off, cnt       ->  LIMIT cnt OFFSET off\n"
-        "  GROUP_CONCAT(x)      ->  string_agg(x, ',')\n"
-        "  x DIV y  /  x % y    ->  x // y   /   x % y\n"
-        "  DATE_FORMAT minutes use %M here (DuckDB strftime), not %i\n"
+        "Known differences:\n"
+        "  '1' + 1 (text in arithmetic), CAST(x AS UNSIGNED / YEAR), mixed text/number IN/BETWEEN,\n"
+        "  zero dates (0000-00-00), AUTO_INCREMENT / ENGINE= in CREATE TABLE, CREATE DATABASE.\n"
+        "  TIME values can exceed 24h in MySQL, so TIME results are text ('HH:MM:SS').\n"
     ),
 )
 
