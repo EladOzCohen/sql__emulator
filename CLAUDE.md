@@ -252,7 +252,7 @@ local and git-ignored: third-party text) and `tests/compat/audit_functions.py`
 lists documented functions that do not exist. Principled skips live in
 `tests/compat/known_skips*.json` (each needs a reason).
 
-Status (MySQL): all 518 manual examples pass or are skipped with a written reason (477 pass, 41 documented gaps in known_skips*.json; run tests/compat/regressions.py too). Known MySQL gaps: implicit text->number arithmetic ('1'+1), CAST AS UNSIGNED/YEAR, mixed-type IN/BETWEEN/IFNULL, _binary. BigQuery: only shared infrastructure exists; ~186/786 cases pass, modules are mostly stubs (next work).
+Status (MySQL): all 518 manual examples pass or are skipped with a written reason (477 pass, 41 documented gaps in known_skips*.json; run tests/compat/regressions.py too). Known MySQL gaps: implicit text->number arithmetic ('1'+1), CAST AS UNSIGNED/YEAR, mixed-type IN/BETWEEN/IFNULL, _binary. BigQuery: 619 of 786 manual examples pass, 158 skipped with reasons (many only differ in how bytes/structs/DATETIME are displayed), 9 still fail (UNNEST as a column alias, FORMAT('%T'), octal escapes in b'..', COLLATE). Never define macros named like operators or core aggregates/window functions (they break SUM(x)+1 and windows); tests/compat/regressions.py guards this.
 Gotchas: a TEMP macro named like a builtin shadows it; inside macros call the
 real one as `system.main.<fn>()`, and never rely on DuckDB builtins that call
 another shadowed builtin (`round_even` calls `round`). Run suites with a

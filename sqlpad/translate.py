@@ -49,6 +49,21 @@ class Tok:
         return self.kind == PUNCT and (not chars or self.text in chars)
 
 
+def _escape(sql: str, j: int) -> tuple[str, int]:
+    """Decode the backslash escape at sql[j]: (text, characters consumed)."""
+    nxt = sql[j + 1]
+    if nxt in "xX" and re.fullmatch(r"[0-9A-Fa-f]{2}", sql[j + 2:j + 4]):
+        return chr(int(sql[j + 2:j + 4], 16)), 4          # H
+    for marker, width in (("u", 4), ("U", 8)):                # é, \U0001F600
+        digits = sql[j + 2:j + 2 + width]
+        if nxt == marker and re.fullmatch(r"[0-9A-Fa-f]{%d}" % width, digits):
+            try:
+                return chr(int(digits, 16)), 2 + width
+            except ValueError:
+                break
+    return _BACKSLASH.get(nxt, nxt), 2
+
+
 def _read_triple(sql: str, i: int, quote: str, backslash: bool) -> tuple[str, str, int]:
     """Read a '''...''' / \"\"\"...\"\"\" string starting at sql[i]."""
     fence = quote * 3
@@ -60,8 +75,9 @@ def _read_triple(sql: str, i: int, quote: str, backslash: bool) -> tuple[str, st
             return sql[i:j + 3], "".join(out), j + 3
         ch = sql[j]
         if backslash and ch == "\\" and j + 1 < n:
-            out.append(_BACKSLASH.get(sql[j + 1], sql[j + 1]))
-            j += 2
+            text, step = _escape(sql, j)
+            out.append(text)
+            j += step
             continue
         out.append(ch)
         j += 1
@@ -82,9 +98,9 @@ def _read_quoted(sql: str, i: int, quote: str, backslash: bool) -> tuple[str, st
                 continue
             return sql[i:j + 1], "".join(out), j + 1
         if backslash and ch == "\\" and j + 1 < n:
-            nxt = sql[j + 1]
-            out.append(_BACKSLASH.get(nxt, nxt))
-            j += 2
+            text, step = _escape(sql, j)
+            out.append(text)
+            j += step
             continue
         out.append(ch)
         j += 1

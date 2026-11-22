@@ -1,0 +1,15 @@
+{
+ "bq-datetime-029": "Docs print DATETIME as 2008-12-25T05:30:00 (ISO 'T'); DuckDB TIMESTAMP renders with a space and cannot be both a TIMESTAMP and print with T. Values are correct.",
+ "bq-datetime-030": "Docs print DATETIME with 'T' separator; DuckDB TIMESTAMP prints with a space (values match).",
+ "bq-datetime-036": "Docs print DATETIME with 'T' separator; DuckDB TIMESTAMP prints with a space (values match).",
+ "bq-datetime-037": "Docs print DATETIME with 'T' separator; DuckDB TIMESTAMP prints with a space (values match).",
+ "bq-datetime-038": "Docs print DATETIME with 'T' separator; DuckDB TIMESTAMP prints with a space (values match).",
+ "bq-datetime-039": "Docs print DATETIME with 'T' separator; DuckDB TIMESTAMP prints with a space (values match).",
+ "bq-datetime-041": "Docs print DATETIME with 'T' separator; DuckDB TIMESTAMP prints with a space (values match).",
+ "bq-datetime-042": "Docs print DATETIME with 'T' separator; DuckDB TIMESTAMP prints with a space (values match).",
+ "bq-datetime-051": "Docs print DATETIME with 'T' separator; DuckDB TIMESTAMP prints with a space (values match).",
+ "bq-datetime-052": "Docs print DATETIME with 'T' separator; DuckDB TIMESTAMP prints with a space (values match).",
+ "bq-datetime-053": "Docs print DATETIME with 'T' separator; DuckDB TIMESTAMP prints with a space (values match).",
+ "bq-datetime-031": "Docs print DATETIME with 'T' separator; DuckDB TIMESTAMP prints with a space (the 559 day difference matches).",
+ "bq-datetime-063": "Docs result (45, 44) was produced in a non-UTC session zone (2017-11-06 00:00 UTC is Monday: WEEK(MONDAY) is 45 in UTC); session here is UTC."
+}

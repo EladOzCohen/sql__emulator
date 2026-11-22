@@ -60,6 +60,11 @@ def fmt(value) -> str:
         return "NULL"
     if isinstance(value, bool):
         return "true" if value else "false"
+    if isinstance(value, float):
+        if value != value:
+            return "NaN"                      # the manuals print NaN / +inf / -inf
+        if value in (float("inf"), float("-inf")):
+            return "+inf" if value > 0 else "-inf"
     if isinstance(value, (int, float, decimal.Decimal)):
         return str(value)
     if isinstance(value, dt.datetime):
