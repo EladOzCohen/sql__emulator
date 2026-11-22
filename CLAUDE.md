@@ -234,3 +234,28 @@ of the cookbook CSVs; deliberately left alone and not committed.
 
 See personal memory for standing preferences (Hebrew replies, ask-don't-guess,
 step-by-step). Replies to the user are in Hebrew.
+
+## Dialect fidelity work (in progress)
+
+Goal: SQL written in MySQL / BigQuery syntax must run and return what the real
+engine returns. Architecture: `sqlpad/translate.py` (tokenizer + call handlers +
+rules; unaliased columns keep MySQL's expression text or BigQuery's `f0_`),
+`sqlpad/mysql/` and `sqlpad/bigquery/` packages (one module per area: temporal,
+strings, numeric/mathconv, control, aggregate, arrays, admin). Dialect objects
+now carry `session` settings, `translate`, `register` (Python UDFs) and `prelude`.
+`core.run_statement(con, sql, dialect)` translates first; errors show the
+translated SQL ("ran as (DuckDB)"); IDE button "⇄ SQL" shows it without running.
+
+QA: `python tests/compat/run_compat.py --dialect mysql|bigquery [--file X] [-v]`
+runs examples taken from the official manuals (`tests/compat/cases/*.json`, kept
+local and git-ignored: third-party text) and `tests/compat/audit_functions.py`
+lists documented functions that do not exist. Principled skips live in
+`tests/compat/known_skips*.json` (each needs a reason).
+
+Status (MySQL): date/time 133/133 (+15 documented skips), strings 151/156,
+numeric 80/84, control/cast 52/69, aggregate/window 56/61. BigQuery: only the
+shared infrastructure exists; ~186/786 cases pass, modules are mostly stubs.
+Gotchas: a TEMP macro named like a builtin shadows it; inside macros call the
+real one as `system.main.<fn>()`, and never rely on DuckDB builtins that call
+another shadowed builtin (`round_even` calls `round`). Run suites with a
+timeout: a recursive macro hangs DuckDB instead of failing.

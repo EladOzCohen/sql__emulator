@@ -1,0 +1,7 @@
+{
+  "mysql-string-006": "the manual shows the mysql client's --binary-as-hex rendering (0x4D7953514C) of a binary string; we return the same bytes (VARBINARY 'MySQL'), only the client display differs",
+  "mysql-string-007": "the manual shows the mysql client's --binary-as-hex rendering (0x4D4D4D) of a binary string; we return the same bytes (VARBINARY 'MMM'), only the client display differs",
+  "mysql-string-029": "the manual's example output 'JWJj' is a typo (checked against the manual text and the base64 definition): TO_BASE64('abc') is 'YWJj'; FROM_BASE64 round-trips to 'abc'",
+  "mysql-string-072": "the manual's example output 'JWJj' is a typo (checked against the manual text and the base64 definition): TO_BASE64('abc') is 'YWJj'",
+  "mysql-string-086": "needs the latin1_german2_ci (German phone-book) collation, which expands 'ä' to 'ae'; DuckDB has no such collation (its ICU build exposes no phonebook tailoring)"
+}

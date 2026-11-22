@@ -12,6 +12,10 @@ dialects never contaminates your saved tables or another dialect.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from typing import Callable
+
+from . import bigquery as _bigquery
+from . import mysql as _mysql
 
 
 @dataclass(frozen=True)
@@ -20,8 +24,25 @@ class Dialect:
     title: str
     prompt: str
     scratch: str
-    prelude: list[str] = field(default_factory=list)
+    prelude: list[str] = field(default_factory=list)     # TEMP macros etc.
+    session: list[str] = field(default_factory=list)     # SET ... statements
+    translate: Callable[[str], str] | None = None        # SQL text -> DuckDB SQL
+    register: Callable[[object], None] | None = None     # add Python functions
     cheatsheet: str = ""
+
+    def apply(self, con) -> None:
+        """Configure a fresh connection for this dialect (session-only)."""
+        for stmt in self.session:
+            con.execute(stmt)
+        if self.register is not None:
+            self.register(con)
+        for stmt in self.prelude:
+            try:
+                con.execute(stmt)
+            except Exception as exc:  # noqa: BLE001 - one bad macro must not break the session
+                import sys
+                print(f"sqlpad: dialect '{self.key}' setup failed for "
+                      f"{stmt[:70]!r}: {str(exc).splitlines()[0]}", file=sys.stderr)
 
 
 # --------------------------------------------------------------------------- #
@@ -52,13 +73,10 @@ _MYSQL = Dialect(
     title="MySQL-flavored",
     prompt="mysql> ",
     scratch="query_mysql.sql",
-    prelude=[
-        # DATE_FORMAT(date, fmt) / STR_TO_DATE(str, fmt)
-        "CREATE OR REPLACE TEMP MACRO date_format(d, fmt) AS strftime(d, fmt)",
-        "CREATE OR REPLACE TEMP MACRO str_to_date(s, fmt) AS strptime(s, fmt)",
-        # MySQL IFNULL exists natively in DuckDB; add NVL-style alias too.
-        "CREATE OR REPLACE TEMP MACRO ifnull(x, y) AS coalesce(x, y)",
-    ],
+    session=_mysql.SESSION,
+    translate=_mysql.build_translator(),
+    register=_mysql.register,
+    prelude=_mysql.prelude(),
     cheatsheet=(
         "MySQL-flavored (runs on DuckDB). Provided via the prelude:\n"
         "  DATE_FORMAT(d,'%Y-%m')   STR_TO_DATE(s,'%Y-%m-%d')   IFNULL(x,y)\n"
@@ -81,26 +99,10 @@ _BIGQUERY = Dialect(
     title="BigQuery (GoogleSQL)",
     prompt="bq> ",
     scratch="query_bigquery.sql",
-    prelude=[
-        # SAFE_* arithmetic (return NULL instead of error; division is float)
-        "CREATE OR REPLACE TEMP MACRO safe_divide(x, y) AS "
-        "(CASE WHEN y = 0 THEN NULL ELSE (x * 1.0) / y END)",
-        "CREATE OR REPLACE TEMP MACRO safe_add(x, y) AS (x + y)",
-        "CREATE OR REPLACE TEMP MACRO safe_subtract(x, y) AS (x - y)",
-        "CREATE OR REPLACE TEMP MACRO safe_multiply(x, y) AS (x * y)",
-        "CREATE OR REPLACE TEMP MACRO safe_negate(x) AS (-x)",
-        # Date/time formatting (GoogleSQL puts the format string first)
-        "CREATE OR REPLACE TEMP MACRO format_date(fmt, d) AS strftime(d, fmt)",
-        "CREATE OR REPLACE TEMP MACRO parse_date(fmt, s) AS strptime(s, fmt)::DATE",
-        "CREATE OR REPLACE TEMP MACRO format_timestamp(fmt, t) AS strftime(t, fmt)",
-        "CREATE OR REPLACE TEMP MACRO parse_timestamp(fmt, s) AS strptime(s, fmt)",
-        "CREATE OR REPLACE TEMP MACRO format_datetime(fmt, t) AS strftime(t, fmt)",
-        "CREATE OR REPLACE TEMP MACRO parse_datetime(fmt, s) AS strptime(s, fmt)",
-        # Strings / arrays
-        "CREATE OR REPLACE TEMP MACRO regexp_contains(s, pattern) AS regexp_matches(s, pattern)",
-        "CREATE OR REPLACE TEMP MACRO split(s, delim) AS string_split(s, delim)",
-        "CREATE OR REPLACE TEMP MACRO generate_array(a, b) AS generate_series(a, b)",
-    ],
+    session=_bigquery.SESSION,
+    translate=_bigquery.build_translator(),
+    register=_bigquery.register,
+    prelude=_bigquery.prelude(),
     cheatsheet=(
         "BigQuery / GoogleSQL (runs on DuckDB). Works natively — write it as-is:\n"
         "  QUALIFY, GROUP BY alias, GROUP BY ALL, trailing commas\n"

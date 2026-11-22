@@ -1,0 +1,15 @@
+{
+  "mysql-datetime-009": "CONVERT_TZ with named zones needs the server's time zone tables",
+  "mysql-datetime-039": "FROM_UNIXTIME depends on the session time zone; the manual's output assumes its own zone",
+  "mysql-datetime-040": "FROM_UNIXTIME(...) + 0: temporal value in numeric context (not supported); also time zone dependent",
+  "mysql-datetime-041": "FROM_UNIXTIME depends on the session time zone; the manual's output assumes its own zone",
+  "mysql-datetime-122": "UNIX_TIMESTAMP depends on the session time zone; the manual's output assumes its own zone",
+  "mysql-datetime-123": "UNIX_TIMESTAMP depends on the session time zone; the manual's output assumes its own zone",
+  "mysql-datetime-078": "TIME value used as a number (SEC_TO_TIME(x) + 0): TIME results are text here",
+  "mysql-datetime-085": "result is the zero date 0000-00-00, which DuckDB's DATE cannot represent (we return NULL)",
+  "mysql-datetime-086": "result is the incomplete date 0000-09-00, which DuckDB's DATE cannot represent (we return NULL)",
+  "mysql-datetime-088": "result is the zero date 0000-00-00, which DuckDB's DATE cannot represent (we return NULL)",
+  "mysql-datetime-089": "the manual contradicts itself: it shows 2004-04-31 but also says 8.4 range-checks dates; we return NULL",
+  "mysql-datetime-091": "the manual contradicts itself: it shows 2023-02-31 but also says 8.4 range-checks dates; we return NULL",
+  "mysql-datetime-141": "needs MySQL's decimal division scale (6/4 is 1.5000, so HOUR_MINUTE reads minute=5000); DuckDB gives 1.5"
+}

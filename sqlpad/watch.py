@@ -35,6 +35,8 @@ def _print_result(res: core.Result, index: int, total: int) -> None:
 
     if not res.ok:
         print(f"  \033[31m✗ Error:\033[0m {res.error}")
+        if res.translated:
+            print(f"  \033[90mran as (DuckDB): {' '.join(res.translated.split())}\033[0m")
         return
 
     if res.has_rows:
@@ -46,11 +48,11 @@ def _print_result(res: core.Result, index: int, total: int) -> None:
         print(f"  \033[32m✓ {verb} ok\033[0m  \033[90m{res.elapsed_ms:.1f} ms\033[0m")
 
 
-def run_once(con, sql_path: str, dialect_title: str = "") -> None:
+def run_once(con, sql_path: str, dialect: dialects.Dialect | None = None) -> None:
     _clear()
     print(BANNER)
     stamp = datetime.now().strftime("%H:%M:%S")
-    tag = f"[{dialect_title}]  " if dialect_title else ""
+    tag = f"[{dialect.title}]  " if dialect else ""
     print(f"\033[35m{tag}\033[0m\033[90m{os.path.abspath(sql_path)}  ·  ran at {stamp}\033[0m")
 
     with open(sql_path, "r", encoding="utf-8") as fh:
@@ -63,7 +65,7 @@ def run_once(con, sql_path: str, dialect_title: str = "") -> None:
 
     total = len(statements)
     for i, stmt in enumerate(statements, start=1):
-        res = core.run_statement(con, stmt)
+        res = core.run_statement(con, stmt, dialect)
         _print_result(res, i, total)
         if not res.ok:
             # stop on first error, like a script would
@@ -83,7 +85,7 @@ def watch(sql_path: str | None = None, db_path: str = core.DEFAULT_DB,
             fh.write(f"-- {dial.title} scratch pad. Write SQL, save, see results.\n"
                      "SELECT 'hello, SQL' AS greeting;\n")
 
-    con = core.connect(db_path, prelude=dial.prelude)
+    con = core.connect(db_path, dialect=dial)
     last_mtime = -1.0
 
     try:
@@ -96,7 +98,7 @@ def watch(sql_path: str | None = None, db_path: str = core.DEFAULT_DB,
             if mtime != last_mtime:
                 last_mtime = mtime
                 try:
-                    run_once(con, sql_path, dial.title)
+                    run_once(con, sql_path, dial)
                 except Exception as exc:  # noqa: BLE001
                     print(f"\n\033[31mUnexpected error:\033[0m {exc}")
                 print(f"\n\033[90mWatching for changes… (edit + save {sql_path}, "

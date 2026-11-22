@@ -48,6 +48,8 @@ Multi-line is fine — press Enter mid-statement to keep typing.
 def _print_result(res: core.Result, max_width: int) -> None:
     if not res.ok:
         print(f"\033[31m✗ {res.error}\033[0m")
+        if res.translated:
+            print(f"\033[90mran as (DuckDB): {' '.join(res.translated.split())}\033[0m")
         return
     if res.has_rows:
         print(render.render_table(res.columns, res.rows, max_col_width=max_width))
@@ -56,9 +58,9 @@ def _print_result(res: core.Result, max_width: int) -> None:
         print(f"\033[32m✓ ok\033[0m  \033[90m{res.elapsed_ms:.1f} ms\033[0m")
 
 
-def _run_sql(con, sql: str, max_width: int) -> None:
+def _run_sql(con, sql: str, max_width: int, dialect=None) -> None:
     for stmt in render.split_statements(sql):
-        res = core.run_statement(con, stmt)
+        res = core.run_statement(con, stmt, dialect)
         _print_result(res, max_width)
         if not res.ok:
             break
@@ -165,7 +167,7 @@ def _handle_meta(line: str, state: dict) -> bool:
             print(f"\033[31m✗ no such file: {args[0]}\033[0m")
         else:
             with open(args[0], "r", encoding="utf-8") as fh:
-                _run_sql(con, fh.read(), state["width"])
+                _run_sql(con, fh.read(), state["width"], state["dialect"])
     elif cmd == ".dialect":
         if not args:
             print(f"\033[35mcurrent: {state['dialect'].title}\033[0m\n")
@@ -179,7 +181,7 @@ def _handle_meta(line: str, state: dict) -> bool:
             # reconnect so the previous dialect's TEMP macros are cleared;
             # persisted tables live in the db file and survive.
             con.close()
-            state["con"] = core.connect(state["db_path"], prelude=new.prelude)
+            state["con"] = core.connect(state["db_path"], dialect=new)
             state["db"] = catalog.current_database(state["con"])
             state["dialect"] = new
             print(f"\033[32m✓ switched to {new.title}\033[0m "
@@ -221,7 +223,7 @@ def _make_session(history_path: str):
 def repl(db_path: str = core.DEFAULT_DB,
          dialect: dialects.Dialect | None = None) -> None:
     dial = dialect or dialects.DIALECTS[dialects.DEFAULT_DIALECT]
-    con, report = core.connect_ex(db_path, prelude=dial.prelude)
+    con, report = core.connect_ex(db_path, dialect=dial)
     state = {"width": 40, "con": con, "db_path": db_path, "dialect": dial,
              "db": catalog.current_database(con)}
     tables = core.list_tables(con)
@@ -266,7 +268,7 @@ def repl(db_path: str = core.DEFAULT_DB,
                 _track_db(state)
                 continue
 
-            _run_sql(state["con"], line, state["width"])
+            _run_sql(state["con"], line, state["width"], state["dialect"])
             _track_db(state)
     except KeyboardInterrupt:
         pass

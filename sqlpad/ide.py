@@ -17,13 +17,13 @@ import re
 from . import catalog, core, dialects, render
 
 try:
-    from PyQt5.QtCore import Qt, QUrl
+    from PyQt5.QtCore import QSettings, Qt, QUrl, pyqtSignal
     from PyQt5.QtGui import (
-        QColor, QDesktopServices, QFont, QKeySequence, QSyntaxHighlighter,
-        QTextCharFormat,
+        QColor, QDesktopServices, QFont, QFontMetrics, QFontMetricsF,
+        QKeySequence, QSyntaxHighlighter, QTextCharFormat, QTextCursor,
     )
     from PyQt5.QtWidgets import (
-        QAbstractItemView, QAction, QApplication, QComboBox, QFileDialog,
+        QAbstractItemView, QAction, QApplication, QComboBox, QDialog, QFileDialog,
         QHeaderView, QLabel, QMainWindow, QMenu, QMessageBox, QPlainTextEdit,
         QShortcut, QSplitter, QTableWidget, QTableWidgetItem, QToolBar,
         QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget,
@@ -92,11 +92,106 @@ class SqlHighlighter(QSyntaxHighlighter):
 
 
 # --------------------------------------------------------------------------- #
+#  Editor / results widgets
+# --------------------------------------------------------------------------- #
+def _wheel_zoom(widget, event) -> bool:
+    """Ctrl+wheel zooms (emits +1/-1) instead of scrolling. True if handled."""
+    if not event.modifiers() & Qt.ControlModifier:
+        return False
+    delta = event.angleDelta().y()
+    if delta:
+        widget.zoom_requested.emit(1 if delta > 0 else -1)
+    event.accept()
+    return True
+
+
+class SqlEditor(QPlainTextEdit):
+    """SQL editor with IDE-style Tab / Shift+Tab and Ctrl+wheel zoom.
+
+    Tab with a selection indents every selected line (it never replaces the
+    selection); Shift+Tab outdents. Without a selection, Tab inserts spaces up
+    to the next 4-column stop.
+    """
+
+    INDENT = "    "
+    zoom_requested = pyqtSignal(int)      # +1 zoom in, -1 zoom out
+
+    def wheelEvent(self, event):  # noqa: N802 (Qt signature)
+        if not _wheel_zoom(self, event):
+            super().wheelEvent(event)
+
+    def keyPressEvent(self, event):  # noqa: N802 (Qt signature)
+        key = event.key()
+        if key in (Qt.Key_Tab, Qt.Key_Backtab) and not (
+                event.modifiers() & (Qt.ControlModifier | Qt.AltModifier)):
+            cursor = self.textCursor()
+            if key == Qt.Key_Backtab or event.modifiers() & Qt.ShiftModifier:
+                self._change_indent(cursor, indent=False)
+            elif cursor.hasSelection():
+                self._change_indent(cursor, indent=True)
+            else:
+                width = len(self.INDENT)
+                cursor.insertText(" " * (width - cursor.positionInBlock() % width))
+            event.accept()
+            return
+        super().keyPressEvent(event)
+
+    def _change_indent(self, cursor: "QTextCursor", indent: bool) -> None:
+        doc = self.document()
+        had_selection = cursor.hasSelection()
+        first = doc.findBlock(cursor.selectionStart())
+        last = doc.findBlock(cursor.selectionEnd())
+        # a selection that ends at the very start of a line does not include it
+        if (had_selection and last.blockNumber() > first.blockNumber()
+                and last.position() == cursor.selectionEnd()):
+            last = last.previous()
+        first_no, last_no = first.blockNumber(), last.blockNumber()
+
+        cursor.beginEditBlock()
+        for number in range(first_no, last_no + 1):
+            block = doc.findBlockByNumber(number)
+            edit = QTextCursor(block)
+            text = block.text()
+            if indent:
+                if text.strip():              # leave blank lines alone
+                    edit.insertText(self.INDENT)
+            else:
+                n = 1 if text.startswith("\t") else 0
+                if not n:
+                    while n < len(self.INDENT) and n < len(text) and text[n] == " ":
+                        n += 1
+                if n:
+                    edit.movePosition(QTextCursor.Right, QTextCursor.KeepAnchor, n)
+                    edit.removeSelectedText()
+        cursor.endEditBlock()
+
+        if had_selection:                     # keep the edited lines selected
+            start = doc.findBlockByNumber(first_no)
+            end = doc.findBlockByNumber(last_no)
+            cursor.setPosition(start.position())
+            cursor.setPosition(end.position() + end.length() - 1, QTextCursor.KeepAnchor)
+            self.setTextCursor(cursor)
+
+
+class ResultsTable(QTableWidget):
+    """Results grid; Ctrl+wheel zooms like the editor."""
+
+    zoom_requested = pyqtSignal(int)
+
+    def wheelEvent(self, event):  # noqa: N802 (Qt signature)
+        if not _wheel_zoom(self, event):
+            super().wheelEvent(event)
+
+
+# --------------------------------------------------------------------------- #
 #  Main window
 # --------------------------------------------------------------------------- #
+_FONT_MIN, _FONT_MAX, _FONT_DEFAULT = 7, 40, 12
+
 _STARTER = (
     "-- Ctrl+Enter runs the statement under the cursor (or selection).\n"
     "-- Ctrl+Shift+Enter runs everything.\n"
+    "-- Zoom: Ctrl+wheel, or Ctrl+Plus / Ctrl+Minus / Ctrl+0 to reset.\n"
     "-- Double-click a database on the left to switch to it (or: USE <database>;)\n"
     "SHOW TABLES;\n"
 )
@@ -145,15 +240,25 @@ class IdeWindow(QMainWindow):
         super().__init__()
         self.db_path = db_path
         self.dialect = dialect
-        self.con, report = core.connect_ex(db_path, prelude=dialect.prelude)
+        self.con, report = core.connect_ex(db_path, dialect=dialect)
         self.active_db = catalog.current_database(self.con)
         self.current_file: str | None = None
         self.last_result: tuple[list[str], list] | None = None
+
+        # zoom level is remembered between runs (git-ignored ini next to data/)
+        self.settings = QSettings(
+            str(catalog.data_dir().parent / "ide_settings.ini"), QSettings.IniFormat)
+        try:
+            size = int(self.settings.value("font_size", _FONT_DEFAULT))
+        except (TypeError, ValueError):
+            size = _FONT_DEFAULT
+        self.font_size = max(_FONT_MIN, min(_FONT_MAX, size))
 
         self.setWindowTitle("SQLPad IDE")
         self.resize(1100, 720)
         self._build_toolbar()
         self._build_body()
+        self._apply_font()
         self._build_shortcuts()
         self.refresh_tree()
         self._update_db_label()
@@ -176,7 +281,16 @@ class IdeWindow(QMainWindow):
         sync = QAction("⟳ Sync", self)
         sync.setToolTip("Load new or changed CSV files from the data/ folders")
         sync.triggered.connect(self.sync_databases)
-        for a in (run, run_all, open_a, save_a, export, sync):
+        zoom_out = QAction("A−", self)
+        zoom_out.setToolTip("Zoom out (Ctrl+Minus or Ctrl+wheel)")
+        zoom_out.triggered.connect(lambda: self.zoom(-1))
+        zoom_in = QAction("A+", self)
+        zoom_in.setToolTip("Zoom in (Ctrl+Plus or Ctrl+wheel); Ctrl+0 resets")
+        zoom_in.triggered.connect(lambda: self.zoom(1))
+        translated = QAction("⇄ SQL", self)
+        translated.setToolTip("Show the DuckDB SQL this dialect runs for the selection / current statement")
+        translated.triggered.connect(self.show_translation)
+        for a in (run, run_all, open_a, save_a, export, sync, translated, zoom_out, zoom_in):
             tb.addAction(a)
         tb.addSeparator()
 
@@ -201,13 +315,13 @@ class IdeWindow(QMainWindow):
         self.tree.itemDoubleClicked.connect(self.on_tree_double)
         self.tree.customContextMenuRequested.connect(self.on_tree_menu)
 
-        self.editor = QPlainTextEdit()
-        self.editor.setFont(QFont("Consolas", 12))
-        self.editor.setTabStopDistance(4 * 8)
+        self.editor = SqlEditor()
         self.editor.setPlainText(_STARTER)
+        self.editor.zoom_requested.connect(self.zoom)
         self.highlighter = SqlHighlighter(self.editor.document())
 
-        self.table = QTableWidget()
+        self.table = ResultsTable()
+        self.table.zoom_requested.connect(self.zoom)
         self.table.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.table.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.table.setAlternatingRowColors(True)
@@ -240,20 +354,83 @@ class IdeWindow(QMainWindow):
         QShortcut(QKeySequence("Ctrl+Shift+Enter"), self, self.run_all)
         QShortcut(QKeySequence.Open, self, self.open_file)
         QShortcut(QKeySequence.Save, self, self.save_file)
+        for seq in ("Ctrl++", "Ctrl+=", "Ctrl+Plus"):
+            QShortcut(QKeySequence(seq), self, lambda: self.zoom(1))
+        for seq in ("Ctrl+-", "Ctrl+Minus"):
+            QShortcut(QKeySequence(seq), self, lambda: self.zoom(-1))
+        QShortcut(QKeySequence("Ctrl+0"), self, self.zoom_reset)
+
+    # ---- Zoom ------------------------------------------------------------- #
+    def zoom(self, delta: int) -> None:
+        self._set_font_size(self.font_size + delta)
+
+    def zoom_reset(self) -> None:
+        self._set_font_size(_FONT_DEFAULT)
+
+    def _set_font_size(self, size: int) -> None:
+        size = max(_FONT_MIN, min(_FONT_MAX, size))
+        if size == self.font_size:
+            return
+        self.font_size = size
+        self._apply_font()
+        self.settings.setValue("font_size", size)
+
+    def _apply_font(self) -> None:
+        """Scale editor, results grid and database tree together."""
+        editor_font = QFont("Consolas", self.font_size)
+        self.editor.setFont(editor_font)
+        self.editor.setTabStopDistance(
+            len(SqlEditor.INDENT) * QFontMetricsF(editor_font).horizontalAdvance(" "))
+
+        side_font = QFont(self.table.font())
+        side_font.setPointSizeF(max(6.0, round(self.font_size * 0.75, 1)))
+        for widget in (self.table, self.tree):
+            widget.setFont(side_font)
+        self.table.horizontalHeader().setFont(side_font)
+        self.table.verticalHeader().setFont(side_font)
+        self.table.verticalHeader().setDefaultSectionSize(QFontMetrics(side_font).height() + 10)
+        self.table.resizeColumnsToContents()
 
     # ---- Actions ---------------------------------------------------------- #
-    def run_current(self) -> None:
+    def _current_sql(self) -> str:
+        """The selection, or the statement under the cursor."""
         cursor = self.editor.textCursor()
         selected = cursor.selectedText()
         if selected.strip():
             # QPlainTextEdit uses U+2029 as the newline in selected text
-            sql = selected.replace(" ", "\n")
-        else:
-            sql = render.statement_at(self.editor.toPlainText(), cursor.position()) or ""
-        self._execute(sql)
+            return selected.replace("\u2029", "\n")
+        return render.statement_at(self.editor.toPlainText(), cursor.position()) or ""
+
+    def run_current(self) -> None:
+        self._execute(self._current_sql())
 
     def run_all(self) -> None:
         self._execute(self.editor.toPlainText())
+
+    def show_translation(self) -> None:
+        """Show the DuckDB SQL that the current dialect would run (no execution)."""
+        sql = self._current_sql() or self.editor.toPlainText()
+        if self.dialect.translate is None:
+            body = f"{self.dialect.title} runs as written: no translation."
+        else:
+            parts = []
+            for stmt in render.split_statements(sql):
+                try:
+                    out = self.dialect.translate(stmt)
+                except Exception as exc:  # noqa: BLE001
+                    out = f"-- translator error: {exc}"
+                parts.append(out.strip().rstrip(";") + ";")
+            body = "\n\n".join(parts) if parts else "(nothing selected)"
+        box = QDialog(self)
+        box.setWindowTitle(f"{self.dialect.title}: SQL as run by DuckDB")
+        box.resize(820, 420)
+        lay = QVBoxLayout(box)
+        view = QPlainTextEdit(body)
+        view.setReadOnly(True)
+        view.setFont(QFont("Consolas", 11))
+        SqlHighlighter(view.document())
+        lay.addWidget(view)
+        box.exec_()
 
     def _execute(self, sql: str) -> None:
         statements = render.split_statements(sql)
@@ -263,12 +440,15 @@ class IdeWindow(QMainWindow):
         last = None
         total_ms = 0.0
         for stmt in statements:
-            res = core.run_statement(self.con, stmt)
+            res = core.run_statement(self.con, stmt, self.dialect)
             total_ms += res.elapsed_ms
             if not res.ok:
                 self._clear_table()
                 self.last_result = None
-                self.set_status(f"✗ {res.error}", error=True)
+                message = f"✗ {res.error}"
+                if res.translated:      # errors refer to the DuckDB SQL: show it
+                    message += f"\nran as (DuckDB): {' '.join(res.translated.split())[:300]}"
+                self.set_status(message, error=True)
                 self._after_execute()   # earlier statements may have changed things
                 return
             if res.has_rows:
@@ -472,7 +652,7 @@ class IdeWindow(QMainWindow):
             self.con.close()
         except Exception:  # noqa: BLE001
             pass
-        self.con = core.connect(self.db_path, prelude=new.prelude)
+        self.con = core.connect(self.db_path, dialect=new)
         self.dialect = new
         self.active_db = catalog.current_database(self.con)
         self._update_db_label()

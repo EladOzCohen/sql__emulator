@@ -23,6 +23,7 @@ class Result:
     rows: list[tuple[Any, ...]]
     elapsed_ms: float
     error: str | None = None
+    translated: str | None = None  # the SQL actually run, if the dialect rewrote it
 
     @property
     def ok(self) -> bool:
@@ -35,48 +36,63 @@ class Result:
 
 def connect_ex(
     db_path: str = DEFAULT_DB,
-    prelude: list[str] | None = None,
+    dialect: "dialects.Dialect | None" = None,
     databases: bool = True,
 ) -> tuple[duckdb.DuckDBPyConnection, "catalog.SyncReport | None"]:
     """Open the default database, attach/sync the data/ folder databases and
     restore the last active one. Returns (connection, sync report).
 
-    `prelude` is an optional list of statements (dialect TEMP macros) run
-    after connecting. They are session-only and never persisted.
+    `dialect` (optional) is applied after connecting: session settings, TEMP
+    macros and registered functions. All of it is session-only, never persisted.
     """
     con = duckdb.connect(db_path)
     report = catalog.setup(con) if databases else None
-    for stmt in prelude or []:
-        con.execute(stmt)
+    if dialect is not None:
+        dialect.apply(con)
     return con, report
 
 
 def connect(
     db_path: str = DEFAULT_DB,
-    prelude: list[str] | None = None,
+    dialect: "dialects.Dialect | None" = None,
     databases: bool = True,
 ) -> duckdb.DuckDBPyConnection:
     """Like connect_ex, for callers that don't need the sync report."""
-    return connect_ex(db_path, prelude, databases)[0]
+    return connect_ex(db_path, dialect, databases)[0]
 
 
-def run_statement(con: duckdb.DuckDBPyConnection, statement: str) -> Result:
-    """Execute a single SQL statement and capture columns/rows/timing/error."""
+def run_statement(
+    con: duckdb.DuckDBPyConnection,
+    statement: str,
+    dialect: "dialects.Dialect | None" = None,
+) -> Result:
+    """Execute a single SQL statement and capture columns/rows/timing/error.
+
+    With a `dialect`, the statement is first translated to DuckDB SQL. If the
+    translator itself fails, the original statement is run unchanged.
+    """
+    sql = statement
+    if dialect is not None and dialect.translate is not None:
+        try:
+            sql = dialect.translate(statement)
+        except Exception:  # noqa: BLE001 - never let a translator bug hide the query
+            sql = statement
+    translated = sql if sql != statement else None
     start = time.perf_counter()
     try:
-        cur = con.execute(statement)
+        cur = con.execute(sql)
         elapsed = (time.perf_counter() - start) * 1000.0
         if cur.description:
             columns = [d[0] for d in cur.description]
             rows = cur.fetchall()
             if columns == ["Success"] and not rows:
                 # USE / ATTACH etc. report a bare "Success" column: not a result set
-                return Result(statement, None, [], elapsed)
-            return Result(statement, columns, rows, elapsed)
-        return Result(statement, None, [], elapsed)
+                return Result(statement, None, [], elapsed, translated=translated)
+            return Result(statement, columns, rows, elapsed, translated=translated)
+        return Result(statement, None, [], elapsed, translated=translated)
     except Exception as exc:  # noqa: BLE001 - surface any engine error to the user
         elapsed = (time.perf_counter() - start) * 1000.0
-        return Result(statement, None, [], elapsed, error=str(exc))
+        return Result(statement, None, [], elapsed, error=str(exc), translated=translated)
 
 
 def import_csv(

@@ -99,11 +99,11 @@ def main(argv: list[str] | None = None) -> int:
             dial = _resolve_dialect(args.dialect, interactive_ok=False)
             return ide_mod.run_ide(db_path=args.db, dialect=dial)
 
-        # non-interactive commands: dialect only matters for its prelude macros
+        # non-interactive commands: dialect only matters for its translation/macros
         dial = _resolve_dialect(args.dialect, interactive_ok=False)
 
         if cmd == "import":
-            con = core.connect(args.db, prelude=dial.prelude)
+            con = core.connect(args.db, dialect=dial)
             try:
                 sheet = int(args.sheet) if args.sheet.isdigit() else args.sheet
                 n = core.import_file(con, args.file, args.table, sheet=sheet)
@@ -113,10 +113,10 @@ def main(argv: list[str] | None = None) -> int:
             return 0
 
         if cmd == "run":
-            con = core.connect(args.db, prelude=dial.prelude)
+            con = core.connect(args.db, dialect=dial)
             try:
                 for stmt in render.split_statements(args.sql):
-                    res = core.run_statement(con, stmt)
+                    res = core.run_statement(con, stmt, dial)
                     if not res.ok:
                         print(f"Error: {res.error}", file=sys.stderr)
                         return 1

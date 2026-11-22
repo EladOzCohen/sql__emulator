@@ -7,3 +7,7 @@ __pycache__/
 
 # generated databases (one DuckDB file per data/<folder>) and sync state
 databases/
+ide_settings.ini
+
+# third-party doc extracts used by the compat suite (kept local; see tests/compat/run_compat.py)
+tests/compat/cases/
